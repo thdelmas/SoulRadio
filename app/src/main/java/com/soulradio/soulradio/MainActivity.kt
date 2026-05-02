@@ -83,25 +83,32 @@ class MainActivity : ComponentActivity() {
 private fun RadioScreen() {
     val context = LocalContext.current
     val engine = remember { TrackEngine(context) }
-    var selected by remember { mutableStateOf<Frequency?>(null) }
-    var auto by remember { mutableStateOf(false) }
+    var auto by remember { mutableStateOf(PlaybackService.isAutoEnabled(context)) }
+    var selected by remember {
+        mutableStateOf(if (auto) Frequencies.forNow() else null)
+    }
 
     DisposableEffect(Unit) { onDispose { engine.release() } }
 
+    // While AUTO is on, mirror the schedule into UI state so the dial
+    // highlights the current band. PlaybackService drives the actual
+    // playback — see PlaybackService.enableAuto.
     LaunchedEffect(auto) {
         if (!auto) return@LaunchedEffect
         while (true) {
             val target = Frequencies.forNow()
             if (selected?.key != target.key) {
                 selected = target
-                engine.selectFrequency(target)
             }
             delay(60_000)
         }
     }
 
     val onTap: (Frequency) -> Unit = { freq ->
-        auto = false
+        if (auto) {
+            auto = false
+            PlaybackService.setAuto(context, false)
+        }
         if (selected?.key == freq.key) {
             selected = null
             engine.selectFrequency(null)
@@ -123,6 +130,7 @@ private fun RadioScreen() {
             onToggle = {
                 val next = !auto
                 auto = next
+                PlaybackService.setAuto(context, next)
                 if (!next) {
                     selected = null
                     engine.selectFrequency(null)

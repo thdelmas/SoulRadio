@@ -80,7 +80,7 @@ class TrackEngine(private val context: Context) {
         }
 
         cancelFade()
-        if (current == null || !c.isPlaying) {
+        if (!c.isPlaying) {
             applyMedia(c, asset)
             current = freq
             c.volume = 0f

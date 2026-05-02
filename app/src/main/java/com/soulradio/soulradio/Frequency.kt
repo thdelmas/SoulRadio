@@ -83,7 +83,13 @@ object Frequencies {
 
     val companions = listOf(
         Frequency("432", "432", "Verdi's A", isCompanion = true),
-        Frequency("7.83", "7.83", "Schumann", isCompanion = true),
+        Frequency(
+            "7.83", "7.83", "Schumann", isCompanion = true,
+            nowPlaying = NowPlaying(
+                work = "Gregorian chant — recorded inside the Abbey of Sant'Antimo",
+                performer = "Zyance (2008) · CC BY-SA 3.0",
+            ),
+        ),
     )
 
     val all = dial + companions
@@ -101,7 +107,8 @@ object Frequencies {
         in 16..17 -> byKey("639")!!
         in 18..19 -> byKey("417")!!
         in 20..21 -> byKey("285")!!
-        else      -> byKey("174")!! // 22..23 and 0..5 — 174 holds the whole night
+        22        -> byKey("174")!!
+        else      -> byKey("7.83")!! // 23 and 0..5 — Sant'Antimo chant under stone reverb
     }
 
     fun forNow(): Frequency = forHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))

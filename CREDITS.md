@@ -64,3 +64,10 @@ All bundled recordings are used under their original licenses. Compositions are 
   Performed by Solomija Drozd (voice), Petro Titiajev (violin), Ivan Ostapovych (organ). Recorded 23 February 2013, Latin Cathedral, Lviv.
   License: [CC BY-SA 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Johann_Sebastian_Bach_-_Mass_in_B_minor_-_Agnus_Dei.ogg)
+
+## 7.83 Hz night band
+
+- **Gregorian chant — recorded inside the Abbey of Sant'Antimo (Tuscany)**
+  Field recording by Zyance, made April 2008 during a morning service at the 12th-century Romanesque abbey. The room — not the chant — is the point: the abbey's stone gives the recording the long reverberation tail referenced in [FREQUENCIES.md §7.83](FREQUENCIES.md).
+  License: [CC BY-SA 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/) (also dual-licensed under GFDL 1.2+)
+  Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sanantimo_gregorian.ogg)

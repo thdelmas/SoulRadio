@@ -13,8 +13,8 @@ class FrequenciesTest {
     // The schedule, transcribed directly from FREQUENCIES.md § Quick map.
     // Format: hour-of-day (0..23) -> expected frequency key.
     private val expectedSchedule = mapOf(
-        0  to "174",   1  to "174",   2  to "174",   3  to "174",
-        4  to "174",   5  to "174",
+        0  to "7.83",  1  to "7.83",  2  to "7.83",  3  to "7.83",
+        4  to "7.83",  5  to "7.83",
         6  to "396",   7  to "396",   8  to "396",
         9  to "741",   10 to "741",   11 to "741",
         12 to "528",   13 to "528",   14 to "528",   15 to "528",
@@ -22,7 +22,7 @@ class FrequenciesTest {
         18 to "417",   19 to "417",
         20 to "285",   21 to "285",
         22 to "174",
-        23 to "174",
+        23 to "7.83",
     )
 
     @Test
@@ -53,17 +53,17 @@ class FrequenciesTest {
         assertEquals("417", Frequencies.forHour(18).key)
         assertEquals("285", Frequencies.forHour(20).key)
         assertEquals("174", Frequencies.forHour(22).key)
-        assertEquals("174", Frequencies.forHour(23).key)
-        // Night band wraps: 22:00–06:00 means 05:59 is still night, 06:00 is morning.
-        assertEquals("174", Frequencies.forHour(5).key)
+        assertEquals("7.83", Frequencies.forHour(23).key)
+        // Night band wraps: 23:00–06:00 means 05:59 is still night, 06:00 is morning.
+        assertEquals("7.83", Frequencies.forHour(5).key)
         assertEquals("396", Frequencies.forHour(6).key)
     }
 
     @Test
-    fun forHour_nightBandIsAnchoredBy174() {
-        // 22:00–06:00 is held by 174 Hz until a 7.83 underlay is curated.
-        for (hour in listOf(22, 23, 0, 1, 2, 3, 4, 5)) {
-            assertEquals("Hour $hour is in the night band", "174", Frequencies.forHour(hour).key)
+    fun forHour_nightBandIsSchumann() {
+        // 23:00–06:00 is the Schumann companion (7.83 Hz).
+        for (hour in listOf(23, 0, 1, 2, 3, 4, 5)) {
+            assertEquals("Hour $hour is in the night band", "7.83", Frequencies.forHour(hour).key)
         }
     }
 

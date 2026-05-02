@@ -29,8 +29,7 @@ The 24-hour auto loop and the 9-tap dial both draw from this map. The dial is fo
 | 16:00–18:00   | 639 Hz   | Connection, table, conversation|
 | 18:00–20:00   | 417 Hz   | Setting down the day           |
 | 20:00–22:00   | 285 Hz   | Slowing the body               |
-| 22:00–23:00   | 174 Hz   | Anchoring, low and warm        |
-| 23:00–06:00   | 7.83 Hz  | Held by the Earth's hum        |
+| 22:00–06:00   | 174 Hz   | Anchoring through the night    |
 
 The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper register of the tradition, reserved for moments the listener picks deliberately.
 
@@ -149,7 +148,8 @@ These are not on the 9-tap dial. They live in the auto loop and in the night ban
 ### 7.83 Hz — *the Schumann resonance*
 
 - **Status:** Not audible. The fundamental electromagnetic resonance of the cavity between Earth's surface and the ionosphere — measured by Winfried Otto Schumann in 1952.
-- **Use:** Below the threshold of human hearing (~20 Hz). In our night band (23:00–06:00) it appears as a *pulse* — a soft amplitude modulation under whatever else is playing — not as an audible tone. The body senses it as cadence, not sound.
+- **Intended use:** Below the threshold of human hearing (~20 Hz). The design role is a *pulse* — a soft amplitude modulation riding under whatever else is playing — not an audible tone. The body senses it as cadence, not sound.
+- **Current build:** The night band (22:00–06:00) is held by 174 Hz alone. The 7.83 underlay is deferred until a curated companion recording is added; until then, putting an inaudible carrier on top of silence would just *be* silence.
 - **Historical analogue:** stone-cathedral reverb. Romanesque abbeys (Vézelay, Fontenay, Cluny III) had reverberation tails of 8–12 seconds. The *resonance of the room* is the pre-modern equivalent of an ambient low pulse.
 
 ---

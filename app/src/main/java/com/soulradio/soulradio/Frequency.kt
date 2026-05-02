@@ -101,8 +101,7 @@ object Frequencies {
         in 16..17 -> byKey("639")!!
         in 18..19 -> byKey("417")!!
         in 20..21 -> byKey("285")!!
-        22        -> byKey("174")!!
-        else      -> byKey("7.83")!!
+        else      -> byKey("174")!! // 22..23 and 0..5 — 174 holds the whole night
     }
 
     fun forNow(): Frequency = forHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))

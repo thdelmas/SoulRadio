@@ -1,0 +1,27 @@
+*.iml
+.gradle
+/.idea
+/build
+/app/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.DS_Store
+
+# Build outputs
+*.apk
+*.aab
+*.ap_
+
+# Signing material — never commit
+*.keystore
+*.jks
+keystore.properties
+release-keystore.properties
+google-services.json
+
+# OS / editor noise
+Thumbs.db
+.vscode/
+*.swp

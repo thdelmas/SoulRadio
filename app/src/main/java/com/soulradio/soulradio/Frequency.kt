@@ -16,10 +16,34 @@ data class Frequency(
 
 object Frequencies {
     val dial = listOf(
-        Frequency("174", "174", "the foundation"),
-        Frequency("285", "285", "the slow turn"),
-        Frequency("396", "396", "the morning gate"),
-        Frequency("417", "417", "the dissolver"),
+        Frequency(
+            "174", "174", "the foundation",
+            nowPlaying = NowPlaying(
+                work = "Tchaikovsky · Pilgrim's Song",
+                performer = "Feodor Chaliapin (1924) · public domain",
+            ),
+        ),
+        Frequency(
+            "285", "285", "the slow turn",
+            nowPlaying = NowPlaying(
+                work = "Bach · Air on the G String, BWV 1068",
+                performer = "Joel Belov · Robert Gayler (1920) · public domain",
+            ),
+        ),
+        Frequency(
+            "396", "396", "the morning gate",
+            nowPlaying = NowPlaying(
+                work = "Bach · Wachet auf, BWV 140 — opening chorus",
+                performer = "MIT Concert Choir, William Cutter · CC BY-SA 2.0",
+            ),
+        ),
+        Frequency(
+            "417", "417", "the dissolver",
+            nowPlaying = NowPlaying(
+                work = "Allegri · Miserere mei, Deus",
+                performer = "Ensamble Escénico Vocal · CC BY 3.0",
+            ),
+        ),
         Frequency(
             "528", "528", "the centre",
             nowPlaying = NowPlaying(
@@ -27,7 +51,13 @@ object Frequencies {
                 performer = "Matthieu Fontana · CC BY-NC-ND 3.0",
             ),
         ),
-        Frequency("639", "639", "the table"),
+        Frequency(
+            "639", "639", "the table",
+            nowPlaying = NowPlaying(
+                work = "Bach · Brandenburg Concerto No. 3, BWV 1048 — Allegro",
+                performer = "Advent Chamber Orchestra · CC BY-SA 2.0",
+            ),
+        ),
         Frequency(
             "741", "741", "the clearing",
             nowPlaying = NowPlaying(
@@ -35,8 +65,20 @@ object Frequencies {
                 performer = "Kimiko Ishizaka · CC0 (Open Goldberg)",
             ),
         ),
-        Frequency("852", "852", "the high window"),
-        Frequency("963", "963", "the crown"),
+        Frequency(
+            "852", "852", "the high window",
+            nowPlaying = NowPlaying(
+                work = "Beethoven · Moonlight Sonata, Adagio sostenuto",
+                performer = "Paul Pitman · public domain (Musopen)",
+            ),
+        ),
+        Frequency(
+            "963", "963", "the crown",
+            nowPlaying = NowPlaying(
+                work = "Bach · Mass in B minor, Agnus Dei",
+                performer = "Drozd · Titiajev · Ostapovych · CC BY-SA 3.0",
+            ),
+        ),
     )
 
     val companions = listOf(

@@ -40,8 +40,8 @@ android {
         }
     }
     androidResources {
-        // FLAC files in assets/ should ship uncompressed so the decoder can seek/loop cleanly.
-        noCompress += ['flac']
+        // Audio files in assets/ should ship uncompressed so the decoder can seek/loop cleanly.
+        noCompress += ['flac', 'ogg']
     }
 }
 

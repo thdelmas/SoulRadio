@@ -128,7 +128,7 @@ The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper regi
 - **Intention:** The top of the Solfeggio scale. The dial keeps it as the rightmost tone — present, but reserved for moments the listener reaches for.
 - **Historical music:**
   - **Tallis — *Spem in Alium* (c. 1570), final cadence** — forty voices arriving on the same chord. The Western canon's most sustained moment of "everything in agreement."
-  - **Bach — *Mass in B minor*, "Sanctus" (BWV 232, completed 1749)** — six-voice double chorus. Bach's last and largest sacred work.
+  - **Bach — *Mass in B minor* (BWV 232, completed 1749)** — Bach's last and largest sacred work. The *Sanctus* is the canonical "everything in agreement" movement; the *Agnus Dei* (currently bundled, for licensing reasons — see [CREDITS.md](CREDITS.md)) sits in the same register of arrival.
   - **Hildegard von Bingen — *O virtus Sapientiae*** — chant at the upper end of the female register; written about wisdom as a wheel turning.
   - **Allegri — *Miserere*, the high C of the boy soprano** — the moment that, by tradition, was forbidden to be transcribed outside the Sistine Chapel until Mozart wrote it down from memory at fourteen.
   - **Byzantine *cherubic hymn*** — Eastern Orthodox liturgy; the moment the choir signals the descent of the holy.

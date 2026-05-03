@@ -41,6 +41,16 @@ object Frequencies {
                     work = "Bach · Cello Suite No. 1 in G, Prelude (BWV 1007)",
                     performer = "John Michel · CC BY-SA 3.0",
                 ),
+                NowPlaying(
+                    asset = "chopin_berceuse_vanderknaap.ogg",
+                    work = "Chopin · Berceuse, Op. 57",
+                    performer = "Veronica van der Knaap (live, Christchurch 2002) · public domain",
+                ),
+                NowPlaying(
+                    asset = "zabriskie_cylinder_eight.ogg",
+                    work = "Chris Zabriskie · Cylinder Eight",
+                    performer = "Chris Zabriskie (Cylinders, 2014) · CC BY 4.0",
+                ),
             ),
         ),
         Frequency(
@@ -60,6 +70,16 @@ object Frequencies {
                     asset = "byrd_4part_mass_agnus_dei.ogg",
                     work = "Byrd · Mass for Four Voices — Agnus Dei",
                     performer = "Ensemble Morales · CC BY 3.0",
+                ),
+                NowPlaying(
+                    asset = "satie_gymnopedie_1_musopen.ogg",
+                    work = "Satie · Gymnopédie No. 1",
+                    performer = "Musopen · public domain",
+                ),
+                NowPlaying(
+                    asset = "brahms_intermezzo_117_1.ogg",
+                    work = "Brahms · Intermezzo, Op. 117 No. 1",
+                    performer = "La Pianista · CC BY-SA 3.0",
                 ),
             ),
         ),
@@ -81,6 +101,11 @@ object Frequencies {
                     work = "Mozart · Laudate Dominum (Vesperae de Dominica, K. 321)",
                     performer = "MIT Concert Choir, William Cutter · CC BY-SA 2.0",
                 ),
+                NowPlaying(
+                    asset = "raga_bhairavi_morley.opus",
+                    work = "Raga Bhairavi (morning raga) — sitar",
+                    performer = "Reshma Srivastava · attribution: Larry Morley (2012) · CC BY 3.0",
+                ),
             ),
         ),
         Frequency(
@@ -100,6 +125,16 @@ object Frequencies {
                     asset = "rore_agnus_praeter_tudor.ogg",
                     work = "Cipriano de Rore · Missa Praeter Rerum Seriem — Agnus Dei",
                     performer = "The Tudor Consort · CC BY 3.0",
+                ),
+                NowPlaying(
+                    asset = "faure_cantique_passy.ogg",
+                    work = "Fauré · Cantique de Jean Racine, Op. 11",
+                    performer = "Petits Chanteurs de Passy · CC BY-SA 3.0",
+                ),
+                NowPlaying(
+                    asset = "buckley_penumbra.mp3",
+                    work = "Scott Buckley · Penumbra",
+                    performer = "Scott Buckley · CC BY 4.0 (scottbuckley.com.au)",
                 ),
             ),
         ),
@@ -121,6 +156,16 @@ object Frequencies {
                     work = "Mozart · Clarinet Concerto, K. 622 — Adagio",
                     performer = "William McColl · UW Symphony, Abraham Kaplan · CC BY-SA 2.0",
                 ),
+                NowPlaying(
+                    asset = "schumann_traumerei_betts.ogg",
+                    work = "Schumann · Träumerei (Kinderszenen, Op. 15 No. 7)",
+                    performer = "Donald Betts · public domain (Musopen)",
+                ),
+                NowPlaying(
+                    asset = "chopin_nocturne_9_2_goldstein.ogg",
+                    work = "Chopin · Nocturne in E♭, Op. 9 No. 2",
+                    performer = "Martha Goldstein · CC BY-SA 2.0",
+                ),
             ),
         ),
         Frequency(
@@ -140,6 +185,11 @@ object Frequencies {
                     asset = "monteverdi_laudate_pueri_cantica.ogg",
                     work = "Monteverdi · Laudate pueri (Vespro della Beata Vergine, 1610)",
                     performer = "Cantica Symphonia, Giuseppe Maletto · CC BY-SA 3.0",
+                ),
+                NowPlaying(
+                    asset = "lautenbacher_simard_cedar_flute.ogg",
+                    work = "Lautenbacher · Native American flute composition",
+                    performer = "Guy Simard (flute), Marc Lautenbacher (composition) · CC BY-SA 4.0",
                 ),
             ),
         ),
@@ -186,6 +236,26 @@ object Frequencies {
                     work = "Beethoven · Hammerklavier Sonata, Op. 106 — Adagio sostenuto",
                     performer = "Paul Pitman · CC0 (Musopen)",
                 ),
+                NowPlaying(
+                    asset = "satie_gnossienne_1.ogg",
+                    work = "Satie · Gnossienne No. 1",
+                    performer = "La Pianista · CC BY-SA 3.0",
+                ),
+                NowPlaying(
+                    asset = "mendelssohn_gondellied_membeth.ogg",
+                    work = "Mendelssohn · Venetianisches Gondellied, Op. 30 No. 6",
+                    performer = "Membeth · CC0",
+                ),
+                NowPlaying(
+                    asset = "ravel_pavane_dussaut.ogg",
+                    work = "Ravel · Pavane pour une infante défunte",
+                    performer = "Thérèse Dussaut · CC BY-SA 2.0",
+                ),
+                NowPlaying(
+                    asset = "buckley_meanwhile.mp3",
+                    work = "Scott Buckley · Meanwhile",
+                    performer = "Scott Buckley · CC BY 4.0 (scottbuckley.com.au)",
+                ),
             ),
         ),
         Frequency(
@@ -205,6 +275,16 @@ object Frequencies {
                     asset = "tallis_videte_miraculum_tudor.ogg",
                     work = "Tallis · Videte miraculum",
                     performer = "The Tudor Consort · CC BY-SA 3.0",
+                ),
+                NowPlaying(
+                    asset = "byzantine_hymn_part1.ogg",
+                    work = "Byzantine ecclesiastical hymn",
+                    performer = "Greek Orthodox cantor · CC0",
+                ),
+                NowPlaying(
+                    asset = "guqin_liu_shui_huang.ogg",
+                    work = "Guqin · Liu Shui (Flowing Water) — on the Voyager Golden Record",
+                    performer = "Charlie Huang · CC BY-SA 3.0",
                 ),
             ),
         ),
@@ -229,6 +309,16 @@ object Frequencies {
                     work = "Bishop · Home, Sweet Home",
                     performer = "Adelina Patti (1905) · public domain",
                 ),
+                NowPlaying(
+                    asset = "tamagno_niun_mi_tema_1903.ogg",
+                    work = "Verdi · Niun mi tema (Otello, Death of Otello)",
+                    performer = "Francesco Tamagno (1903) · public domain",
+                ),
+                NowPlaying(
+                    asset = "schumann_heink_wiegenlied_1906.mp3",
+                    work = "Brahms · Wiegenlied (Cradle Song), Op. 49 No. 4",
+                    performer = "Ernestine Schumann-Heink · Victor Orchestra (1906) · public domain",
+                ),
             ),
         ),
         Frequency(
@@ -248,6 +338,26 @@ object Frequencies {
                     asset = "compline_trinity_boston_2016.ogg",
                     work = "Choral Compline — Trinity Church, Boston",
                     performer = "Trinity Church choir (2016) · CC BY 3.0",
+                ),
+                NowPlaying(
+                    asset = "shika_no_tone_kodo.ogg",
+                    work = "Shika no Tōne (Distant Cry of Deer) — shakuhachi honkyoku",
+                    performer = "Araki Kodō III (Victor 13029, 1925–37) · public domain",
+                ),
+                NowPlaying(
+                    asset = "tibetan_gyuto_chant_corwin.ogg",
+                    work = "Tibetan monks chanting — Gyuto Branch Monastery, McLeod Ganj",
+                    performer = "Field recording: Samuel Corwin (2016) · CC BY 4.0",
+                ),
+                NowPlaying(
+                    asset = "macleod_tranquility.mp3",
+                    work = "Kevin MacLeod · Tranquility (16-min long-form ambient)",
+                    performer = "Kevin MacLeod (incompetech.com) · CC BY 4.0",
+                ),
+                NowPlaying(
+                    asset = "raga_yaman_innokino.opus",
+                    work = "Raga Yaman (evening / first-watch raga) — sitar, tanpura, tabla",
+                    performer = "Filmed in Benares by INNOKINO medialab (2017) · CC BY 3.0",
                 ),
             ),
         ),

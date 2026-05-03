@@ -17,6 +17,8 @@ Each entry has four fields:
 
 The 24-hour auto loop and the 9-tap dial both draw from this map. The dial is for when you want to choose. The loop is for when you don't.
 
+Several bands now bundle more than one historical recording. When a band is tuned (manually or by the auto loop) the radio picks one of its recordings for that session and loops it — see [CREDITS.md](CREDITS.md) for the full list and licenses.
+
 ---
 
 ## Quick map
@@ -47,6 +49,8 @@ The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper regi
   - **Hildegard von Bingen — *O virtus Sapientiae* (12th c.)** when sung in lower transposition.
   - **Russian Orthodox liturgy — the *oktavist* basses** of the All-Night Vigil tradition (e.g. Rachmaninoff's *Vespers*, 1915). The lowest male voice in any choral tradition on earth.
   - **Bach — *Cello Suite No. 1 in G major*, Prelude (BWV 1007)** — the open low G the cello speaks from. The piece returns to that note like a tide.
+  - **Chopin — *Berceuse*, Op. 57 (1843–44)** — a lullaby built over an unbroken left-hand ostinato in D♭ major; the right hand decorates above without ever leaving the floor. Late-Romantic piano grounded the way the band asks. (Currently bundled — see [CREDITS.md §174](CREDITS.md).)
+  - **Chris Zabriskie — *Cylinder Eight* (from *Cylinders*, 2014)** — the lowest, most drone-anchored entry in Zabriskie's nine-piece set; slowly evolving processed piano with no melodic arc. The contemporary CC-released voice on the foundation band, sitting beside the Bach cello prelude. (Currently bundled — see [CREDITS.md §174](CREDITS.md).)
 
 ### 285 Hz — *the slow turn*
 
@@ -57,6 +61,8 @@ The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper regi
   - **William Byrd — *Mass for Four Voices*, Agnus Dei (c. 1592)** — a slow internal pulse.
   - **Bach — *Air on the G String* (BWV 1068, mvt. II)** — the most-cited "calm" piece in the Western repertoire, and earned.
   - **Pérotin — *Viderunt omnes* (c. 1198)** — the earliest four-voice polyphony in Europe. Long-held tones over a chant *cantus firmus*.
+  - **Satie — *Gymnopédie No. 1* (1888)** — *Lent et douloureux*. The textbook "slow turn" of late-19th-century French piano writing — three bars of left-hand pulse, a melody that refuses to climb. (Currently bundled — see [CREDITS.md §285](CREDITS.md).)
+  - **Brahms — Intermezzo in E♭, Op. 117 No. 1 (1892)** — the first of Brahms's late piano *intermezzi*, headed in the score with a Scottish lullaby epigraph; Brahms called the Op. 117 set "the lullabies of my sorrows." Late-Romantic contemplation with no climactic gesture. (Currently bundled — see [CREDITS.md §285](CREDITS.md).)
 
 ### 396 Hz — *the morning gate*
 
@@ -66,17 +72,23 @@ The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper regi
   - **Gregorian *Lauds*** — the dawn office of the Divine Office, sung at first light in monasteries since the 6th century. *Aeterne rerum conditor* (Ambrose, 4th c.) is the classical Lauds hymn.
   - **Bach — *Wachet auf, ruft uns die Stimme* (BWV 140)** — literally *"Awake, the voice calls us"*. A morning cantata.
   - **Mozart — *Ave verum corpus* (K. 618, 1791)** — 46 bars, one of the most economical pieces of consolation ever written.
+  - **Mozart — *Laudate Dominum* from *Vesperae de Dominica* (K. 321, 1779)** — the psalm of universal praise; we use the soft, soprano-led canticle as a clearing tone for the morning gate. (Currently bundled — see [CREDITS.md §396](CREDITS.md).)
   - **Josquin des Prez — *Missa Ave maris stella*** — Renaissance Marian devotion, used at the start of the canonical day.
+  - **Raga Bhairavi — Hindustani classical morning raga (sitar)** — sung at dawn in temples to close the morning cycle, *bhairav thaat*. The non-Western voice for the morning gate, sitting beside the Bach cantata and Mozart settings. (Currently bundled — see [CREDITS.md §396](CREDITS.md).)
 
 ### 417 Hz — *the dissolver*
 
 - **Folk name:** "Undoing situations / change."
-- **Intention:** A tone for transition — leaving work, leaving an argument, leaving a room you were stuck in. Used in our late-afternoon band.
+- **Intention:** A tone for transition — leaving work, leaving an argument, leaving a room you were stuck in. Used in our early-evening band.
 - **Historical music:**
   - **Gregory Allegri — *Miserere mei, Deus* (c. 1638)** — sung in the Sistine Chapel during Holy Week. A piece literally written for the act of letting go.
   - **Bach — *Erbarme dich* from *St. Matthew Passion* (BWV 244, 1727)** — the alto aria. A piece about being unable to undo what is done, sung anyway.
   - **Pérotin — *Sederunt principes* (c. 1199)** — extended drone polyphony; the listener's sense of clock dissolves.
   - **Tomás Luis de Victoria — *O magnum mysterium* (1572)** — Spanish Renaissance, written to make the air in a stone room feel different.
+  - **Tomás Luis de Victoria — *O vos omnes* (Tenebrae responsory, 1585)** — *"O all you who pass by, behold and see if there be any sorrow like unto my sorrow."* The Spanish Renaissance text written for the act of standing still inside an unfinishable feeling. (Currently bundled — see [CREDITS.md §417](CREDITS.md).)
+  - **Cipriano de Rore — *Missa Praeter Rerum Seriem*, Agnus Dei (1557)** — eight minutes of Renaissance Agnus Dei from Willaert's successor at San Marco; the dissolving-into-mercy text written in a different compositional voice from the Allegri above. (Currently bundled — see [CREDITS.md §417](CREDITS.md).)
+  - **Fauré — *Cantique de Jean Racine*, Op. 11 (1864–65)** — Fauré at nineteen, setting Racine's translation of the Ambrosian hymn *Consors paterni luminis*. Late-Romantic French choral writing in the same dissolving-into-mercy register as the Allegri and Rore above. (Currently bundled — see [CREDITS.md §417](CREDITS.md).)
+  - **Scott Buckley — *Penumbra*** — contemporary "tender, glacial meditation" by the Australian composer; string orchestra + atmospheric synthesizer + field recording, no climactic gesture. The same letting-go intention in a present-day cinematic voice. (Currently bundled — see [CREDITS.md §417](CREDITS.md).)
 
 ### 528 Hz — *the centre*
 
@@ -88,17 +100,20 @@ The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper regi
   - **Vivaldi — *The Four Seasons*, "Spring", mvt. I (1725)** — bright E major; the piece every nervous system already recognises.
   - **Mozart — *Clarinet Concerto in A major*, K. 622, Adagio (1791)** — a single woodwind, no edges.
   - **Hildegard von Bingen — *Caritas abundat in omnia* (12th c.)** — the literal "love" antiphon of the medieval canon.
+  - **Schumann — *Träumerei* (Kinderszenen, Op. 15 No. 7, 1838)** — *"Dreaming."* The most-played miniature in the Romantic piano canon; the chord progression is a quiet ground and the band asks for nothing more. (Currently bundled — see [CREDITS.md §528](CREDITS.md).)
+  - **Chopin — Nocturne in E♭, Op. 9 No. 2 (1830–32)** — the most-recognised nocturne in the Western piano repertoire. Sits at the centre of the day where it belongs. (Currently bundled — see [CREDITS.md §528](CREDITS.md).)
 
 ### 639 Hz — *the table*
 
 - **Folk name:** "Connecting / harmonious relationships."
-- **Intention:** The frequency for shared rooms — meals, conversation, reunion. Used in our early-evening band.
+- **Intention:** The frequency for shared rooms — meals, conversation, reunion. Used in our late-afternoon band.
 - **Historical music:**
   - **Renaissance polyphonic Mass settings** — Josquin, Palestrina, Lassus. Music *built on* the principle of independent voices that agree.
   - **Palestrina — *Sicut cervus* (c. 1584)** — four voices imitating each other at a walking pace.
   - **Monteverdi — *Vespro della Beata Vergine* (1610)** — early Baroque, ensemble at full warmth.
   - **Bach — *Brandenburg Concerto No. 3 in G* (BWV 1048)** — three violins, three violas, three cellos: an architecture of conversation.
   - **English consort music** — John Dowland's *Lachrimae* (1604) — viol consort, written for shared rooms.
+  - **Lautenbacher / Simard — Native American cedar flute composition (2025)** — contemporary chamber piece: cedar flute lead over guitar, percussion, bass, and synthesizer accompaniment. Brings a non-European voice into the band and shows that the radio's "artistic music a curator chose" rule includes modern composition, not just the canonical sacred repertoire. (Currently bundled — see [CREDITS.md §639](CREDITS.md).)
 
 ### 741 Hz — *the clearing*
 
@@ -120,7 +135,12 @@ The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper regi
   - **Tallis — *If ye love me* (c. 1565)** — short English motet, devastating in its restraint.
   - **Arvo Pärt is electronic-era** — but his medieval forebears, the **Notre-Dame school** (Léonin, Pérotin), wrote the same vertical air.
   - **Beethoven — *Moonlight Sonata*, Adagio sostenuto (1801)** — the "stepping back" piece of the standard repertoire.
+  - **Beethoven — *Hammerklavier Sonata*, Op. 106, Adagio sostenuto (1818)** — seventeen minutes of late-style suspended Beethoven; the longest slow movement in the standard repertoire and a piece that asks the listener to step back further still. (Currently bundled — see [CREDITS.md §852](CREDITS.md).)
   - **Debussy — *Clair de Lune* (1890, pre-electronic by decades)** — French Impressionism; a piece that sounds like a high window.
+  - **Satie — *Gnossienne No. 1* (1890)** — Satie's modal piano writing — no time signature in the original score, the bar-lines suggested rather than ruled. The textbook "high window" piece of late-19th-century French music: present, suspended, refusing to resolve. (Currently bundled — see [CREDITS.md §852](CREDITS.md).)
+  - **Mendelssohn — *Venetianisches Gondellied*, Op. 30 No. 6 (1830s)** — the "Venetian Gondola Song" from the second book of *Lieder ohne Worte*. An F♯-minor barcarolle whose left-hand rocking figure carries the right-hand melody the way water carries a boat. (Currently bundled — see [CREDITS.md §852](CREDITS.md).)
+  - **Ravel — *Pavane pour une infante défunte* (1899)** — the "Pavane for a dead princess." Five minutes of late-Romantic French piano contemplation; one of the most-cited contemplative pieces in the standard repertoire and the canonical companion to the Debussy above. (Currently bundled — see [CREDITS.md §852](CREDITS.md).)
+  - **Scott Buckley — *Meanwhile*** — contemporary "liquid, dreamy world to float in"; ethereal piano + heavily processed synth pads. The high-window register in a present-day processed-piano voice, sitting beside the Debussy *Clair de Lune* and the Ravel *Pavane*. (Currently bundled — see [CREDITS.md §852](CREDITS.md).)
 
 ### 963 Hz — *the crown*
 
@@ -128,10 +148,12 @@ The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper regi
 - **Intention:** The top of the Solfeggio scale. The dial keeps it as the rightmost tone — present, but reserved for moments the listener reaches for.
 - **Historical music:**
   - **Tallis — *Spem in Alium* (c. 1570), final cadence** — forty voices arriving on the same chord. The Western canon's most sustained moment of "everything in agreement."
+  - **Tallis — *Videte miraculum* (c. 1575)** — the Marian responsory for the Feast of the Purification; soprano-led upper voices sustained over an alto-tenor ground, eight minutes of the same vertical air the band asks for. (Currently bundled — see [CREDITS.md §963](CREDITS.md).)
   - **Bach — *Mass in B minor* (BWV 232, completed 1749)** — Bach's last and largest sacred work. The *Sanctus* is the canonical "everything in agreement" movement; the *Agnus Dei* (currently bundled, for licensing reasons — see [CREDITS.md](CREDITS.md)) sits in the same register of arrival.
   - **Hildegard von Bingen — *O virtus Sapientiae*** — chant at the upper end of the female register; written about wisdom as a wheel turning.
   - **Allegri — *Miserere*, the high C of the boy soprano** — the moment that, by tradition, was forbidden to be transcribed outside the Sistine Chapel until Mozart wrote it down from memory at fourteen.
-  - **Byzantine *cherubic hymn*** — Eastern Orthodox liturgy; the moment the choir signals the descent of the holy.
+  - **Byzantine *cherubic hymn*** — Eastern Orthodox liturgy; the moment the choir signals the descent of the holy. The bundled long-form Byzantine ecclesiastical hymn carries the same *ison* (held drone) tradition. (Currently bundled — see [CREDITS.md §963](CREDITS.md).)
+  - **Guqin — *Liu Shui* (Flowing Water)** — the piece NASA placed on the Voyager Golden Record in 1977 as the single Chinese contribution to humanity's interstellar mixtape. Silk-string zither, vast pauses, and the canonical "listening to the cosmos" piece in the Chinese repertoire — three traditions (Bach, Byzantine, guqin) arriving at the same upper register from different directions. (Currently bundled — see [CREDITS.md §963](CREDITS.md).)
 
 ---
 
@@ -144,14 +166,14 @@ These are not on the 9-tap dial. They live in the auto loop and in the night ban
 - **Status:** Not a Solfeggio tone. A *tuning standard* — the pitch the note A is set to.
 - **History:** Giuseppe Verdi formally petitioned the Italian government in 1884 to set A = 432 Hz, calling it "the scientific pitch." The petition succeeded briefly. Modern orchestras settled on A = 440 Hz at a 1939 ISO conference. Period-instrument ensembles still use lower pitches: **Baroque pitch (A = 415 Hz)** for Bach, even lower for French Baroque.
 - **What it means for SoulRadio:** When we use orchestral or choral recordings, we prefer historically-informed performances at A = 415 or A = 432 over the modern A = 440. A "Verdi tuning" preset re-tunes the room by ~32 cents — a difference the body notices without being able to name.
-- **Current build:** Caruso, "Celeste Aida" from Verdi's *Aida*, recorded for Victor on 1 February 1904. The Metropolitan Opera and most major theatres held A at 432–435 Hz from the late 19th century until WWII — Caruso recorded inside that tuning era. Pitch on acoustic-era discs drifts with playback speed, so this is a Verdi-tuning-*era* recording rather than a verifiably-432-Hz one. See [CREDITS.md §432](CREDITS.md).
+- **Current build:** Caruso, "Celeste Aida" from Verdi's *Aida* (Victor, 1 February 1904); Caruso, "Una furtiva lagrima" (Victor, 26 November 1911); **Adelina Patti, *Home, Sweet Home*** (Victrola, 1905) — Patti was born in 1843, the last living link to Verdi's own era; **Francesco Tamagno, "Niun mi tema"** from Verdi's *Otello* (Victor, 1903) — Tamagno was Verdi's chosen Otello at the 1887 La Scala premiere, the role written for his voice; and **Ernestine Schumann-Heink, Brahms *Wiegenlied*** (Victor Orchestra, 1906) — the most-sung lullaby in the Western Romantic repertoire, by the contralto Brahms himself had heard in Vienna. The Metropolitan Opera and most major theatres held A at 432–435 Hz from the late 19th century until WWII; all five discs were cut inside that tuning era. Pitch on acoustic-era discs drifts with playback speed, so these are Verdi-tuning-*era* recordings rather than verifiably-432-Hz ones. See [CREDITS.md §432](CREDITS.md).
 - **Music:** anything performed by *Jordi Savall / Hespèrion XXI*, *The Tallis Scholars*, *Sir John Eliot Gardiner / English Baroque Soloists*, *Philippe Herreweghe / Collegium Vocale Gent*.
 
 ### 7.83 Hz — *the Schumann resonance*
 
 - **Status:** Not audible. The fundamental electromagnetic resonance of the cavity between Earth's surface and the ionosphere — measured by Winfried Otto Schumann in 1952.
 - **Intended use:** Below the threshold of human hearing (~20 Hz). The design role is a *pulse* — a soft amplitude modulation riding under whatever else is playing — not an audible tone. The body senses it as cadence, not sound.
-- **Current build:** Until a true sub-audible underlay layer ships, the 7.83 band stands in for the *room* it would have ridden inside: a Gregorian chant recorded in the Abbey of Sant'Antimo (Tuscany, 12th c. Romanesque), where the stone gives the recording an 8-second tail. The hum is the room, not a tone.
+- **Current build:** Until a true sub-audible underlay layer ships, the 7.83 band stands in for the *room* it would have ridden inside: a Gregorian chant recorded in the Abbey of Sant'Antimo (Tuscany, 12th c. Romanesque), where the stone gives the recording an 8-second tail. Six further night-band recordings are bundled alongside it: the long-form **Gregorian *Improperia*** (Good Friday Reproaches, 16+ minutes of unison plainchant); the full **Choral Compline** sung at Trinity Church, Boston (29 May 2016, ~18 minutes) — Compline being the literal night office of the Western canonical hours; the Zen Buddhist **shakuhachi *honkyoku Shika no Tōne*** (*Distant Cry of Deer*) played by Araki Kodō III on Victor 13029 (1925–37) — breath-driven long tones, the closest Eastern equivalent to the Western contemplative night office; a field recording of **Tibetan monks chanting at Gyuto Branch Monastery**, McLeod Ganj (Samuel Corwin, 2016) — the deep overtone (multiphonic) chant tradition, the lowest-register sung sound on earth and the closest acoustic analogue to a sub-audible drone; **Kevin MacLeod's *Tranquility*** (16-min long-form ambient, [incompetech.com](https://incompetech.com), CC BY 4.0) — the night band's contemporary CC-released voice; and a 27-minute performance of **Raga Yaman** filmed in Benares (INNOKINO, 2017) — the canonical Hindustani late-evening / first-watch raga, sitar over tanpura drone, the *alap-jor-jhala* arc that this band's drone morphology was built around. The hum is the room, not a tone.
 - **Historical analogue:** stone-cathedral reverb. Romanesque abbeys (Vézelay, Fontenay, Cluny III) had reverberation tails of 8–12 seconds. The *resonance of the room* is the pre-modern equivalent of an ambient low pulse.
 
 ---

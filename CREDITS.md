@@ -56,6 +56,11 @@ All bundled recordings are used under their original licenses. Compositions are 
   License: [CC BY-SA 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Brahms_-_Intermezzo,_Op._117,_No._1.ogg)
 
+- **Clara Schumann — *Liebst du um Schönheit*, Op. 12 No. 4**
+  Performed by Adèle Bérard (soprano) and Laura Lazayre (piano), the *Béla ensemble* (France). Clara Wieck-Schumann's setting of Friedrich Rückert's *"If you love for beauty"* — a two-minute lyric arc, a small song that doesn't climb. Brings the most-revered female composer of the 19th-century Romantic canon onto the radio, sitting beside the Brahms intermezzo on the same band — Brahms famously credited Clara as the closest musical mind to his own.
+  License: [CC BY-SA 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
+  Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Clara_Wieck-Schumann_%E2%80%93_Liebst_du_um_Sch%C3%B6nheit.webm)
+
 ## 396 Hz band
 
 - **Bach — Cantata BWV 140 *Wachet auf, ruft uns die Stimme* — opening chorus**
@@ -132,6 +137,11 @@ All bundled recordings are used under their original licenses. Compositions are 
   License: [CC BY-SA 2.0 Generic](https://creativecommons.org/licenses/by-sa/2.0/)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Frederic_Chopin_-_Nocturne_Eb_major_Opus_9,_number_2.ogg)
 
+- **Scott Buckley — *Amberlight***
+  Australian composer's "soft, nostalgic piano and orchestral track." Sits at the centre of the day in the same lineage as the Penumbra (417) and Meanwhile (852) entries — a contemporary cinematic voice for the warmth this band asks for, beside the Schumann *Träumerei* and the Chopin nocturne. Composer attribution required: *"'Amberlight' by Scott Buckley — released under CC-BY 4.0. www.scottbuckley.com.au"*
+  License: [CC BY 4.0 International](https://creativecommons.org/licenses/by/4.0/)
+  Source: [scottbuckley.com.au/library/amberlight](https://www.scottbuckley.com.au/library/amberlight/)
+
 ## 639 Hz band
 
 - **Bach — Brandenburg Concerto No. 3 in G major, BWV 1048 — I. Allegro**
@@ -154,6 +164,11 @@ All bundled recordings are used under their original licenses. Compositions are 
   License: [CC BY-SA 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Native-American-flute%C2%A9Marc-Lautenbacher_music_Guy-Simard_flute.ogg)
 
+- **Dehlavi & Payvar — Concertino for Santur**
+  Performed by Manoochehr Sadeghi (santur). Iranian classical concertino composed jointly by Hossein Dehlavi (1927–2019) and Faramarz Payvar — two foundational 20th-century Persian classical composers — built around the santur (struck-string trapezoidal zither) as solo voice in conversation with the ensemble. Brings a Persian classical voice to the table band beside the Bach Brandenburg, the Palestrina, and the Lautenbacher cedar-flute composition; fourteen minutes of the same "instruments in agreement" architecture in a tradition the radio had not yet heard from. Released to the public under the CC license by Sadeghi and Dehlavi themselves (Wikimedia VRT ticket #2011100510001039).
+  License: [CC BY-SA 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/) (also dual-licensed under GFDL 1.2+)
+  Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sadeghi-Dehlavi-Concertino_for_Santur_Full.ogg)
+
 ## 741 Hz band
 
 - **Bach — Goldberg Variations, BWV 988 — Aria**
@@ -175,6 +190,11 @@ All bundled recordings are used under their original licenses. Compositions are 
   Performed for the Musopen public-domain release. The C-major sonata named in [FREQUENCIES.md §741](FREQUENCIES.md) — articulate, transparent, the clearest piano writing in the standard repertoire.
   License: **Public domain** (released by the performer via Musopen)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wolfgang_Amadeus_Mozart_-_sonata_no._16_in_c_major,_k.545_'sonata_facile'_-_i._allegro.ogg)
+
+- **Cécile Chaminade — Flute Concertino in D major, Op. 107**
+  Performed by the United States Marine Band, MGySgt Betsy Hill (flute soloist), Col. Michael J. Colburn conducting. Chaminade (1857–1944) was the first female composer awarded the Légion d'honneur (1913); the Concertino is her best-known work, written in 1902 as a Paris Conservatoire flute examination piece. Brings a French late-Romantic female-composed voice to the clearing band — flute and orchestra in the bright, articulate, transparent register the band asks for, beside the Couperin harpsichord and the Mozart K.545. The recording itself is a US-government work (US Marine Band official duty performance) and so is in the public domain on both copyright counts (composition + recording).
+  License: **Public domain** (composition expired; recording is PD-USGov-Military-Marines)
+  Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Flute_Concertino_in_D_major_-_United_States_Marine_Band.mp3)
 
 ## 852 Hz band
 
@@ -240,6 +260,11 @@ All bundled recordings are used under their original licenses. Compositions are 
   License: [CC BY-SA 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/) (also CC BY 2.5 + GFDL 1.2+)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Liu_Shui.ogg)
 
+- **Znamenny chant — *Da molchit vsjaka plot chelovecha***
+  Performed by the Moscow Patriarchal Choir (Russian Orthodox Church). The Holy Saturday Cherubikon substitute — *"Let all mortal flesh keep silence"* — sung once a year at the Great Vespers of the Resurrection in the indigenous Russian *znamenny* monophonic chant tradition (the pre-Italian-influenced Slavic Orthodox chant style, named after its hooked-neume notation). A third chant tradition for the crown band beside the Latin Gregorian elsewhere on the radio and the bundled Byzantine ecclesiastical hymn — Latin, Greek, and Slavic Christian voices arriving at the same upper-register stillness.
+  License: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (public-domain dedication)
+  Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:07_Da_molchit_vsjaka_plot_chelovecha_znamennyj_raspev_grind_Moscow_Patriarchal_Choir.ogg)
+
 ## 432 Hz band — *Verdi's A*
 
 - **Verdi — *Aida* — "Celeste Aida"**
@@ -304,3 +329,8 @@ All bundled recordings are used under their original licenses. Compositions are 
   Filmed in Benares (Varanasi) by INNOKINO medialab, 2017 (uploader credit: *innokino*). Twenty-seven minutes of the canonical late-evening Hindustani raga — sitar-led melodic line over a tanpura drone with tabla, the *alap-jor-jhala* arc that the night band's drone morphology was built around. Sits beside the Gyuto monks and the Compline service on this band as the Indian classical voice of the same single-tone-under-melody architecture. Audio extracted from the source WebM (Opus 48 kHz stereo, stream-copied — no re-encode).
   License: [CC BY 3.0 Unported](https://creativecommons.org/licenses/by/3.0/) — attribution to *innokino*
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Raga_Yaman._Benares..webm) (originally [YouTube/innokino](https://www.youtube.com/watch?v=xTl7hl6W9CA))
+
+- **M.S. Subbulakshmi — *Sacred Melodies of Lord Vishnu* (Carnatic)**
+  Performed by M.S. Subbulakshmi (vocal) and Radha Viswanathan (vocal). Thirty-seven minutes of South Indian (Carnatic) classical devotional song — the *Vishnu Sahasranamam*, three Annamacharya kīrtanas (*Bhavamu Lona*, *Parama Purusha*, *Brahma Kadigina Paadamu*), and the traditional *Dolayam* — by the singer who became the first musician of any tradition awarded the Bharat Ratna (1998). Brings the Carnatic (South Indian) voice to the night band beside the existing Hindustani (North Indian) Raga Yaman, the Gyuto monks, and the Compline service: four contemplative-night traditions in conversation. Released on the Saregama label's Wikimedia Commons partnership; audio stream-copied from the source WebM (Opus 48 kHz stereo, no re-encode).
+  License: [CC BY 3.0 Unported](https://creativecommons.org/licenses/by/3.0/) — attribution to *Saregama Carnatic Classical*
+  Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sacred_Melodies_of_Lord_Vishnu_-_M.S._Subbulakshmi,_Radha_Viswanathan_-_Carnatic_Classical_Music.webm)

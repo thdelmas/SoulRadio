@@ -81,6 +81,11 @@ object Frequencies {
                     work = "Brahms · Intermezzo, Op. 117 No. 1",
                     performer = "La Pianista · CC BY-SA 3.0",
                 ),
+                NowPlaying(
+                    asset = "clara_schumann_liebst_du_um_schonheit.ogg",
+                    work = "Clara Schumann · Liebst du um Schönheit",
+                    performer = "Adèle Bérard · Laura Lazayre (Béla ensemble) · CC BY-SA 4.0",
+                ),
             ),
         ),
         Frequency(
@@ -166,6 +171,11 @@ object Frequencies {
                     work = "Chopin · Nocturne in E♭, Op. 9 No. 2",
                     performer = "Martha Goldstein · CC BY-SA 2.0",
                 ),
+                NowPlaying(
+                    asset = "buckley_amberlight.mp3",
+                    work = "Scott Buckley · Amberlight",
+                    performer = "Scott Buckley · CC BY 4.0 (scottbuckley.com.au)",
+                ),
             ),
         ),
         Frequency(
@@ -191,6 +201,11 @@ object Frequencies {
                     work = "Lautenbacher · Native American flute composition",
                     performer = "Guy Simard (flute), Marc Lautenbacher (composition) · CC BY-SA 4.0",
                 ),
+                NowPlaying(
+                    asset = "sadeghi_dehlavi_santur_concertino.ogg",
+                    work = "Dehlavi & Payvar · Concertino for Santur",
+                    performer = "Manoochehr Sadeghi (santur) · CC BY-SA 3.0",
+                ),
             ),
         ),
         Frequency(
@@ -215,6 +230,11 @@ object Frequencies {
                     asset = "mozart_k545_allegro_musopen.ogg",
                     work = "Mozart · Sonata in C, K. 545 (\"facile\") — Allegro",
                     performer = "Musopen · public domain",
+                ),
+                NowPlaying(
+                    asset = "chaminade_flute_concertino_marine_band.mp3",
+                    work = "Chaminade · Flute Concertino in D, Op. 107",
+                    performer = "US Marine Band · MGySgt Betsy Hill · public domain",
                 ),
             ),
         ),
@@ -285,6 +305,11 @@ object Frequencies {
                     asset = "guqin_liu_shui_huang.ogg",
                     work = "Guqin · Liu Shui (Flowing Water) — on the Voyager Golden Record",
                     performer = "Charlie Huang · CC BY-SA 3.0",
+                ),
+                NowPlaying(
+                    asset = "znamenny_da_molchit_moscow.ogg",
+                    work = "Znamenny chant · Da molchit vsjaka plot chelovecha",
+                    performer = "Moscow Patriarchal Choir · CC0",
                 ),
             ),
         ),
@@ -358,6 +383,11 @@ object Frequencies {
                     asset = "raga_yaman_innokino.opus",
                     work = "Raga Yaman (evening / first-watch raga) — sitar, tanpura, tabla",
                     performer = "Filmed in Benares by INNOKINO medialab (2017) · CC BY 3.0",
+                ),
+                NowPlaying(
+                    asset = "subbulakshmi_sacred_melodies_vishnu.opus",
+                    work = "M.S. Subbulakshmi · Sacred Melodies of Lord Vishnu (Carnatic)",
+                    performer = "M.S. Subbulakshmi · Radha Viswanathan · CC BY 3.0 (Saregama)",
                 ),
             ),
         ),

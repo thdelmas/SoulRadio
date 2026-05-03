@@ -209,7 +209,8 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
             // Bordered pill — same idiom as the AUTO pill, smaller, so it
             // reads as an obvious tap target rather than decorative copy.
             // Hairline GoldDim border keeps it visually paired with AUTO
-            // without competing for the eye.
+            // without competing for the eye. Vertical padding clears the
+            // 48 dp tap-target floor.
             Text(
                 text = "notes",
                 color = Gold,
@@ -221,7 +222,7 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
                     .clip(CircleShape)
                     .border(1.dp, GoldDim, CircleShape)
                     .clickable { onOpenNotes() }
-                    .padding(horizontal = 14.dp, vertical = 8.dp),
+                    .padding(horizontal = 14.dp, vertical = 16.dp),
             )
         }
 

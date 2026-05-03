@@ -4,6 +4,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
@@ -17,9 +19,13 @@ import com.google.common.util.concurrent.ListenableFuture
  * survives screen lock and surfaces lockscreen / Bluetooth controls);
  * this class chooses what plays and rides the volume ramp for fades.
  *
- * Asset convention: the first non-hidden file inside `audio/<freq.key>/`
- * is the recording for that frequency. Frequencies with no bundled file
- * are "untuned" — selectable in the UI but no audio plays.
+ * Each Frequency may bundle one or more recordings (see [Frequency.tracks]).
+ * Multi-track bands are loaded as a shuffled playlist on REPEAT_MODE_ALL so
+ * the order is different every session AND the radio rotates through the
+ * pool while the user stays tuned — no more hearing the same take on loop
+ * for an hour. Single-track bands stay on REPEAT_MODE_ONE for gapless loop.
+ * Frequencies with zero tracks bundled are "untuned" — selectable in the UI
+ * but no audio plays.
  */
 class TrackEngine(private val context: Context) {
 
@@ -35,17 +41,51 @@ class TrackEngine(private val context: Context) {
     private var pending: Frequency? = null
     private var current: Frequency? = null
 
-    /** Frequencies whose asset folder contains a bundled recording. */
+    /** Frequencies that bundle at least one playable recording. */
     val tunedKeys: Set<String> = Frequencies.all
-        .filter { firstAssetIn(it.assetFolder) != null }
+        .filter { it.tracks.isNotEmpty() }
         .map { it.key }
         .toSet()
+
+    private val _currentFrequency = mutableStateOf<Frequency?>(null)
+    /**
+     * The frequency actually playing in the service, derived from the
+     * MediaController's current item and play state. Drives the dial
+     * highlight so the UI stays honest after the activity is recreated
+     * (audio kept playing in the service while we were gone) and so the
+     * AUTO band update is instant when the schedule rolls over at the
+     * hour boundary, instead of lagging behind a 60 s poll.
+     */
+    val currentFrequency: State<Frequency?> = _currentFrequency
+
+    private val _currentTrack = mutableStateOf<NowPlaying?>(null)
+    /**
+     * The specific recording (work + performer) that is playing now,
+     * resolved from the MediaController's current asset URI. The dial card
+     * binds to this rather than to a static field on the Frequency, so
+     * the now-playing label tracks the track that was actually picked
+     * for this session.
+     */
+    val currentTrack: State<NowPlaying?> = _currentTrack
+
+    private val playerListener = object : Player.Listener {
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            recomputeCurrentFrequency()
+        }
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            recomputeCurrentFrequency()
+        }
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            recomputeCurrentFrequency()
+        }
+    }
 
     init {
         val token = SessionToken(context, ComponentName(context, PlaybackService::class.java))
         controllerFuture = MediaController.Builder(context, token).buildAsync()
         controllerFuture.addListener({
-            controller = controllerFuture.get()
+            controller = controllerFuture.get()?.also { it.addListener(playerListener) }
+            recomputeCurrentFrequency()
             pending?.let { selectFrequency(it) }
         }, ContextCompat.getMainExecutor(context))
     }
@@ -72,7 +112,7 @@ class TrackEngine(private val context: Context) {
         }
         if (current?.key == freq.key && c.isPlaying) return
 
-        val asset = firstAssetIn(freq.assetFolder) ?: run {
+        if (freq.tracks.isEmpty()) {
             cancelFade()
             fadeTo(c, 0f) { c.pause() }
             current = null
@@ -81,7 +121,7 @@ class TrackEngine(private val context: Context) {
 
         cancelFade()
         if (!c.isPlaying) {
-            applyMedia(c, asset)
+            applyMedia(c, freq)
             current = freq
             c.volume = 0f
             c.play()
@@ -90,7 +130,7 @@ class TrackEngine(private val context: Context) {
             // fade-out → swap → fade-in. Not a true overlap (single player),
             // but keeps the manifesto's "no hard cuts" promise.
             fadeTo(c, 0f) {
-                applyMedia(c, asset)
+                applyMedia(c, freq)
                 current = freq
                 c.play()
                 fadeTo(c, targetVolume) {}
@@ -100,13 +140,51 @@ class TrackEngine(private val context: Context) {
 
     fun release() {
         cancelFade()
+        controller?.removeListener(playerListener)
         MediaController.releaseFuture(controllerFuture)
         controller = null
     }
 
-    private fun applyMedia(c: MediaController, assetPath: String) {
-        c.setMediaItem(MediaItem.fromUri("asset:///$assetPath"))
-        c.repeatMode = Player.REPEAT_MODE_ONE
+    private fun recomputeCurrentFrequency() {
+        val c = controller
+        val playing = c != null && c.isPlaying
+        val item = c?.currentMediaItem
+        _currentFrequency.value = if (playing) frequencyFromMediaItem(item) else null
+        _currentTrack.value = if (playing) trackFromMediaItem(item) else null
+    }
+
+    private fun frequencyFromMediaItem(item: MediaItem?): Frequency? {
+        val key = keyAndAssetFromMediaItem(item)?.first ?: return null
+        return Frequencies.byKey(key)
+    }
+
+    private fun trackFromMediaItem(item: MediaItem?): NowPlaying? {
+        val (key, asset) = keyAndAssetFromMediaItem(item) ?: return null
+        val freq = Frequencies.byKey(key) ?: return null
+        return Frequencies.trackByAsset(freq, asset)
+    }
+
+    private fun keyAndAssetFromMediaItem(item: MediaItem?): Pair<String, String>? {
+        val uri = item?.localConfiguration?.uri?.toString() ?: return null
+        // Asset URIs are "asset:///audio/<key>/<filename>" — see assetFolder.
+        val m = Regex("^asset:///audio/([^/]+)/(.+)$").find(uri) ?: return null
+        return m.groupValues[1] to m.groupValues[2]
+    }
+
+    private fun applyMedia(c: MediaController, freq: Frequency) {
+        val items = freq.tracks.map {
+            MediaItem.fromUri("asset:///${freq.assetPath(it)}")
+        }
+        // Multi-track: shuffle the pool and loop the playlist so we rotate
+        // through different takes. shuffleModeEnabled only affects what comes
+        // *next* — the playhead still starts on items[0] — so we also seed a
+        // random start index, otherwise every session opens on the same
+        // recording. Single-track: REPEAT_MODE_ONE keeps the gapless seek-loop
+        // ExoPlayer does best.
+        val startIndex = if (items.size > 1) items.indices.random() else 0
+        c.setMediaItems(items, startIndex, 0L)
+        c.shuffleModeEnabled = items.size > 1
+        c.repeatMode = if (items.size > 1) Player.REPEAT_MODE_ALL else Player.REPEAT_MODE_ONE
         c.prepare()
     }
 
@@ -136,13 +214,5 @@ class TrackEngine(private val context: Context) {
     private fun cancelFade() {
         fadeRunnable?.let { handler.removeCallbacks(it) }
         fadeRunnable = null
-    }
-
-    private fun firstAssetIn(folder: String): String? = try {
-        context.assets.list(folder)
-            ?.firstOrNull { !it.startsWith(".") }
-            ?.let { "$folder/$it" }
-    } catch (_: Exception) {
-        null
     }
 }

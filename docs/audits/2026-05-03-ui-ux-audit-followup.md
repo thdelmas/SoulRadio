@@ -4,6 +4,8 @@ _Date: 2026-05-03 · Scope: full radio screen, AUTO behaviour, in-app notes read
 
 This is a follow-up to [2026-05-03-ui-ux-audit.md](2026-05-03-ui-ux-audit.md). The first audit's ten findings have all been addressed in commits between `869ef3c` and `4cb2c4c`. The notes reader and the 432 companion landed after that audit was written, so they are in scope here for the first time.
 
+**Status (2026-05-03 evening):** all five findings closed. Findings #2–#5 landed as WIP bundled into `bc65f71` (the solar-loop commit, which already had unrelated edits in the working tree); #1 closed in `a7d01d7`. Per-finding closure notes are inline below.
+
 ---
 
 ## TL;DR
@@ -40,11 +42,15 @@ The `notes` text ([MainActivity.kt:190-201](../../app/src/main/java/com/soulradi
 
 **Fix:** bump the tap padding (e.g. `vertical = 16.dp`) so the click region clears 48 dp. The text size and visual presence stays the same.
 
+**Closed (`a7d01d7`):** vertical padding bumped to 16 dp on both `notes` and `close`. Click region now clears the 48 dp floor.
+
 ### 2. The `notes` button doesn't read as tappable
 
 10 sp `Light` in `GoldDim` (#8A7228) on black, with `letterSpacing = 2.sp` and no underline / border / glyph ([MainActivity.kt:190-201](../../app/src/main/java/com/soulradio/soulradio/MainActivity.kt#L190-L201)). It reads as a label, not a control. Manifesto §4 says *findable*, not *invisible*.
 
 **Fix:** the lightest possible affordance — a 1 px underline at GoldDim, or a small leading dot (`· notes`), or a dim outlined glyph. Anything that distinguishes "tappable" from "decorative caption."
+
+**Closed (WIP in `bc65f71`):** picked the bordered-pill route — 1 dp `GoldDim` border on a `CircleShape`, text bumped to `Gold` 11 sp / 3 sp letterspacing. Same idiom as the AUTO pill at smaller weight, so the eye reads them as a pair.
 
 ### 3. Markdown tables are silently dropped — the FREQUENCIES quick-map is invisible
 
@@ -52,17 +58,23 @@ The `notes` text ([MainActivity.kt:190-201](../../app/src/main/java/com/soulradi
 
 **Fix:** either render `|`-rows as plain text with the pipe-separated columns preserved, or add a minimal table renderer (header row + body rows). The latter is preferable for legibility but the former is one extra branch in the existing while-loop.
 
+**Closed (WIP in `bc65f71`):** picked the audit's preferred option — minimal renderer. Table consumer at [AboutScreen.kt:297-309](../../app/src/main/java/com/soulradio/soulradio/AboutScreen.kt#L297-L309) eats the contiguous `|…|` block; `parseTable` drops the GFM `|---|---|` separator; `Table` ([AboutScreen.kt:321-357](../../app/src/main/java/com/soulradio/soulradio/AboutScreen.kt#L321-L357)) renders header in `GoldDim`/Medium with a hairline divider, body in `MuteSoft`/Light, equal-weighted columns.
+
 ### 4. The "untuned · recording forthcoming" caption is engineer jargon
 
 [MainActivity.kt:348-355](../../app/src/main/java/com/soulradio/soulradio/MainActivity.kt#L348-L355). First-time users don't know what "tuned" means in this app. The word leaked from the codebase (`tunedKeys`, `isTuned`) into the room.
 
 **Fix:** `silent · recording not yet bundled` — same length, same restraint, no jargon.
 
+**Closed (WIP in `bc65f71`):** copy adopted verbatim. Caption now reads `silent · recording not yet bundled` ([MainActivity.kt:407](../../app/src/main/java/com/soulradio/soulradio/MainActivity.kt#L407)).
+
 ### 5. The `auto · paused` notice tells the user *what* but not *what to do*
 
 [MainActivity.kt:284-315](../../app/src/main/java/com/soulradio/soulradio/MainActivity.kt#L284-L315). The notice fades in for 2 s when AUTO flips off as a side effect of a dial tap. Good. But a first-time user has no signal that the AUTO pill is the recovery path — the pill itself is unchanged at the moment of the notice.
 
 **Fix (lightest):** when the notice triggers, briefly pulse the AUTO pill once (a single ~700 ms alpha bump) so the eye links the notice to the affordance. No copy change. No CTA.
+
+**Closed (WIP in `bc65f71`):** `AutoPill` now takes a `pausedAt` timestamp; a `LaunchedEffect` keyed on it does `snapTo(0.6f)` then `animateTo(0f, tween(700))` on the border alpha ([MainActivity.kt:284-289](../../app/src/main/java/com/soulradio/soulradio/MainActivity.kt#L284-L289)). Alpha-only, no layout shift, no copy.
 
 ### 6. Smaller items (documented, not filed)
 

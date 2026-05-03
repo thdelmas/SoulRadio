@@ -20,7 +20,7 @@ An ambient Android radio: a 24-hour auto-loop tied to the hour of day, plus a 9-
 - No analytics, telemetry, or sale of listening data.
 - No medical/health claims about any frequency.
 - Lossless audio when feasible; respect the ear (no jolts, no cuts).
-- Curated pre-electronic recordings (chant, Bach, etc.) are the **primary** audio — synthesized sine tones are a fallback, not the product.
+- Curated pre-electronic recordings (chant, Bach, etc.) are the **preferred** audio — but the rule is "artistic music a curator chose," not "no electronic instrument anywhere." A modern composition that uses synth, percussion, or processed sound as a compositional element is fine if it is musical work, not generic ambient slop. What we keep out: white-noise loops, sine-wave New Age fillers, AI-generated background tracks, and any "wellness" audio that wasn't made as music. Bare synthesized sine tones are a fallback, not the product.
 
 If a change risks any of these, stop and flag it.
 
@@ -45,7 +45,7 @@ If a change risks any of these, stop and flag it.
 
 1. Drop the lossless file in `app/src/main/assets/audio/<key>/` (e.g. `audio/528/`). Only the first non-hidden file in the folder is played; the `.gitkeep` stays.
 2. Add a `NowPlaying(work, performer)` entry on the `Frequency` in [Frequency.kt](app/src/main/java/com/soulradio/soulradio/Frequency.kt).
-3. Add the attribution + license to [CREDITS.md](CREDITS.md). Public-domain or permissive Creative Commons only.
+3. Add the attribution + license to [CREDITS.md](CREDITS.md). Only **public domain, CC0, CC BY, or CC BY-SA** — see [docs/licensing.md](docs/licensing.md) for the rule and the rejected license tiers (NC, ND, all-rights-reserved).
 4. Verify it loops cleanly (no silence gap, no click) on a real device.
 
 ## Before committing

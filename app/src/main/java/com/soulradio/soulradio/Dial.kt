@@ -3,11 +3,9 @@ package com.soulradio.soulradio
 import android.view.HapticFeedbackConstants
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,10 +37,9 @@ internal fun Dial(
     tunedKeys: Set<String>,
     pulse: State<Float>,
     onTap: (Frequency) -> Unit,
-    onLongPress: (Frequency) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Frequencies.dial.chunked(3).forEach { row ->
@@ -54,7 +51,6 @@ internal fun Dial(
                         tuned = freq.key in tunedKeys,
                         pulse = pulse,
                         onTap = onTap,
-                        onLongPress = onLongPress,
                     )
                 }
             }
@@ -62,7 +58,6 @@ internal fun Dial(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DialNode(
     freq: Frequency,
@@ -70,50 +65,60 @@ private fun DialNode(
     tuned: Boolean,
     pulse: State<Float>,
     onTap: (Frequency) -> Unit,
-    onLongPress: (Frequency) -> Unit,
 ) {
-    // Long-press reveals the tone's title in the caption without selecting
-    // or playing — discoverable for the curious, invisible for everyone else.
-    // Companions don't need this: their titles already render under the
-    // circle.
+    // Title sits under the circle (matching CompanionNode) so the meaning of
+    // each number is legible at a glance — manifesto §4: a frequency you
+    // can't find in three seconds is one you won't use.
     val colors = nodeColors(selected, tuned)
     val view = LocalView.current
-    Box(
-        modifier = Modifier
-            .size(98.dp)
-            .drawBehind {
-                if (selected) {
-                    drawCircle(
-                        color = Gold.copy(alpha = pulse.value),
-                        radius = size.minDimension / 2 - 0.5.dp.toPx(),
-                        style = Stroke(width = 1.dp.toPx()),
-                    )
-                }
-            },
-        contentAlignment = Alignment.Center,
-    ) {
+    val titleColor by animateColorAsState(
+        targetValue = if (selected) Gold else MuteSoft,
+        animationSpec = tween(700),
+        label = "dial-title",
+    )
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
-                .size(82.dp)
-                .clip(CircleShape)
-                .background(colors.bg)
-                .border(colors.borderWidth, colors.border, CircleShape)
-                .combinedClickable(
-                    onClick = {
+                .size(98.dp)
+                .drawBehind {
+                    if (selected) {
+                        drawCircle(
+                            color = Gold.copy(alpha = pulse.value),
+                            radius = size.minDimension / 2 - 0.5.dp.toPx(),
+                            style = Stroke(width = 1.dp.toPx()),
+                        )
+                    }
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(82.dp)
+                    .clip(CircleShape)
+                    .background(colors.bg)
+                    .border(colors.borderWidth, colors.border, CircleShape)
+                    .clickable {
                         view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
                         onTap(freq)
                     },
-                    onLongClick = { onLongPress(freq) },
-                ),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = freq.label,
-                color = colors.fg,
-                fontSize = 19.sp,
-                fontWeight = FontWeight.Light,
-            )
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = freq.label,
+                    color = colors.fg,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Light,
+                )
+            }
         }
+        Spacer(Modifier.height(6.dp))
+        Text(
+            text = freq.title,
+            color = titleColor,
+            fontSize = 10.sp,
+            letterSpacing = 1.sp,
+            fontWeight = FontWeight.Light,
+        )
     }
 }
 

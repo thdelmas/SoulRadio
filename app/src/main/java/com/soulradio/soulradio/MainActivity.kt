@@ -94,11 +94,6 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
     // not when the user explicitly toggles the pill. The notice exists
     // because that side-effect is silent and easy to miss.
     var autoPausedAt by remember { mutableStateOf<Long?>(null) }
-    // Long-press reveals a tone's title in the caption without selecting
-    // or playing it. The previewAt timestamp keys the auto-clear coroutine
-    // so a fresh long-press on another node resets the 2.5s window.
-    var previewed by remember { mutableStateOf<Frequency?>(null) }
-    var previewAt by remember { mutableStateOf<Long?>(null) }
 
     DisposableEffect(Unit) { onDispose { engine.release() } }
 
@@ -114,13 +109,6 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
             }
             delay(60_000)
         }
-    }
-
-    LaunchedEffect(previewAt) {
-        if (previewAt == null) return@LaunchedEffect
-        delay(2500)
-        previewed = null
-        previewAt = null
     }
 
     // One shared breath drives every alive element (the playing node's ring
@@ -144,8 +132,6 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
             PlaybackService.setAuto(context, false)
             autoPausedAt = System.currentTimeMillis()
         }
-        previewed = null
-        previewAt = null
         if (selected?.key == freq.key) {
             selected = null
             engine.selectFrequency(null)
@@ -153,10 +139,6 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
             selected = freq
             engine.selectFrequency(freq)
         }
-    }
-    val onLongPress: (Frequency) -> Unit = { freq ->
-        previewed = freq
-        previewAt = System.currentTimeMillis()
     }
 
     Column(
@@ -207,7 +189,6 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
             tunedKeys = engine.tunedKeys,
             pulse = pulse,
             onTap = onTap,
-            onLongPress = onLongPress,
         )
 
         Spacer(Modifier.height(32.dp))
@@ -227,7 +208,6 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
         Caption(
             selected = selected,
             isTuned = selected?.let { engine.isTuned(it) } ?: false,
-            previewed = previewed,
         )
 
         Spacer(Modifier.height(28.dp))
@@ -316,24 +296,18 @@ private fun AutoPausedNotice(triggerKey: Long?) {
 }
 
 @Composable
-private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency?) {
-    // Preview takes precedence over selection: a long-press peek shouldn't
-    // be hidden by whatever is currently playing. Details (work/performer
-    // or "untuned") only render for an actual selection — a previewed tone
-    // is a peek, not a play.
-    val displayed = previewed ?: selected
-    val showDetails = previewed == null && selected != null
-    // 72dp min reserves space for the tallest caption (title + work +
-    // performer with their spacers), so selecting a tone doesn't push the
-    // dial up or down. Long work/performer strings cap to one line with
-    // ellipsis instead of wrapping into a third line that would jiggle the
-    // layout further.
+private fun Caption(selected: Frequency?, isTuned: Boolean) {
+    // Title is now always under each dial node, so the caption drops the
+    // redundant title line and shows only what the node can't: now-playing
+    // details, the "untuned" note, or the empty-state prompt.
+    // 56dp min reserves room for the tallest caption (work + performer with
+    // their spacer), keeping the dial from jumping when a tone is selected.
     Crossfade(
-        targetState = displayed?.key,
+        targetState = selected?.key,
         animationSpec = tween(700),
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 72.dp),
+            .heightIn(min = 56.dp),
         label = "caption",
     ) { key ->
         val current = key?.let { Frequencies.byKey(it) }
@@ -352,18 +326,6 @@ private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency
                 )
                 return@Column
             }
-            Text(
-                text = current.title,
-                color = Gold,
-                fontSize = 13.sp,
-                letterSpacing = 2.sp,
-                fontWeight = FontWeight.Light,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            if (!showDetails) return@Column
-            Spacer(Modifier.height(10.dp))
             if (!isTuned) {
                 Text(
                     text = "untuned · recording forthcoming",

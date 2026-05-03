@@ -100,11 +100,11 @@ class PlaybackService : MediaSessionService() {
             override fun run() {
                 if (!autoEnabled) return
                 applyAutoForNow()
-                handler.postDelayed(this, msUntilNextHour())
+                handler.postDelayed(this, msUntilNextBoundary())
             }
         }
         tickRunnable = r
-        handler.postDelayed(r, msUntilNextHour())
+        handler.postDelayed(r, msUntilNextBoundary())
     }
 
     private fun cancelTick() {
@@ -113,7 +113,7 @@ class PlaybackService : MediaSessionService() {
     }
 
     private fun applyAutoForNow() {
-        val target = Frequencies.forNow()
+        val target = Frequencies.forNow(this)
         val player = mediaSession?.player ?: return
         if (autoCurrent?.key == target.key && player.isPlaying) return
         switchTo(target)
@@ -121,7 +121,7 @@ class PlaybackService : MediaSessionService() {
 
     private fun switchTo(freq: Frequency) {
         val player = mediaSession?.player ?: return
-        val asset = firstAssetIn(freq.assetFolder) ?: run {
+        if (freq.tracks.isEmpty()) {
             cancelFade()
             fadeTo(player, 0f) { player.pause() }
             autoCurrent = null
@@ -129,7 +129,7 @@ class PlaybackService : MediaSessionService() {
         }
         cancelFade()
         if (!player.isPlaying) {
-            applyMedia(player, asset)
+            applyMedia(player, freq)
             autoCurrent = freq
             player.volume = 0f
             player.play()
@@ -137,7 +137,7 @@ class PlaybackService : MediaSessionService() {
         } else {
             // fade-out → swap → fade-in (single player, but no hard cuts).
             fadeTo(player, 0f) {
-                applyMedia(player, asset)
+                applyMedia(player, freq)
                 autoCurrent = freq
                 player.play()
                 fadeTo(player, TARGET_VOLUME) {}
@@ -145,9 +145,17 @@ class PlaybackService : MediaSessionService() {
         }
     }
 
-    private fun applyMedia(player: Player, assetPath: String) {
-        player.setMediaItem(MediaItem.fromUri("asset:///$assetPath"))
-        player.repeatMode = Player.REPEAT_MODE_ONE
+    private fun applyMedia(player: Player, freq: Frequency) {
+        val items = freq.tracks.map {
+            MediaItem.fromUri("asset:///${freq.assetPath(it)}")
+        }
+        player.setMediaItems(items)
+        // Mirrors TrackEngine: multi-track bands shuffle the pool and loop the
+        // playlist so the radio rotates through every recording while the
+        // hour holds. Single-track bands stay on REPEAT_MODE_ONE for the
+        // gapless seek-loop ExoPlayer does best.
+        player.shuffleModeEnabled = items.size > 1
+        player.repeatMode = if (items.size > 1) Player.REPEAT_MODE_ALL else Player.REPEAT_MODE_ONE
         player.prepare()
     }
 
@@ -179,15 +187,25 @@ class PlaybackService : MediaSessionService() {
         fadeRunnable = null
     }
 
-    private fun firstAssetIn(folder: String): String? = try {
-        assets.list(folder)
-            ?.firstOrNull { !it.startsWith(".") }
-            ?.let { "$folder/$it" }
-    } catch (_: Exception) {
-        null
+    private fun msUntilNextBoundary(): Long {
+        val loc = LocationStore.get(this) ?: return msUntilNextClockHour()
+        val now = Calendar.getInstance()
+        val today = SolarCalculator.compute(
+            now.get(Calendar.YEAR), now.get(Calendar.MONTH) + 1, now.get(Calendar.DAY_OF_MONTH),
+            loc, now.timeZone,
+        ) ?: return msUntilNextClockHour()
+        val tomorrow = (now.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
+        val tomorrowSun = SolarCalculator.compute(
+            tomorrow.get(Calendar.YEAR), tomorrow.get(Calendar.MONTH) + 1,
+            tomorrow.get(Calendar.DAY_OF_MONTH), loc, tomorrow.timeZone,
+        )
+        val nextBoundary = SolarSchedule.nextBoundaryMillis(
+            now.timeInMillis, today, tomorrowSun?.sunriseUtcMillis,
+        )
+        return (nextBoundary - now.timeInMillis).coerceAtLeast(1_000L)
     }
 
-    private fun msUntilNextHour(): Long {
+    private fun msUntilNextClockHour(): Long {
         val cal = Calendar.getInstance()
         val ms = (60 - cal.get(Calendar.MINUTE)) * 60_000L -
             cal.get(Calendar.SECOND) * 1000L -

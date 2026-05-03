@@ -2,6 +2,7 @@ package com.soulradio.soulradio
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
@@ -15,7 +16,9 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +46,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -65,6 +69,11 @@ class MainActivity : ComponentActivity() {
             MaterialTheme(colorScheme = darkColorScheme()) {
                 Surface(modifier = Modifier.fillMaxSize(), color = Bg) {
                     var showNotes by remember { mutableStateOf(false) }
+                    // The device back gesture should return to the radio when
+                    // notes are open; otherwise it falls through to default
+                    // (finish the activity), which is what one expects on the
+                    // root screen.
+                    BackHandler(enabled = showNotes) { showNotes = false }
                     Crossfade(
                         targetState = showNotes,
                         animationSpec = tween(500),
@@ -88,7 +97,7 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
     val engine = remember { TrackEngine(context) }
     var auto by remember { mutableStateOf(PlaybackService.isAutoEnabled(context)) }
     var selected by remember {
-        mutableStateOf(if (auto) Frequencies.forNow() else null)
+        mutableStateOf(if (auto) Frequencies.forNow(context) else null)
     }
     // Bumped only when AUTO flips off as a *side effect* of a dial tap —
     // not when the user explicitly toggles the pill. The notice exists
@@ -97,18 +106,30 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
 
     DisposableEffect(Unit) { onDispose { engine.release() } }
 
-    // While AUTO is on, mirror the schedule into UI state so the dial
-    // highlights the current band. PlaybackService drives the actual
-    // playback — see PlaybackService.enableAuto.
-    LaunchedEffect(auto) {
-        if (!auto) return@LaunchedEffect
-        while (true) {
-            val target = Frequencies.forNow()
-            if (selected?.key != target.key) {
-                selected = target
+    // The engine reports what is *actually* playing in the service — the
+    // source of truth for the dial highlight after the activity has been
+    // recreated, and the signal that lets us drop the 60 s AUTO poll.
+    val playing by engine.currentFrequency
+
+    // After the controller binds, if the activity has no selection but a
+    // track is playing in the service (the user reopened the app while
+    // audio kept going), adopt that tone so the dial reflects the room.
+    LaunchedEffect(Unit) {
+        snapshotFlow { engine.currentFrequency.value }
+            .collect { freq ->
+                if (freq != null && selected == null && !auto) {
+                    selected = freq
+                }
             }
-            delay(60_000)
-        }
+    }
+
+    // While AUTO is on, mirror what the service is playing onto the dial.
+    // Falls back to the schedule until the controller binds, so the dial
+    // is correct on the very first frame.
+    LaunchedEffect(auto, playing) {
+        if (!auto) return@LaunchedEffect
+        val target = playing ?: Frequencies.forNow(context)
+        if (selected?.key != target.key) selected = target
     }
 
     // One shared breath drives every alive element (the playing node's ring
@@ -151,12 +172,14 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
         Spacer(Modifier.height(20.dp))
         Box(modifier = Modifier.fillMaxWidth()) {
             // AUTO pill stays centred (the eye expects it there); the notes
-            // button sits at the trailing edge as a small dim affordance —
-            // findable, not pushy.
+            // button sits at the trailing edge — the only door to the docs
+            // that explain what these numbers mean, so it stays in the gold
+            // family rather than reading as decoration.
             Box(modifier = Modifier.align(Alignment.Center)) {
                 AutoPill(
                     auto = auto,
                     pulse = pulse,
+                    pausedAt = autoPausedAt,
                     onToggle = {
                         val next = !auto
                         auto = next
@@ -168,17 +191,22 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
                     },
                 )
             }
+            // Bordered pill — same idiom as the AUTO pill, smaller, so it
+            // reads as an obvious tap target rather than decorative copy.
+            // Hairline GoldDim border keeps it visually paired with AUTO
+            // without competing for the eye.
             Text(
                 text = "notes",
-                color = GoldDim,
-                fontSize = 10.sp,
-                letterSpacing = 2.sp,
+                color = Gold,
+                fontSize = 11.sp,
+                letterSpacing = 3.sp,
                 fontWeight = FontWeight.Light,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .clip(CircleShape)
+                    .border(1.dp, GoldDim, CircleShape)
                     .clickable { onOpenNotes() }
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                    .padding(horizontal = 14.dp, vertical = 8.dp),
             )
         }
 
@@ -205,9 +233,12 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
         Spacer(Modifier.weight(1f))
 
         AutoPausedNotice(triggerKey = autoPausedAt)
+        val playingTrack by engine.currentTrack
         Caption(
             selected = selected,
             isTuned = selected?.let { engine.isTuned(it) } ?: false,
+            playingTrack = playingTrack,
+            playingFrequency = playing,
         )
 
         Spacer(Modifier.height(28.dp))
@@ -215,15 +246,31 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
 }
 
 @Composable
-private fun AutoPill(auto: Boolean, pulse: State<Float>, onToggle: () -> Unit) {
+private fun AutoPill(
+    auto: Boolean,
+    pulse: State<Float>,
+    pausedAt: Long?,
+    onToggle: () -> Unit,
+) {
     val textColor by animateColorAsState(
         targetValue = if (auto) Gold else GoldDim,
         animationSpec = tween(700),
         label = "auto-text",
     )
+    // When AUTO is silently paused by a dial tap, the AutoPausedNotice
+    // appears far from the pill. A brief outline ring on the pill itself
+    // links the notice to its recovery affordance — one ~700ms fade,
+    // alpha only, no copy or layout change.
+    val highlight = remember { Animatable(0f) }
+    LaunchedEffect(pausedAt) {
+        if (pausedAt == null) return@LaunchedEffect
+        highlight.snapTo(0.6f)
+        highlight.animateTo(0f, animationSpec = tween(700))
+    }
     Row(
         modifier = Modifier
             .clip(CircleShape)
+            .border(1.dp, Gold.copy(alpha = highlight.value), CircleShape)
             .clickable { onToggle() }
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -296,7 +343,12 @@ private fun AutoPausedNotice(triggerKey: Long?) {
 }
 
 @Composable
-private fun Caption(selected: Frequency?, isTuned: Boolean) {
+private fun Caption(
+    selected: Frequency?,
+    isTuned: Boolean,
+    playingTrack: NowPlaying?,
+    playingFrequency: Frequency?,
+) {
     // Title is now always under each dial node, so the caption drops the
     // redundant title line and shows only what the node can't: now-playing
     // details, the "untuned" note, or the empty-state prompt.
@@ -316,28 +368,39 @@ private fun Caption(selected: Frequency?, isTuned: Boolean) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (current == null) {
+                // Empty-state caption is instructional rather than decorative
+                // (telling a first-time user what AUTO and a tap actually do),
+                // so it gets a tighter letter-spacing than the now-playing
+                // line and is allowed to wrap — the 56 dp slot already
+                // reserves room for two lines.
                 Text(
-                    text = "tap a tone · or leave it",
+                    text = "tap a tone to listen · or leave it on AUTO",
                     color = Mute,
                     fontSize = 11.sp,
-                    letterSpacing = 2.sp,
+                    letterSpacing = 1.sp,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
                 )
                 return@Column
             }
             if (!isTuned) {
                 Text(
-                    text = "untuned · recording forthcoming",
+                    text = "silent · recording not yet bundled",
                     color = Mute,
                     fontSize = 11.sp,
                     letterSpacing = 1.sp,
                     maxLines = 1,
                 )
             } else {
-                current.nowPlaying?.let { np ->
+                // Show the actually-playing track when its band matches the
+                // selected band; otherwise fall back to the band's first
+                // listed recording so the card never goes blank during the
+                // brief window before the player reports its current item.
+                val np = playingTrack
+                    ?.takeIf { playingFrequency?.key == current.key }
+                    ?: current.tracks.firstOrNull()
+                np?.let {
                     Text(
-                        text = np.work,
+                        text = it.work,
                         color = MuteSoft,
                         fontSize = 12.sp,
                         textAlign = TextAlign.Center,
@@ -346,7 +409,7 @@ private fun Caption(selected: Frequency?, isTuned: Boolean) {
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = np.performer,
+                        text = it.performer,
                         color = Mute,
                         fontSize = 10.sp,
                         textAlign = TextAlign.Center,

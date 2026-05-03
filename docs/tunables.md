@@ -146,60 +146,52 @@ The radio's relationship to these systems is editorial: when a recording is perf
 
 ---
 
-## Refused as categories (not as Hz)
+## Curation rules — the music side
 
-The catalogue above filters by *frequency*. There is a second filter — *what the music is designed to do to the listener* — that runs before frequency is even considered. Three categories are refused on this filter, regardless of which Hz they would have landed on. They sit underneath the [CLAUDE.md](../CLAUDE.md) rule (*"artistic music a curator chose, not generic ambient slop, not wellness audio"*) and make explicit what "artistic" rules in and what it rules out.
+The catalogue above filters by *frequency*. This section filters by *what the music does, or fails to do, for the listener.*
 
-### Auto loop vs. proactive tap
+The radio's stance: **music is a tool the listener can reach for to take back control of their attention.** A station that does something for the listener — slows them down, lifts them up, opens contemplative space, sharpens focus, induces ecstatic or contemplative states, drives a workout, releases an emotional charge — is a tool the listener can use. The radio is *not* afraid of mechanism; mechanism is the point. The only thing the radio refuses across the board is **meaningless** music.
 
-The radio has two modes of access, and the bar shifts between them.
+### One refusal, applied everywhere
 
-- **Auto loop** — the 24-hour clock-driven default. It plays whether or not the listener is paying attention, and it shapes the room around whatever the listener is already doing. Bar: nothing that *does something to* the listener. The loop catches you; it must not push.
-- **Proactive tap** — the listener pressing a station on the dial. Consented attention. The bar relaxes for **energy** (a more active morning Bach can live on a tapped 396 that would be too forward in the auto-loop morning slot) but **not for agenda**. A proactive tap does not unlock state-induction or engagement loops; the radio refuses those at the catalogue level, not at the moment-of-playback level.
+**Music with no effect.** Generic ambient filler, sine-wave wellness slop, AI-generated background tracks, anything that is audio without being music. This is the manifesto's anti-filler rule, already in [CLAUDE.md](../CLAUDE.md) — *"what we keep out: white-noise loops, sine-wave New Age fillers, AI-generated background tracks, and any 'wellness' audio that wasn't made as music."* Music has to *do* something for the listener to earn a place on the radio.
 
-### 1. Trance / ecstatic state-induction
+Refused on **both** the loop and the dial. The single absolute rule.
 
-Sufi qawwali built around *fana*. Mevlevi whirling music. Pentecostal shape-note in its revival function. Binaural-beat "trance" tracks. Psy-trance, Goa.
+#### Note on [MANIFESTO.md](../MANIFESTO.md) line 41 — *"We will not gamify your nervous system"*
 
-These recordings are engineered to *port the practitioner's intent into the listener*. The refusal traces to the same line as the brainwave-band refusal earlier in this doc: **SoulRadio does not promise states.** A station that holds qawwali is the radio claiming it can deliver dhikr — a promise the radio can't make and wouldn't want to.
+Read in context with the four lines around it (no advertisements, no data sale, no "louder in your life" features, no frequency-as-prescription), this is a rule about **app and UI design**: no streaks, no notifications, no points-and-progression UI, no dopamine-loop interface patterns. It is *not* a rule about audio content. A listener who taps a station with strong-effect music — including drop-structure — has reached for a tool; the manifesto's anti-gamification rule applies to what the *app* does to the user, not to what musical architecture a tapped station carries.
 
-Recordings *of* a practice (a monastery's plainchant, a temple's *nagaswaram*) are different in kind — the listener is overhearing a tradition, not being targeted by it. That distinction is the one the curation lives on.
+Drop-structure music has real positive uses for a listener who reaches for it deliberately: catharsis (Aristotle's *Poetics*), workout motivation (the dominant fitness genre for measurable reasons), mood discharge, the collective effervescence the music originally exists to produce, aesthetic craft. The line between "drop-structure pop" and "climactic classical" (Beethoven's 5th, Tchaikovsky's *1812 Overture*, Mahler's symphonies) is genuinely fuzzy — all of them are build-and-payoff machines. Treating drops as a categorical refusal would either rule out climactic classical too (which is wrong) or admit a curator-judgment line that isn't a manifesto rule (which is what we actually do).
 
-**Refused in the auto loop, always. On proactive tap, this is the closest call in the document, and the doc owes the reader an honest account.**
+So drops are treated under the loop/dial cut below, with **autonomy-erosion noted as a curatorial concern, not a refusal.**
 
-The case *for* allowing it on tap: the listener has opted in. A recording of qawwali, played to someone who tapped 396 to overhear it, is closer to "attending a practice from outside" than to "being entrained." The proactive-tap relaxation already accepts this logic for propulsion (an active *Brandenburg* allegro on a tapped morning gate). Why not here?
+### Two modes, two curation rules
 
-The case *against* — and the one the radio sides with: **the dial is not a buffet of intents.** Putting trance on the dial means the radio offers state-induction as one of its rooms, regardless of how often individual users tap it. The radio's identity is defined by what's on the dial, not by which session plays which track. Once trance is on the dial, the radio is a state-induction product with a tasteful UI, competing in the Insight Timer / Calm / binaural-beat-app category. The manifesto's stance is that this is a different product.
+The radio has two products in one — the auto loop and the dial — and they have different jobs, so they have different bars.
 
-The honest tension: **7.83 already sits in entrainment-adjacent territory.** The framing (*"soft amplitude modulation under music," not a binaural beat*) keeps the radio just out of state-induction land — but that is a thread, not a wall. The trance refusal on proactive tap is consistent only as long as 7.83 stays on the modulation side of that thread. The day 7.83 ships as a foreground tone with an explicit "for meditation" label, the line moves and this refusal moves with it.
+- **Loop = music that has no effect on a non-attending listener.** The loop is wallpaper. It plays whether or not the listener is paying attention; it has to be safe in the absence of engagement. The loop's rule is therefore strict: only music whose effect *requires the listener's participation*. Sant'Antimo plainchant, M.S. Subbulakshmi's sacred Carnatic devotional (on [7.83](../FREQUENCIES.md#783-hz--the-schumann-resonance)), Tibetan overtone chant, slow Sufi devotional poetry, slow contemplative Bach. Take the listener's attention away and the music is just beautiful sound; nothing is being done *to* a non-attending body.
+- **Dial = music the listener has reached for.** The tap *is* the consent. A station the listener selected can include music that does anything to them — energize, calm, induce contemplative or ecstatic states, sharpen focus, drive a workout, discharge an emotion — because the listener has invited it. The dial's rule is permissive about effect; what the dial actually *offers* is an editorial choice by the curator.
 
-### 2. Urgency / propulsion / time pressure
+Four patterns are refused **in the loop** that are admissible **on the dial**:
 
-*Summer* from Vivaldi's Four Seasons. Bach toccatas at full clip (BWV 565 *presto*). Fast minimalism (Reich's *Piano Phase*, Glass at speed). Trailer cues. Driving concerti grossi.
-
-This music *presses* the listener — it puts the nervous system into a forward lean. The auto loop is tied to the hour of day precisely so the dial can match the room the listener is already in. A 3 a.m. listener should not be put into fight-or-flight by the dial.
-
-Refused in the auto loop, always. **Softens on proactive tap:** a more *active* Bach (a *Brandenburg* allegro, a partita courante) can live on the morning-gate (396) or clearing (741) bands for a listener who has tapped them on. The line between "active" and "propulsive" is whether the listener can dip in and out of the music without losing their place. If the music yanks attention back to itself, it has crossed.
-
-### 3. Engagement-loop tension / release
-
-EDM build/drop structure. Trailer music with a *braaam*. Post-2010 pop engineered around a hook drop. Some film scoring (Zimmer's *Inception* cues, anything that teaches the ear to wait for the moment).
-
-This is the direct musical import of the thing [MANIFESTO.md](../MANIFESTO.md) refuses most fiercely: *no streaks, no engagement loops, no gamification.* Drop-structure music trains the listener to *wait for the payoff*. Installing it on the dial would put a streak loop, made of sound, into the listener's room.
-
-The contrast that explains the line: a Bach fugue has tension and release too, but the tension is structural — distributed across voices, dippable, with no single moment to wait for. Drop-structure music has one moment, and the rest of the track is a queue for it. Different category of object.
-
-Refused on both auto loop and proactive tap.
+- **State-induction by mechanism** — binaural beats, hemi-sync, isochronic tones, the climactic high-tempo *takrar* sections of qawwali engineered for *fana*, the worked-up sections of charismatic gospel and Pentecostal shape-note revival. The recording does the work; the listener's attention isn't required. Refused in the loop because the loop catches a non-attending listener. Admissible on the dial because the tap is the consent — currently no such station is offered, but the cut allows it.
+- **Propulsion / urgency** — *Summer* from Vivaldi's Four Seasons, BWV 565 *presto*, fast minimalism (Reich's *Piano Phase*, Glass at speed), trailer cues, driving concerti grossi. Tempo as mechanism. A 3 a.m. listener should not be put into fight-or-flight by the dial. Admissible on the dial when the station announces it — *active* Bach (a *Brandenburg* allegro, a partita courante) can live on a tapped morning gate (396) or clearing (741) for a listener who invited the energy.
+- **Sharply contoured dynamics** — sudden jumps, unannounced silence-then-loud, attention-grabbing transitions. The loop respects the room; the dial can host more sharply contoured music if a station announces it.
+- **Drop-structure architecture** — EDM build/drop, trailer *braaams*, hook-drop pop, drop-conditioned trailer scores. Refused in the loop (nothing should condition a non-attending listener's nervous system). Admissible on the dial as a curator's call. **Curatorial consideration — autonomy-erosion:** drops differ from other mechanism music in that they tend to *condition compulsion over time* — each "voluntary" tap can gradually erode actual choice in a way that calm-inducing binaural beats or contemplative *takrar* don't. Weigh that against the real positive uses (catharsis, exercise motivation, mood discharge) before adding such a station. The curator's bar is higher here than for, say, a binaural-beat station, but it is not a manifesto refusal.
 
 ### Summary
 
-| Category | Auto loop | Proactive tap |
-|----------|-----------|---------------|
-| Trance / state-induction | Refused | Refused |
-| Urgency / propulsion | Refused | Refused at the propulsive end; *active* (not propulsive) music allowed |
-| Engagement loop / drops | Refused | Refused |
+| Pattern | Loop | Dial |
+|---------|------|------|
+| No-effect filler / wellness slop | Refused | Refused |
+| State-induction by mechanism (binaural beats, *takrar*) | Refused | Admissible (curator's call) |
+| Propulsion / urgency | Refused | Admissible when a station announces it |
+| Sharply contoured dynamics | Refused | Admissible when a station announces it |
+| Drop-structure (EDM build/drop, trailer *braaams*, hook-drop pop) | Refused | Admissible (curator's call; autonomy-erosion concern) |
+| Tradition music (plainchant, Subbulakshmi, slow Sufi poetry, contemplative Bach) | Admissible | Admissible |
 
-The unifying principle: **the radio refuses music whose design intent is to do something *to* the listener.** State-induction targets consciousness; propulsion targets the nervous system; drop-structure targets the reward circuit. The dial is a room; a room does not have an agenda about you.
+The unifying principle: **the radio is a set of tools the listener can reach for to shape their own attention.** The loop is the room (wallpaper, no demands, safe to ignore); the dial is the conversation (effects the listener invited). The single universal refusal is **meaningless music** — the only kind that cannot be a tool, by definition. Everything else is a question of which mode the music belongs in, and for some patterns (drop-structure most prominently) whether the curator chooses to offer it given the trade-off between the music's real positive uses and its autonomy-erosion risk over time.
 
 ---
 
@@ -210,7 +202,7 @@ Any "should we add X?" proposal has to clear two distinct tests, because the aut
 **The shared test (both modes):**
 
 1. Does it have a musical tradition behind it that a curator can fill with *artistic music a curator chose* (per [CLAUDE.md](../CLAUDE.md))?
-2. Can it be added without implying a state-induction or medical claim (per [MANIFESTO.md](../MANIFESTO.md) §5)?
+2. Can it be added without the radio's UI or copy *claiming* a state, medical effect, or therapeutic outcome? The radio describes what people have *used* a frequency for ("a clearing tone," "the morning gate") and never what it will *do* to the listener — see the **House rule** at the top of [FREQUENCIES.md](../FREQUENCIES.md) and [MANIFESTO.md](../MANIFESTO.md)'s *"we will not pretend a frequency is a prescription"* line. Music on the station may have strong effects — that is the point, per the [Curation rules](#curation-rules--the-music-side) above — but the radio's own description of the station never claims them.
 3. Does it cover experiential ground the existing eleven stations don't already cover?
 
 If any answer is no, drop the proposal. If all three are yes, continue.

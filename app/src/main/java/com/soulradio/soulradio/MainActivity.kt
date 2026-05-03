@@ -4,16 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,24 +46,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
-
-private val Bg = Color.Black
-private val Gold = Color(0xFFD4AF37)
-private val GoldDim = Color(0xFF6E5A1C)
-private val Slate = Color(0xFF1A1A1A)
-private val SlateDeep = Color(0xFF0E0E0E)
-private val Mute = Color(0xFF555555)
-private val MuteSoft = Color(0xFF888888)
-private val Hairline = Color(0xFF222222)
 
 class MainActivity : ComponentActivity() {
 
@@ -87,6 +77,10 @@ private fun RadioScreen() {
     var selected by remember {
         mutableStateOf(if (auto) Frequencies.forNow() else null)
     }
+    // Bumped only when AUTO flips off as a *side effect* of a dial tap —
+    // not when the user explicitly toggles the pill. The notice exists
+    // because that side-effect is silent and easy to miss.
+    var autoPausedAt by remember { mutableStateOf<Long?>(null) }
 
     DisposableEffect(Unit) { onDispose { engine.release() } }
 
@@ -123,6 +117,7 @@ private fun RadioScreen() {
         if (auto) {
             auto = false
             PlaybackService.setAuto(context, false)
+            autoPausedAt = System.currentTimeMillis()
         }
         if (selected?.key == freq.key) {
             selected = null
@@ -177,6 +172,7 @@ private fun RadioScreen() {
 
         Spacer(Modifier.weight(1f))
 
+        AutoPausedNotice(triggerKey = autoPausedAt)
         Caption(
             selected = selected,
             isTuned = selected?.let { engine.isTuned(it) } ?: false,
@@ -224,191 +220,6 @@ private fun AutoPill(auto: Boolean, pulse: State<Float>, onToggle: () -> Unit) {
 }
 
 @Composable
-private fun Dial(
-    selectedKey: String?,
-    tunedKeys: Set<String>,
-    pulse: State<Float>,
-    onTap: (Frequency) -> Unit,
-) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Frequencies.dial.chunked(3).forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                row.forEach { freq ->
-                    DialNode(
-                        freq = freq,
-                        selected = selectedKey == freq.key,
-                        tuned = freq.key in tunedKeys,
-                        pulse = pulse,
-                        onTap = onTap,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun DialNode(
-    freq: Frequency,
-    selected: Boolean,
-    tuned: Boolean,
-    pulse: State<Float>,
-    onTap: (Frequency) -> Unit,
-) {
-    val colors = nodeColors(selected, tuned)
-    Box(
-        modifier = Modifier
-            .size(98.dp)
-            .drawBehind {
-                if (selected) {
-                    drawCircle(
-                        color = Gold.copy(alpha = pulse.value),
-                        radius = size.minDimension / 2 - 0.5.dp.toPx(),
-                        style = Stroke(width = 1.dp.toPx()),
-                    )
-                }
-            },
-        contentAlignment = Alignment.Center,
-    ) {
-        Box(
-            modifier = Modifier
-                .size(82.dp)
-                .clip(CircleShape)
-                .background(colors.bg)
-                .border(colors.borderWidth, colors.border, CircleShape)
-                .clickable { onTap(freq) },
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = freq.label,
-                color = colors.fg,
-                fontSize = 19.sp,
-                fontWeight = FontWeight.Light,
-            )
-        }
-    }
-}
-
-private data class NodeColors(
-    val bg: Color,
-    val fg: Color,
-    val border: Color,
-    val borderWidth: Dp,
-)
-
-@Composable
-private fun nodeColors(selected: Boolean, tuned: Boolean): NodeColors {
-    // Four states: selected+tuned (gold disc), selected+untuned (dark with
-    // thick gold outline — distinct so an audio-less tap doesn't visually
-    // lie), tuned-idle (slate + thin gold), untuned-idle (deepest slate +
-    // dim gold). Colour transitions ease over ~700ms — half the audio
-    // crossfade — so the eye leads the ear by a hair instead of slamming.
-    val targetBg = when {
-        selected && tuned -> Gold
-        tuned             -> Slate
-        else              -> SlateDeep
-    }
-    val targetFg = when {
-        selected && tuned -> Color.Black
-        tuned || selected -> Gold
-        else              -> GoldDim
-    }
-    val targetBorder = when {
-        selected && tuned -> Color.Transparent
-        selected          -> Gold
-        tuned             -> Gold
-        else              -> GoldDim
-    }
-    val bg by animateColorAsState(targetBg, tween(700), label = "node-bg")
-    val fg by animateColorAsState(targetFg, tween(700), label = "node-fg")
-    val border by animateColorAsState(targetBorder, tween(700), label = "node-border")
-    val borderWidth = if (selected && !tuned) 2.dp else 1.dp
-    return NodeColors(bg, fg, border, borderWidth)
-}
-
-@Composable
-private fun CompanionsRow(
-    selectedKey: String?,
-    tunedKeys: Set<String>,
-    pulse: State<Float>,
-    onTap: (Frequency) -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-    ) {
-        Frequencies.companions.forEach { freq ->
-            CompanionNode(
-                freq = freq,
-                selected = selectedKey == freq.key,
-                tuned = freq.key in tunedKeys,
-                pulse = pulse,
-                onTap = onTap,
-            )
-        }
-    }
-}
-
-@Composable
-private fun CompanionNode(
-    freq: Frequency,
-    selected: Boolean,
-    tuned: Boolean,
-    pulse: State<Float>,
-    onTap: (Frequency) -> Unit,
-) {
-    val colors = nodeColors(selected, tuned)
-    val titleColor by animateColorAsState(
-        targetValue = if (selected) Gold else MuteSoft,
-        animationSpec = tween(700),
-        label = "companion-title",
-    )
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(
-            modifier = Modifier
-                .size(76.dp)
-                .drawBehind {
-                    if (selected) {
-                        drawCircle(
-                            color = Gold.copy(alpha = pulse.value),
-                            radius = size.minDimension / 2 - 0.5.dp.toPx(),
-                            style = Stroke(width = 1.dp.toPx()),
-                        )
-                    }
-                },
-            contentAlignment = Alignment.Center,
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
-                    .background(colors.bg)
-                    .border(colors.borderWidth, colors.border, CircleShape)
-                    .clickable { onTap(freq) },
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = freq.label,
-                    color = colors.fg,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Light,
-                )
-            }
-        }
-        Spacer(Modifier.height(10.dp))
-        Text(
-            text = freq.title,
-            color = titleColor,
-            fontSize = 10.sp,
-            letterSpacing = 1.sp,
-        )
-    }
-}
-
-@Composable
 private fun Divider() {
     Box(
         modifier = Modifier
@@ -416,6 +227,40 @@ private fun Divider() {
             .height(1.dp)
             .background(Hairline),
     )
+}
+
+@Composable
+private fun AutoPausedNotice(triggerKey: Long?) {
+    // A 22dp slot reserved above the caption — the notice fades in for ~2s
+    // when AUTO flips off as a side-effect of a dial tap, then dissolves.
+    // The slot is always present so the caption block doesn't jiggle when
+    // the notice appears or leaves; the visual cost is a small fixed gap.
+    var visible by remember { mutableStateOf(false) }
+    LaunchedEffect(triggerKey) {
+        if (triggerKey == null) return@LaunchedEffect
+        visible = true
+        delay(2000)
+        visible = false
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(22.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        AnimatedVisibility(
+            visible = visible,
+            enter = fadeIn(tween(500)),
+            exit = fadeOut(tween(700)),
+        ) {
+            Text(
+                text = "auto · paused",
+                color = MuteSoft,
+                fontSize = 10.sp,
+                letterSpacing = 2.sp,
+            )
+        }
+    }
 }
 
 @Composable

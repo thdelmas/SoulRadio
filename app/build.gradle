@@ -43,7 +43,22 @@ android {
         // Audio files in assets/ should ship uncompressed so the decoder can seek/loop cleanly.
         noCompress += ['flac', 'ogg']
     }
+    sourceSets {
+        main {
+            assets.srcDirs += "$buildDir/generated/assets"
+        }
+    }
 }
+
+// Repo-root markdown docs are the source of truth; copying into a generated
+// assets dir keeps src/main/assets/ clean while letting the in-app reader
+// load them at runtime via AssetManager.
+task copyDocs(type: Copy) {
+    from rootProject.projectDir
+    include 'ORIGINS.md', 'MANIFESTO.md', 'FREQUENCIES.md', 'CREDITS.md'
+    into "$buildDir/generated/assets/docs"
+}
+preBuild.dependsOn copyDocs
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'

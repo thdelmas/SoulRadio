@@ -64,7 +64,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme(colorScheme = darkColorScheme()) {
                 Surface(modifier = Modifier.fillMaxSize(), color = Bg) {
-                    RadioScreen()
+                    var showNotes by remember { mutableStateOf(false) }
+                    Crossfade(
+                        targetState = showNotes,
+                        animationSpec = tween(500),
+                        label = "screen",
+                    ) { notes ->
+                        if (notes) {
+                            AboutScreen(onClose = { showNotes = false })
+                        } else {
+                            RadioScreen(onOpenNotes = { showNotes = true })
+                        }
+                    }
                 }
             }
         }
@@ -72,7 +83,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun RadioScreen() {
+private fun RadioScreen(onOpenNotes: () -> Unit) {
     val context = LocalContext.current
     val engine = remember { TrackEngine(context) }
     var auto by remember { mutableStateOf(PlaybackService.isAutoEnabled(context)) }
@@ -156,19 +167,38 @@ private fun RadioScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(Modifier.height(20.dp))
-        AutoPill(
-            auto = auto,
-            pulse = pulse,
-            onToggle = {
-                val next = !auto
-                auto = next
-                PlaybackService.setAuto(context, next)
-                if (!next) {
-                    selected = null
-                    engine.selectFrequency(null)
-                }
-            },
-        )
+        Box(modifier = Modifier.fillMaxWidth()) {
+            // AUTO pill stays centred (the eye expects it there); the notes
+            // button sits at the trailing edge as a small dim affordance —
+            // findable, not pushy.
+            Box(modifier = Modifier.align(Alignment.Center)) {
+                AutoPill(
+                    auto = auto,
+                    pulse = pulse,
+                    onToggle = {
+                        val next = !auto
+                        auto = next
+                        PlaybackService.setAuto(context, next)
+                        if (!next) {
+                            selected = null
+                            engine.selectFrequency(null)
+                        }
+                    },
+                )
+            }
+            Text(
+                text = "notes",
+                color = GoldDim,
+                fontSize = 10.sp,
+                letterSpacing = 2.sp,
+                fontWeight = FontWeight.Light,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .clip(CircleShape)
+                    .clickable { onOpenNotes() }
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+            )
+        }
 
         Spacer(Modifier.weight(1f))
 

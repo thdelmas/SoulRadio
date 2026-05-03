@@ -61,4 +61,5 @@ If a hook fails, **fix and recommit** — don't `--no-verify`.
 - Notifications beyond the foreground-service media notification.
 - Animations that draw attention to the app.
 - Any network call. The app is fully offline by design — don't add a permission for `INTERNET`.
+- Google Cast, AirPlay, DLNA, or any other network casting protocol. Bluetooth is the supported "play it on the speaker over there" path — see [docs/output.md](docs/output.md) for the rationale.
 - "Helpful" features that turn the radio into an app you have to look at.

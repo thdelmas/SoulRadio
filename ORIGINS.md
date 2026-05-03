@@ -1,462 +1,284 @@
 # Origins
 
-The musical frequency frequently cited as the "God frequency" is 963 Hz. It is part of the Solfeggio frequencies and is associated with activating the pineal gland, also known as the "seat of the soul," to foster a connection with divine consciousness.
-
-## Key Details About 963 Hz ("God Frequency")
-
-- **Purpose:** It is believed to represent "divine harmony" and facilitates a "return to oneness".
-- **Benefits:** Proponents suggest it helps open the crown chakra (Sahasrara), clear negative energy, and activate higher intuition.
-- **Usage:** It is commonly used in meditation and sound healing, often described as a pure, high-pitched tone, or in relaxing, ambient music.
-- **"Return to Oneness":** 963 Hz is associated with returning any system to its original, perfect state.
-
-## Other Frequencies Often Confused or Associated
-
-While 963 Hz is commonly dubbed the "God Frequency," other tones are frequently grouped with it in spiritual music:
-
-- **528 Hz ("The Love Frequency" or "Miracle Tone"):** Often associated with DNA repair, transformation, and reducing stress hormones (cortisol).
-- **432 Hz ("Nature's Frequency"):** Believed to be the natural frequency of the Earth, it is used for deep, grounded relaxation.
-
-## Scientific and Cultural Context
-
-While widely used in meditation, 963 Hz is considered a metaphysical concept rather than a scientifically proven medical tool. The experience of these frequencies is subjective, with listeners often reporting increased calmness or spiritual connection.
-
-_AI responses may include mistakes. Learn more — 13 sites_
-
-- Night of Oneness | 963Hz Frequency of Gods & Spiritual Awakening — Night of Oneness | 963Hz Frequency of Gods & Spiritual Awakening | Pineal Gland & Crown Chakra Music - YouTube. This content isn't... — YouTube
-- What is 528 Hz frequency? Plus, how it can benefit you — Calm Blog — What is 528 hertz frequency? 528 Hz is a sound frequency. It's one of many tones within the range of human hearing. This frequency... — Calm
-- Why is 963 Hz the God Frequency? Crown Chakra Activation - Jaapi Media — Why is 963 Hz the God Frequency? Crown Chakra Activation – Jaapi. ... Why is 963 Hz the God Frequency? Crown Chakra Activation * C... — jaapi.media
-- Show all
+_How SoulRadio became SoulRadio. A curated record of the seed conversation — the late-night Q&A that turned a stack of "healing frequency" claims into a manifesto, a 24-hour loop, and a 9-tap dial of pre-electronic recordings._
 
 ---
 
-## Q: does thoses frequency works also on headphones through mp3 player? _(22:28)_
+## A note before reading
 
-Yes, these frequencies generally work through headphones and MP3 players, but there are technical details you should know to get the best results:
+This document is the *origin story*, not the manual. The manual is [FREQUENCIES.md](FREQUENCIES.md); the rules are [MANIFESTO.md](MANIFESTO.md); the audio sources and licenses are [CREDITS.md](CREDITS.md).
 
-### 1. Headphones vs. Speakers
+The conversation below is preserved because it shows the *trajectory* — where the project started (modern "healing frequency" folklore) and where it landed (a curated radio of pre-electronic music tied to the hour of day). Several of the AI-generated claims that seeded the early questions — "DNA repair," "natural anesthetic," "cellular healing," "wipes away trauma" — have been recast per MANIFESTO §5 ("we do not lie about science"). What remains is the *folkloric intention* of each tone: what people have *used* the frequency for, not what it does to a body.
 
-- **Enhanced Focus:** For Solfeggio frequencies like 963 Hz, headphones are often preferred because they help block out external distractions.
-- **Stereo Separation:** If you are listening to binaural beats (where one ear gets a slightly different tone than the other), headphones are mandatory. For pure Solfeggio tones, they aren't strictly necessary but can "enhance the experience".
-
-### 2. MP3 Compression and File Quality
-
-- **Frequency Range:** Standard MP3 files can accurately reproduce frequencies within the human hearing range (20 Hz to 20,000 Hz), so a 963 Hz tone will be preserved.
-- **Bitrate Matters:** High-bitrate MP3s (like 320 kbps) are recommended. Low-quality compression can introduce artifacts or "flatten" the harmonic richness that many believe is key to the frequency's effectiveness.
-- **Lossless is Better:** For the "purest" vibration, many practitioners prefer lossless formats like WAV or FLAC, as they contain all the original data from the recording.
-
-### 3. Equipment Limitations
-
-- **Bluetooth vs. Wired:** Wired headphones are often recommended over Bluetooth for sound therapy to avoid the extra compression that wireless transmission adds.
-- **Direct Delivery:** Using headphones ensures the sound is delivered directly into the ear canal, bypassing room acoustics that might distort the tone.
-
-### Tips for Best Use
-
-- Use noise-canceling or closed-back headphones to maintain an isolated, immersive environment.
-- Ensure the source file is from a reputable creator who uses authentic, uncompressed signal generators rather than artificial post-tuning.
-- Listen at a moderate, comfortable volume to allow for relaxation without ear fatigue.
-
-Do you have a specific brand of headphones or an MP3 player model you're planning to use?
-
-_AI responses may include mistakes. Learn more — 14 sites_
-
-- Why lossy OGG Vorbis, MP3, Youtube and Spotify do not substitute lossless FLAC. — Formats such as MP3s and OGGs can effectively handle these differences in frequencies because they all fall within the range of hu... — Reddit
-- Why do we not recommend Bluetooth for Sound Therapy? - US Version — September 26, 2018 | General. While Bluetooth is a wonderful invention for convenient sound delivery, it is not the best method fo... — mysoundtherapy.com
-- (PDF) Impact of MP3-compression on timbre space of sustained ... — \* a. , resulting in flat equally spaced. \* frequency envelopes. The fixed harmonic frequencies. encouraged listeners to focus thei... — ResearchGate
-- Show all
+The body decides whether it agrees.
 
 ---
 
-## Q: what are the other special frequencies known _(22:33)_
+## Q: What is the "God frequency"? _(22:28)_
 
-Apart from the "God Frequency," the most well-known are the Solfeggio Frequencies, each believed to target specific emotional or physical states.
+The musical tone most often called the "God frequency" is **963 Hz**. It belongs to the modern *Solfeggio set* — nine pitches assembled in the 1990s by Joseph Puleo from a numerological reading of *Numbers* 7. The set is recent. The *word* "solfeggio" is much older — see [§ A note on the word *solfeggio*](#a-note-on-the-word-solfeggio) at the end.
 
-### The Core Solfeggio Scale
+### Folk associations of 963 Hz
 
-- **174 Hz (Pain Relief):** Acts as a natural anesthetic; used to reduce physical pain and provide a sense of security.
-- **285 Hz (Healing Tissue):** Linked to the "restructuring" of organs and tissue; used for physical rejuvenation.
-- **396 Hz (Liberating Guilt/Fear):** Used to clear feelings of grief and guilt to help achieve goals.
-- **417 Hz (Undoing Situations/Change):** Clears negative energy from the environment and helps "wipe away" past trauma.
-- **528 Hz (The Love Frequency):** Known for DNA repair, miracles, and reducing cortisol (the stress hormone).
-- **639 Hz (Connecting/Relationships):** Enhances communication, tolerance, and love in social relationships.
-- **741 Hz (Awakening Intuition):** Used for detoxification and lead a healthier, simpler life.
-- **852 Hz (Returning to Spiritual Order):** Associated with seeing through illusions and raising mental awareness.
+- **Folk name:** "Returning to oneness" / the crown of the Solfeggio scale.
+- **Traditional use:** meditation, contemplative practice, the closing tone of a session.
+- **Stance for SoulRadio:** we treat 963 Hz as the *top of the dial* — present, reachable in one tap, but not a tone the auto loop reaches for. People who want it find it. People who don't, don't.
 
-### Other Popular "Healing" Frequencies
+### Other tones often grouped with 963 Hz
 
-- **432 Hz (The Harmonic Tone):** Often called "Verdi's A," many believe music tuned to this frequency is more resonant with the universe/nature than the standard 440 Hz used today.
-- **7.83 Hz (Schumann Resonance):** This is the Earth's "heartbeat" or electromagnetic frequency. Listening to it is said to help with grounding and jet lag.
-- **40 Hz (Gamma Brain Power):** Frequently used in clinical research for its potential to improve memory and focus, particularly in Alzheimer's studies.
+- **528 Hz** — popularly called the *Love frequency* or *Miracle tone*. Folkloric association with warmth and the centre of the day. Our midday band.
+- **432 Hz** — not a Solfeggio frequency. A *tuning standard* (the pitch the note A is set to), advocated by Verdi in 1884. We use it as one of the two ambient companions; see [FREQUENCIES.md §432](FREQUENCIES.md).
 
-Would you like to know which specific brainwave states (like Alpha or Theta) these frequencies are meant to trigger?
+### Stance
 
-_AI responses may include mistakes. Learn more_
+These frequencies are not medical devices. They are *rooms* — a tradition asks the listener to bring a particular kind of attention. The body decides whether it agrees.
 
 ---
 
-## Q: how much time of exposure is recommended for each? _(22:37)_
+## Q: do these frequencies still work through headphones and an MP3 player? _(22:28)_
 
-For most people, the recommended exposure to healing frequencies is 15 to 30 minutes per session, repeated 3 to 5 times per week. Consistency is generally considered more important than the length of a single session for achieving long-term benefits.
+Yes. The relevant questions are the listening environment and the source quality, not the playback chain itself.
 
-### Recommended Duration by Experience Level
+### Headphones vs. speakers
 
-- **Beginners:** Start with shorter sessions of 5 to 15 minutes to see how your body and mind respond to the specific vibration.
-- **Regular Listeners:** Standard sessions typically last 20 to 30 minutes.
-- **Deep Healing:** Some practitioners use longer sessions of 45 to 60 minutes for more intensive rejuvenation or during sleep.
+- **Headphones** isolate the listener from the room — useful for a focused session, less so for a 24-hour ambient loop.
+- **Speakers** let the room participate. The cathedral builders knew this; SoulRadio is designed to be heard *in a room*, not pressed into the ear canal. Headphones are fine. Speakers are the design target.
+- **Binaural beats** (where each ear gets a slightly different tone) require headphones. SoulRadio does not use binaural beats.
 
-### Duration for Specific Frequencies
+### Compression and source quality
 
-While general guidelines apply to all, high-intensity frequencies require more caution:
+- **Lossless when feasible.** FLAC stays uncompressed in the APK; the decoder needs to seek and loop without artifacts. See [CLAUDE.md § Code conventions](CLAUDE.md).
+- **MP3** is enough to carry these frequencies — the tones are well within the human hearing range. But a high-bitrate MP3 is not the same as the original recording, and on long sessions the difference accumulates.
+- **Source matters more than format.** A field recording from the Abbey of Sant'Antimo at 192 kbps Vorbis carries more of the room than a 320 kbps MP3 of a synth pad ever will.
 
-- **963 Hz ("God Frequency"):** Because this is a very high frequency, it is best to start slow. Overexposure (e.g., listening for over an hour without breaks) can sometimes lead to "vibrational fatigue," causing symptoms like dizziness or feeling "spiritually wiped".
-- **528 Hz ("Love Frequency"):** Research suggests stress-reducing effects can be felt in as little as 5 minutes of exposure.
-- **432 Hz:** Frequently used for longer periods, such as throughout a sleep cycle, to promote deep relaxation and improved sleep quality.
-- **Brainwave States:** Shifting into a relaxed Alpha state usually takes 5 to 10 minutes, while reaching deeper Theta or Delta states often requires 15 to 30 minutes of consistent listening.
+### Wired vs. Bluetooth
 
-### Key Safety Guidelines
-
-- **The 60/60 Rule:** To protect your hearing, especially when using headphones, listen at no more than 60% volume for no more than 60 minutes at a time.
-- **Volume:** These frequencies should be played at a moderate to low volume. They do not need to be loud to be effective; they are meant to be a gentle background for meditation or relaxation.
-- **Listen to Your Body:** If you feel irritable, nauseated, or exhausted, it is a sign to stop and give your nervous system time to integrate the session.
-
-Are you interested in a specific frequency for a particular goal, like better sleep or focus?
-
-_AI responses may include mistakes. Learn more — 11 sites_
-
-- Is the healing effect/benefits of the frequency 432hz and 528hz real? — The decrease in latency, although not statistically significant and statistically significant increase in energy of alpha frequenc... — Reddit
-- Benefits of Music based on 7 Solfeggio Frequencies | Meditative Mind — How long should you listen to healing frequencies? For the best results, try listening to healing frequencies for about 20-30 minu... — meditativemind.org
-- How I Use Solfeggio Frequencies As a Healing Tool - Arawme — Music has always been healing to me and it is something I cannot live without. The above videos from, PowerThoughts Meditation Clu... — Arawme
-- Show all
+- **Bluetooth is supported** — it is the way most listeners will play SoulRadio on a speaker across the room. See [docs/output.md](docs/output.md).
+- **Network casting (Cast / AirPlay / DLNA) is not supported.** The app has no `INTERNET` permission and does not initiate any network call.
+- **Wired is honest.** No re-encoding, no negotiation, no latency. If you have the option, it is the better path.
 
 ---
 
-## Q: are frequencoes and notes the same thing? _(22:39)_
+## Q: what are the other frequencies in the tradition? _(22:33)_
 
-Frequencies and notes are closely related but not exactly the same thing. A frequency is a scientific measurement, while a note is a musical label we give to specific frequencies that sound harmonious together.
+The modern Solfeggio set, with the folk associations the tradition gives each tone (folk associations only — no medical claim is made or implied):
 
-### Key Differences
+### The nine Solfeggio tones
 
-- **Scientific vs. Cultural:** Frequency is the physical vibration of sound measured in Hertz (Hz). A note is a specific name (like A, B, or C) assigned to a frequency within a musical scale.
-- **The "Standard" Frequency:** In modern Western music, the note A4 is conventionally set to 440 Hz. However, this is just a convention; in the past or in different cultures, that same note name might correspond to a different frequency.
-- **Harmonics:** A single frequency is a pure "sine wave." A musical note produced by an instrument is actually a mixture of frequencies, consisting of one strong "fundamental frequency" (the pitch you recognize) and several quieter "harmonics" or "overtones" that give the instrument its unique sound.
-- **Octaves:** When you double a frequency, you get the same note an octave higher. For example, 440 Hz is A4, while 880 Hz is A5.
+- **174 Hz** — folk name *"pain relief / sense of security."* Used as a ground note. The lowest tone in the set.
+- **285 Hz** — folk name *"tissue and field."* Used to slow the body.
+- **396 Hz** — folk name *"liberating guilt and fear."* A clearing tone, often used at the start of a practice.
+- **417 Hz** — folk name *"undoing situations / change."* A tone of transition.
+- **528 Hz** — folk name *"the love frequency / miracle tone."* The popular tradition's centre.
+- **639 Hz** — folk name *"connecting / harmonious relationships."* The frequency of shared rooms.
+- **741 Hz** — folk name *"awakening intuition."* A clearing tone for the head.
+- **852 Hz** — folk name *"returning to spiritual order."* Used to step back from the immediate.
+- **963 Hz** — folk name *"the God frequency."* The top of the scale.
 
-### Comparison at a Glance
+### The two ambient companions
 
-| Feature | Frequency | Musical Note |
-| --- | --- | --- |
-| Measured in | Hertz (Hz) / Vibrations per second | Letter names (A, C#, etc.) |
-| Nature | Pure physical measurement | Human-defined musical symbol |
-| Precision | Can be any number (e.g., 441.5 Hz) | Usually refers to "steps" on a scale |
+Not Solfeggio — included because they sit alongside the set in the tradition:
 
-Essentially, all notes have frequencies, but not every frequency is considered a standard "note" in our traditional musical system.
+- **432 Hz** — Verdi's A. A tuning standard, not a tone.
+- **7.83 Hz** — the Schumann resonance. Below the threshold of human hearing; sensed as cadence, not as sound.
 
-Would you like to see a chart showing which specific frequencies match the common musical notes?
-
-_AI responses may include mistakes. Learn more — 9 sites_
-
-- Difference between note, pitch, and frequency. : r/musictheory - Reddit — Comments Section * Jongtr. • 5y ago. Top 1% Commenter. "Note" = strictly, the symbol in "notation", indicating both a pitch and a ... — Reddit
-- Why are some frequencies considered musical notes and some are not? - Reddit — So for example 880Hz is a note. Then we have decided that a frequency that have a ratio of 3:2 to a note is also a note. Again the... — Reddit
-- What is the relationship between notes and frequencies in music? - Facebook — \* Allison F Barney. So Danny - since you picked A4= 441.49 based on C at 261.62, then Bflat= 465.12, refers to the number of times... — Facebook
-- Show all
+The full per-tone description, with paired pre-electronic recordings, is in [FREQUENCIES.md](FREQUENCIES.md).
 
 ---
 
-## Q: so on order to use the special frequencies do we need musical notes or a single frequency _(22:42)_
+## Q: how long should a session be? _(22:37)_
 
-To use special frequencies effectively, you can use either a single "pure" frequency (a sine wave) or musical compositions tuned to that frequency. Both methods are common in sound therapy, and the choice depends on your personal goal and how you prefer to listen.
+SoulRadio is designed for *constancy*, not for sessions. The manifesto is explicit: *"You should be able to forget it is on and still feel different at the end of the week."* (See [MANIFESTO.md §2](MANIFESTO.md).)
 
-### 1. Single Pure Frequency (Pure Tone)
+### What the surrounding tradition says
 
-This is a steady, unwavering sound created by an electronic oscillator or a tuning fork.
+- **Beginners** in the Solfeggio listening tradition often start at 5–15 minutes.
+- **Regular listeners** report 20–30 minute sessions.
+- **Sleep listeners** play a tone at low volume across an entire night.
 
-- **Best For:** Deep meditation, concentrated energy work, or scientific-style therapy.
-- **Experience:** It can be very intense and "boring" to the human ear because it contains no variation.
-- **Effect:** Practitioners believe these pure sine waves resonate more directly with body tissues and the nervous system without the "distraction" of other musical layers.
+### What SoulRadio does
 
-### 2. Musical Notes (Tuned Compositions)
+The auto loop runs 24 hours. The dial is for moments you choose. Both are designed to live at low volume, in the background of a room — *wallpaper, not wallpaper-paste* (MANIFESTO §2).
 
-This is music (like piano or ambient pads) where all the notes are adjusted to revolve around the special frequency.
+### Hearing safety
 
-- **Best For:** Long-term relaxation, working, or sleeping where a pure tone might be too irritating.
-- **Experience:** It sounds like regular music but often "brighter" or "clearer".
-- **Effect:** Studies on 528 Hz have often used "soothing piano music" tuned to that frequency, finding it effective for reducing stress markers like cortisol.
-
-### Comparison for Practical Use
-
-| Feature | Pure Frequency (Single Tone) | Musical Notes (Compositions) |
-| --- | --- | --- |
-| Complexity | Mathematically minimal | Contains many overtones/harmonics |
-| Best Used | Active meditation sessions | Background listening or sleep |
-| Tools Needed | Tone generator or tuning fork | Specifically tuned playlists/MP3s |
-
-**Pro Tip:** If you want the benefit of a "note" system, look for music specifically labeled as "A=444 Hz tuning." This shift in tuning ensures that the musical note "C" naturally lands exactly on the 528 Hz frequency.
-
-Would you like a recommendation for a tone generator app or a playlist to try these out?
-
-_AI responses may include mistakes. Learn more — 16 sites_
-
-- Is the healing effect/benefits of the frequency 432hz and 528hz real? - Reddit — Do people that write this kind of things realize that a frequency is a tone (one single tone)? And that music consists of many ton... — Reddit
-- 528 Hz Vs. 432 Hz: Unlock Healing Frequencies - Ftp — The difference lies in their perceived primary effects: 528 Hz is often targeted for its reparative and transformative qualities, ... — ftp.bills.com.au
-- 528hz Demystified | A Higher Tone for a New Era - Inner Sounds Meditation — Eyes glazing over yet? What's all this about A notes, C notes, 440 vs 444hz, 523 vs 528hz?? All this is essentially saying that wh... — www.innersoundsmeditation.com
-- Show all
+The 60/60 rule applies as it does to any audio: no more than 60% volume for no more than 60 minutes at a stretch when using headphones. Speakers at low room volume are the intended listening case.
 
 ---
 
-## Q: so if we wanna make a 24h loop frequency alterning between all known ones in order to regulate a human depending on a normal day _(22:44)_
+## Q: are frequencies and musical notes the same thing? _(22:39)_
 
-Designing a 24-hour frequency loop is a great way to align with your body's natural circadian rhythm. To regulate a human day effectively, you want lower, grounding frequencies at night and higher, more spiritual or cognitive frequencies during active hours.
+Closely related, not the same.
 
-### Recommended 24-Hour Frequency Cycle
+- **A frequency** is a physical measurement in Hertz (Hz) — vibrations per second.
+- **A musical note** is a name (A, B, C…) assigned to a frequency inside a tuning system. The same note name corresponds to different frequencies in different tunings.
 
-**Morning (6:00 AM – 9:00 AM): Awakening & Grounding**
+### The standard
 
-- **396 Hz (Liberating Fear/Guilt):** Use this to start the day with a clean emotional slate.
-- **432 Hz (Natural Harmony):** Transition into a state of resonance with nature as you fully wake up.
+In modern Western music, the note A above middle C is set to **440 Hz**. This is a 1939 ISO convention — not a law of nature. Period-instrument ensembles use lower pitches:
 
-**Late Morning (9:00 AM – 12:00 PM): Clarity & Focus**
+- **Baroque pitch** (A = 415 Hz) — for Bach, Handel, Vivaldi.
+- **French Baroque** (A = 392 Hz) — even lower.
+- **Verdi's A** (A = 432 Hz) — the late-19th-century operatic standard.
+- **Chorton** (A ≈ 466 Hz) — the high choir pitch of Bach's Leipzig.
 
-- **741 Hz (Intuition/Problem Solving):** Ideal for the start of the workday to clear the mind and boost mental clarity.
+### Octaves and harmonics
 
-**Afternoon (12:00 PM – 4:00 PM): High Energy & Creativity**
+Doubling a frequency yields the same note an octave higher: 220 Hz, 440 Hz, 880 Hz are all the note A. A musical note from a real instrument is never a single sine — it is a fundamental plus a series of overtones. The overtones are what makes a cello sound like a cello and not like a tone generator.
 
-- **528 Hz (Love/DNA Repair):** Often used for midday revitalization and transformation.
-- **963 Hz (God Frequency/Higher Consciousness):** Best during peak afternoon hours for deep connection and "big picture" thinking.
+### What this means for SoulRadio
 
-**Evening (4:00 PM – 8:00 PM): Social Connection & Detox**
+The Solfeggio numbers (174, 285, 396, 417, 528, 639, 741, 852, 963) are *frequencies*, not notes. Most pre-electronic recordings cited in [FREQUENCIES.md](FREQUENCIES.md) were performed at A = 440, A = 432, or A = 415. None of them are "tuned to 528 Hz" in the modern Solfeggio sense. Claims that *Canon in D* or *Cello Suite No. 1* are "naturally" at a Solfeggio frequency are retrofitted.
 
-- **639 Hz (Harmonious Relationships):** Perfect for the time you spend with family or friends to foster connection.
-- **417 Hz (Clearing Negative Energy):** Use this to "wash off" any stress or negativity accumulated during the workday.
-
-**Night (8:00 PM – 11:00 PM): Relaxation & Preparation for Sleep**
-
-- **285 Hz (Cellular Healing):** Start the body's internal repair process.
-- **174 Hz (Pain Relief/Security):** Provides a sense of safety and reduces physical tension before bed.
-
-**Deep Sleep (11:00 PM – 6:00 AM): Rest & Grounding**
-
-- **7.83 Hz (Schumann Resonance):** While not a Solfeggio frequency, this "Earth's heartbeat" is highly recommended for deep, restorative sleep.
-- **Low-frequency Delta waves (0.5–4 Hz):** Can be layered with ambient noise to ensure uninterrupted sleep cycles.
-
-### Important Technical Implementation
-
-- **Smooth Transitions:** If you are building this loop yourself, use "crossfades" between frequencies. A sudden jump from 963 Hz to 174 Hz can be jarring and disrupt your state.
-- **Volume Level:** Keep the volume consistently low. For a 24-hour loop, the goal is for the sound to become part of your environment (like a "frequency wallpaper") rather than an active listening task.
-- **Speaker vs. Headphones:** While you can use headphones for specific blocks, a high-quality room speaker is better for a 24-hour loop to avoid ear fatigue and allow your body to "feel" the vibrations in the air.
-
-Would you like to know which software or apps can help you automate this 24-hour schedule on your computer or phone?
-
-_AI responses may include mistakes. Learn more — 1 site_
-
-- Circadian Rhythms | National Institute of General Medical Sciences - NIH — What molecular mechanisms underlie circadian rhythms? Feedback loops that regulate biological clock proteins are an important part... — National Institute of General Medical Sciences (NIGMS) (.gov)
+What is true: the pieces share *modal character, tempo, and acoustic intention* with the corresponding Solfeggio tone. Family resemblance, not numerology.
 
 ---
 
-## Q: for each frequencies list 5 famous musical composition _(22:55)_
+## Q: pure tone, or music tuned to the frequency? _(22:42)_
 
-While most mainstream songs are recorded using standard 440 Hz tuning, many fans and artists believe specific famous works naturally resonate with these frequencies or have released special versions tuned to them. Below are 5 notable tracks or albums for each key frequency:
+Both are practiced in the surrounding tradition. SoulRadio chose music.
 
-### 174 Hz (Pain & Tension Relief)
+### The pure-tone path
 
-- "Connecting the Dots" by Miracle Tones — Spotify
-- "174 Hz Deep Sleep" by Emiliano Bruguera — Emiliano Bruguera
-- "Healing" by Hz Meditator — Apple Music
-- "Solfeggio Frequency Pure Tone" by Emiliano Bruguera
-- "174 Hz Quantum Frequency" by Emiliano Bruguera — Spotify
+A steady sine wave from an oscillator, held for the length of a session.
 
-### 285 Hz (Tissue & Energy Healing)
+- **Used for** focused meditation, signal-generator work, brief practice.
+- **Experience** the ear adjusts to the absence of variation; the result can be either "transparent" or "fatiguing" depending on the listener and the duration.
 
-- "Expressing Uniqueness" by Miracle Tones
-- "285 Hertz: Healing" by Hz Meditator
-- "Pure Quantum Scalar Waves" by Complete Brainwave Therapy System — Spotify
-- "Restores Mind & Body" by Meditative Mind — YouTube
-- "Solfeggio 285Hz" by Hz Guru — Spotify
+### The musical path
 
-### 396 Hz (Liberating Guilt & Fear)
+A composition whose modal centre, tempo, or acoustic geometry matches the spirit of the tone.
 
-- "Infinite Wisdom" by Miracle Tones
-- "Let Go of Fear" by Meditative Mind — YouTube
-- "Remove Negative Blocks" by Meditative Mind
-- "396 Hertz: Healing" by Hz Meditator
-- "Fantasy Dreams" by Solfeggio Frequencies — Apple Music
+- **Used for** long-form listening, sleep, ambient presence in a room.
+- **Experience** the ear stays curious; the body recognises the piece as music, not as instrumentation.
 
-### 417 Hz (Undoing Situations & Change)
+### Why SoulRadio chose music
 
-- "Love Is Infinite Potential" by Miracle Tones
-- "Cleanse All Trapped Negative Energy" by Meditative Mind
-- "Let Go of Mental Blockages" by Emiliano Bruguera
-- "417 Hertz: Healing" by Hz Meditator
-- "Solfeggio Frequencies APEX Discoveries" (EP) on Apple Music
+The pure tone is honest about what the modern Solfeggio set is — a number. The music is honest about what the *tradition behind the number* is — a thousand-year practice of letting a particular kind of sound shape a room.
 
-### 528 Hz (The Love/Miracle Frequency)
+A Bach cello prelude in G major and a 174 Hz drone are not the same sound. They are the same **request** to the listener: settle, ground, lower the shoulders.
 
-- "Manifest Your Greatness" by Miracle Tones
-- "Miracle Tone: Harmonic Fibonacci Spiral" by Masterful Minds at Play — Spotify
-- "528 Hz Remove All Blockages" by Solfeggio Frequencies — Volt.fm
-- "528 Hz Pure Tone & Piano" by Healing Solfeggio Frequencies
-- "Mending DNA: Cell Regeneration" by Jason Stephenson
-
-### 639 Hz (Harmonious Relationships)
-
-- "Shine Your Light" by Miracle Tones
-- "Balances Heart Chakra" by Meditative Mind
-- "Solfeggio Love Frequency" by Dreamflute Dorothée Fröller
-- "639 Hz Energy Healing" by Complete Brainwave Therapy System
-- "Relationship Harmony" by Spiritual Frequencies — Music Metrics Vault
-
-### 741 Hz (Detox & Awakening Intuition)
-
-- "The All Seeing You" by Miracle Tones
-- "Cleanse Infections" by Emiliano Bruguera
-- "Spiritual Detox Frequency" by Meditative Mind
-- "Intuition Awakening" by Hz Guru
-- "Digital Detox" (EP) by Solfeggio Frequencies
-
-### 852 Hz (Spiritual Order & Awareness)
-
-- "Awakens Intuition" by Meditative Mind
-- "852" by Verschwender — Electronic Groove
-- "Returning to Spiritual Order" by Complete Brainwave Therapy System
-- "Third Eye Opening" by Spiritual Frequencies
-- "Solfeggio 852Hz" by Hz Guru
-
-### 963 Hz (The God Frequency)
-
-- "Align Yourself with the Universe" by Emiliano Bruguera
-- "Solfeggio Frequency of God" by Emiliano Bruguera
-- "963 Hz Divine Vibrations" (EP) by Solfeggio Frequencies
-- "963 Hz Ambuary Vibrations" (EP) by Solfeggio Frequencies
-- "Activates Pineal Gland" by Meditative Mind
-
-Would you like to find more 432 Hz versions of famous mainstream songs like "Bohemian Rhapsody" or "In the Air Tonight" to add to your daily cycle?
-
-_AI responses may include mistakes. Learn more — 15 sites_
-
-- Frecuencias Solfeggio 174Hz, 285Hz, 396Hz, 417Hz, 528Hz, 639Hz, 741Hz ... — 417 Hz Let Go of Mental Blockages. Emiliano Bruguera. 528 Hz Solfeggio Love Frequency. Emiliano Bruguera. 741 Hz Cleanse Infection... — Spotify
-- "Solfeggio Frequencies Healing: 174, 285, 396, 417, 432, 528, 639, 741, 777 ... — Solfeggio Frequencies Healing: 174, 285, 396, 417, 432, 528, 639, 741, 777, 888, 852, 963 Hz. Hz Meditator · Solfeggio Frequencies ... — Apple Music
-- 174 Hz, 285 Hz, 396 Hz, 417 Hz, 432 Hz, 528 Hz, 639 Hz, 741 Hz, 852 Hz, 963 Hz — Solfeggio Frequency (528 Hz Mending Dna: Cell Regeneration) Jason Stephenson. 528 Hz | Miracle Tone: Harmonic Fibonacci Spiral Pul... — Spotify
-- Show all
+That kinship is what the dial pairs. The synthesized sine tones remain in the codebase as a fallback for bands without a bundled recording — but the curated pre-electronic recordings are the primary product.
 
 ---
 
-## Q: no reference from before electronic music? _(22:57)_
+## Q: a 24-hour loop tied to the hour of day? _(22:44)_
 
-Absolutely. Long before electronic music, these frequencies — or the spiritual and mathematical principles behind them — were woven into ancient chants and classical masterpieces.
+Yes — this is the core design idea. A human is not the same person at 7 a.m. and at 11 p.m. The morning wants clarity. The afternoon wants warmth. The night wants to be let go of. (MANIFESTO §1.)
 
-### 1. Gregorian Chants (The Original Solfeggio)
+### The schedule
 
-The Solfeggio frequencies are actually rooted in the medieval 6-tone scale used by monks for sacred singing. The syllables we use today (Do, Re, Mi) come from the hymn _Ut Queant Laxis_, where each line started on a higher note of this scale.
+The auto loop maps each hour of the day to a band. The current schedule, kept in lock-step between [FREQUENCIES.md](FREQUENCIES.md), [Frequency.kt](app/src/main/java/com/soulradio/soulradio/Frequency.kt), and the test that pins it ([FrequenciesTest.kt](app/src/test/java/com/soulradio/soulradio/FrequenciesTest.kt)):
 
-- **"Ut Queant Laxis" (Hymn to St. John the Baptist):** The primary source for the original six tones.
-- **"Missa Ave Maris Stella" by Josquin des Prez:** A Renaissance masterpiece that carries a deeply spiritual, meditative resonance.
-- **"Puer natus in Bethlehem" by Michael Praetorius:** Known for its grounding, ethereal qualities.
+| Hour band     | Tone     | Intention                         |
+|---------------|----------|-----------------------------------|
+| 06:00–09:00   | 396 Hz   | Releasing the night               |
+| 09:00–12:00   | 741 Hz   | Clearing the channel              |
+| 12:00–16:00   | 528 Hz   | Warmth, gathering, midday         |
+| 16:00–18:00   | 639 Hz   | Connection, table, conversation   |
+| 18:00–20:00   | 417 Hz   | Setting down the day              |
+| 20:00–22:00   | 285 Hz   | Slowing the body                  |
+| 22:00–23:00   | 174 Hz   | Anchoring, low and warm           |
+| 23:00–06:00   | 7.83 Hz  | Held by the stone of the abbey    |
 
-### 2. Classical Works (Tuned to 432 Hz)
+**852 Hz** and **963 Hz** are reserved for the dial — chosen, not auto-played. The upper register of the tradition is something a listener reaches for deliberately.
 
-Many classical composers didn't use the modern 440 Hz standard. For instance, Giuseppe Verdi famously advocated for 432 Hz, calling it the "scientific" pitch. Mozart is believed to have favored a slightly lower tuning around 421.6 Hz.
+### Why these times
 
-- **Vivaldi: "The Four Seasons"** — Particularly "Spring," which is frequently cited for its natural, uplifting resonance when played in 432 Hz.
-- **Pachelbel: "Canon in D"** — Widely considered one of the most soothing progressions in history, often retuned to 528 Hz or 432 Hz for deep relaxation.
-- **Beethoven: "Moonlight Sonata"** — Famous for its calming effect on the nervous system, especially the first movement (Adagio Sostenuto).
-- **Bach: "Cello Suite No. 1 in G Major"** — The resonance of the cello is said to be particularly effective for tissue healing when tuned to 432 Hz.
-- **Debussy: "Clair de Lune"** — An impressionist classic known for creating a "dreamy" atmosphere that mimics higher spiritual states.
+- **Morning (396)** — the dawn office of the monastic Divine Office sat in this register. The day began with a clearing.
+- **Late morning (741)** — the head wants articulate, transparent music when work begins. Goldberg Aria, Couperin, Scarlatti.
+- **Midday (528)** — the longest stretch. Bach's *Jesu, Joy of Man's Desiring*, Pachelbel's Canon, Vivaldi's *Spring*. The "warm" canon.
+- **Late afternoon (639)** — meals, conversation, reunion. Renaissance polyphony was *built on* the principle of independent voices that agree.
+- **Early evening (417)** — the transition tone. Allegri's *Miserere*, Victoria's *O vos omnes*. Music written for the act of letting go.
+- **Evening (285)** — the slow turn. Tallis's *Spem in Alium*, the *Air on the G String*. Pieces that breathe at the speed of a sleeping body.
+- **Late evening (174)** — the ground note. Gregorian chant in low Dorian. The floor a room is built on.
+- **Night (7.83)** — the Schumann band. Until a true sub-audible underlay layer ships, the night band stands in for the *room* it would have ridden inside: a Gregorian chant recorded inside a 12th-century Romanesque abbey, where the stone gives the recording an 8-second tail.
 
-### 3. Spiritual Masterpieces
+### Implementation notes
 
-- **Bach: "Air on the G String"** — Renowned for its ability to induce a state of "peace and tranquility".
-- **Mozart: "Clarinet Concerto in A K622 (Adagio)"** — Often used in studies regarding the "Mozart Effect" for its cognitive and calming benefits.
-
-Watch this collection of 20 recognizable classical pieces specifically tuned to 432 Hz to experience their healing resonance:
-
-> _01:15:57 — Famous Classical Music 432 Hz | 20 Classics That Everyone Knows With AI ... — Classical Oasis — YouTube • 23 Aug 2024_
-
-Would you like to know how to identify the original tuning of a classical recording you find online?
-
-_AI responses may include mistakes. Learn more — 24 sites_
-
-- Unveiling The Serenity: Your 432 Hz Classical Music Playlist - Ftp — Mozart's Piano Sonata No. 11 in A Major, K. 331: A beautiful and cheerful piece that will uplift your spirits. Perfect for startin... — ftp.bills.com.au
-- Best Classical Music 432Hz 》Mozart • Beethoven • Bach • Chopin 》Piano ... — "Canon in D major - Pachelbel","Gymnopédies No. 2 & No. 3","Egmont Overture - Beethoven", "Brandenburg Concerto No. 4 in G, Moveme... — 3:20:04 YouTube · Intentional Sounds
-- Ancient Solfeggio Scale - Each Frequency Explained - MindVibrations — The 6-tone scale, and an additional 3 tones discovered since, is considered by many musicologists and scientists to have a positiv... — MindVibrations
-- Show all
+- **Crossfades, not cuts.** A jump from 963 Hz to 174 Hz is jarring; a 700 ms crossfade is not.
+- **Low volume.** The loop is wallpaper. If it interrupts your thinking, it has failed.
+- **Speaker over headphones** for ambient use. Bluetooth is fine; network casting is not — see [docs/output.md](docs/output.md).
 
 ---
 
-## Q: we are gonna do an app that allows you quick & easy access to thoses and also featuring the wallpaper music 24h loop how should we name it? _(23:06)_
+## Q: is there a reference for each frequency from before electronic music? _(22:57)_
 
-Selecting a name for your app is crucial because it needs to convey both spiritual harmony and the technical convenience of your 24h loop.
+This is the question that turned the project. The original answer offered Spotify playlists from "Hz Meditator," "Miracle Tones," "Emiliano Bruguera" — the modern electronic-Solfeggio aesthetic. SoulRadio went the other way.
 
-Here are a few naming ideas categorized by the "vibe" they project:
+The catalogue of pre-electronic pairings — Gregorian chant, Bach, Tallis, Hildegard, Victoria, Palestrina, Mozart, Debussy — is in [FREQUENCIES.md](FREQUENCIES.md). The licensing rule for any bundled recording (public domain, CC0, CC BY, or CC BY-SA only) is in [docs/licensing.md](docs/licensing.md). The actual bundle is in [CREDITS.md](CREDITS.md).
 
-### Modern & Tech-Focused
+The short version of the pivot:
 
-- **Freq24:** Short, punchy, and clearly explains the 24-hour frequency loop feature.
-- **VibeCycle:** Sounds like a lifestyle tool that helps you "cycle" through your day with better vibes.
-- **Syncro:** Emphasizes how the app "syncs" the user's personal frequency with the natural day.
-- **LoopFlow:** Highlights the seamless, continuous nature of your 24h wallpaper music.
+- **The Solfeggio frequencies are recent** (Joseph Puleo, 1990s). The numbers are arbitrary in the sense that no one was tuning to them before 1990.
+- **The intentions behind the frequencies are not recent.** The dawn office, the funeral motet, the wedding canon, the cradle song — these have been doing the same emotional work for a thousand years.
+- **The honest move** is to play the older music for the older intention, and let the number be a *label* on the room, not a claim about the sound.
 
-### Spiritual & Abstract
-
-- **Oneness:** Connects directly back to the 963 Hz "God Frequency" concept of returning to a state of oneness.
-- **Resonant:** A professional-sounding name that focuses on the physical science of vibration.
-- **Etheric:** Suggests a connection to the higher, "god-like" frequencies like 963 Hz and 852 Hz.
-- **AuraLoop:** Combines the visual idea of "wallpaper" with the auditory idea of a loop.
-
-### Practical & Descriptive
-
-- **GodFreq:** Bold and direct, targeting people searching specifically for that top-tier frequency.
-- **ZenDial:** Implies a "quick and easy" way to dial in your peace of mind.
-- **The Healing Scale:** References the Solfeggio scale as a complete wellness tool.
-- **Constant Ohm:** A play on words suggesting a permanent state of meditative "Om" through your 24h loop.
-
-### Creative Compound Names
-
-- **FrequencyWallpaper:** Very literal; good for SEO (Search Engine Optimization) so people know exactly what it does.
-- **DayTune:** Suggests the app "tunes" your entire day from morning to night.
-- **SoulSync:** A catchy, emotional name that suggests deep alignment.
-
-**Pro-Tip for Your App:** Since you're featuring a "wallpaper" music loop, you might want to look at how existing apps like _Diffuse_ (TikTok) or _Playback_ (Google Play) handle background audio to ensure your "wallpaper" feature works even when the screen is locked.
-
-Which of these directions — modern, spiritual, or practical — feels most like the brand you're building?
-
-_AI responses may include mistakes. Learn more — 2 sites_
-
-- Playback: background play – Apps on Google Play — About this app. arrow_forward. Playback - the ultimate music and video player browser app that allows you to stream your favourite... — Google Play
-- Add Music to Your Wallpaper with Diffuse App — Add Music to Your Wallpaper with Diffuse App | TikTok. Global video community. Open app. @LK Tech Briefing. — 0:37 TikTok · lk.tech.briefing
+A Bach *Cello Suite* prelude is not "tuned to 174 Hz." But it lives in the same register of *settling, grounding, lowering the shoulders*. That kinship is the basis on which SoulRadio pairs them. Not numerology. Family resemblance.
 
 ---
 
-## Q: what frequency are church choirs? _(23:32)_
+## Q: name the app. _(23:06)_
 
-In the context of your app, church choirs aren't defined by a single frequency but rather a range of pitches and historical tuning standards.
+The brainstorm produced four directions:
 
-### 1. Modern Standard (A=440 Hz)
+- **Modern / tech-focused** — Freq24, VibeCycle, Syncro, LoopFlow.
+- **Spiritual / abstract** — Oneness, Resonant, Etheric, AuraLoop.
+- **Practical / descriptive** — GodFreq, ZenDial, The Healing Scale, Constant Ohm.
+- **Compound** — FrequencyWallpaper, DayTune, SoulSync.
 
-Most contemporary church choirs follow the international standard of A=440 Hz. This ensures that the choir stays in tune with modern instruments like pianos, keyboards, or digital organs.
+None of these landed. The name **SoulRadio** came from outside the list — from the manifesto's own framing. The app is a *radio*, not a player. You do not curate it; you tune it on. And the receiver is the *soul* — the manifesto's word for the part of a person that the ear lets in. (MANIFESTO §6: *"the body is the receiver."*)
 
-### 2. Historical & Sacred Tunings
+The name is a promise: a station, not a playlist. A presence, not a feature.
 
-If your app focuses on "special" or "healing" frequencies, you'll find these three historical church standards particularly relevant:
+---
 
-- **Chorton (Choir Pitch):** Common in the Baroque era (like Bach's time), this was a high tuning typically between 460 Hz and 470 Hz. It was used to make church music sound brighter and more "heavenly".
-- **The "Key of David" (A=444 Hz):** Many modern worship leaders use this because it makes the note C land exactly on 528 Hz (the "Love Frequency"). It is often described as feeling more "anointed" or unified.
-- **Baroque Pitch (A=415 Hz):** Often used for "Historically Informed Performances," this is roughly a semitone lower than modern pitch and provides a warmer, mellower sound.
+## Q: at what frequency does a church choir sing? _(23:32)_
 
-### 3. Vocal Ranges of a Choir
+A choir is a *range*, not a frequency — and historically, it was tuned to whatever pitch the local organ was at.
 
-When a choir sings together, they produce a broad spectrum of frequencies based on their voice types:
+### Historical tuning standards
 
-- **Soprano:** 260 Hz – 880 Hz
-- **Alto:** 190 Hz – 660 Hz
-- **Tenor:** 145 Hz – 440 Hz
-- **Bass:** 90 Hz – 290 Hz
+- **Modern (A = 440 Hz)** — the 1939 ISO convention. Most contemporary choirs.
+- **Verdi's A (A = 432 Hz)** — the late-19th-century operatic standard. Still used by historically-informed performances of late-Romantic repertoire.
+- **Baroque pitch (A = 415 Hz)** — about a semitone below modern. Used for Bach, Handel, Vivaldi by period-instrument ensembles.
+- **French Baroque (A = 392 Hz)** — even lower; used for Lully, Couperin, Rameau.
+- **Chorton (A ≈ 466 Hz)** — the high choir pitch of north German organ lofts. Bach's Leipzig.
 
-### Summary for Your App's 24h Loop
+### Vocal ranges
 
-For your "wallpaper" music feature, consider these preset modes:
+A four-part choir spans roughly **80 Hz to 1100 Hz** — bass to soprano, fundamental frequencies. The full sound (with overtones) extends well above that.
 
-- **Cathedral Mode:** Uses 466 Hz for a bright, Renaissance-style resonance.
-- **Monastery Mode:** Uses 432 Hz or 415 Hz for a deep, grounding, Gregorian chant feel.
-- **Worship Mode:** Uses 444 Hz to align the music with the 528 Hz "miracle" tone.
+### What this means for SoulRadio
 
-Would you like to see a list of Gregorian chant recordings already tuned to these specific historical frequencies?
+When the catalogue picks a Renaissance or Baroque recording, we prefer historically-informed performances at A = 415 or A = 432 over modern A = 440 — the lower tuning tilts the room ~16–32 cents, a difference the body notices without being able to name. See [FREQUENCIES.md §432](FREQUENCIES.md).
 
-_AI responses may include mistakes. Learn more_
+---
+
+## A note on the word *solfeggio*
+
+The modern Solfeggio set is recent (1990s). The *word* is much older. Around **1025 AD**, Guido of Arezzo taught his choirs to read pitches by singing the syllables **Ut, Re, Mi, Fa, Sol, La** — drawn from the opening syllables of each line of the hymn ***Ut queant laxis*** (Hymn to St. John the Baptist):
+
+> *Ut queant laxis*
+> *Resonare fibris*
+> *Mira gestorum*
+> *Famuli tuorum*
+> *Solve polluti*
+> *Labii reatum*
+> *Sancte Iohannes*
+
+Each line begins one step higher than the last. From those first syllables — *Ut, Re, Mi, Fa, Sol, La* — descend the modern *do, re, mi, fa, sol, la, ti*, and the word *sol-fa* / *solfège* / *solfeggio*.
+
+When SoulRadio uses the word, we mean both: the modern numerical set *and* the thousand-year-old practice of teaching the body to find a pitch by ear alone.
+
+---
+
+## What this document is, and is not
+
+- It **is** the seed conversation, curated. The questions and the order are preserved because the order is the argument.
+- It **is not** a science paper. The folkloric claims are presented as folklore — not as physiology.
+- It **is not** a substitute for [MANIFESTO.md](MANIFESTO.md) (the rules) or [FREQUENCIES.md](FREQUENCIES.md) (the catalogue). If those documents disagree with this one, they win.
+
+Tune in. Or better — don't. Just leave it on.
+
+— SoulRadio

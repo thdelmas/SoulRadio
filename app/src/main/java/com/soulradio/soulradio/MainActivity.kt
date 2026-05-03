@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -49,6 +50,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -291,10 +293,17 @@ private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency
     // is a peek, not a play.
     val displayed = previewed ?: selected
     val showDetails = previewed == null && selected != null
+    // 72dp min reserves space for the tallest caption (title + work +
+    // performer with their spacers), so selecting a tone doesn't push the
+    // dial up or down. Long work/performer strings cap to one line with
+    // ellipsis instead of wrapping into a third line that would jiggle the
+    // layout further.
     Crossfade(
         targetState = displayed?.key,
         animationSpec = tween(700),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 72.dp),
         label = "caption",
     ) { key ->
         val current = key?.let { Frequencies.byKey(it) }
@@ -309,6 +318,7 @@ private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency
                     fontSize = 11.sp,
                     letterSpacing = 2.sp,
                     textAlign = TextAlign.Center,
+                    maxLines = 1,
                 )
                 return@Column
             }
@@ -318,6 +328,9 @@ private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency
                 fontSize = 13.sp,
                 letterSpacing = 2.sp,
                 fontWeight = FontWeight.Light,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
             if (!showDetails) return@Column
             Spacer(Modifier.height(10.dp))
@@ -327,6 +340,7 @@ private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency
                     color = Mute,
                     fontSize = 11.sp,
                     letterSpacing = 1.sp,
+                    maxLines = 1,
                 )
             } else {
                 current.nowPlaying?.let { np ->
@@ -335,6 +349,8 @@ private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency
                         color = MuteSoft,
                         fontSize = 12.sp,
                         textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
@@ -342,6 +358,8 @@ private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency
                         color = Mute,
                         fontSize = 10.sp,
                         textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }

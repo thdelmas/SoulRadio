@@ -81,6 +81,11 @@ private fun RadioScreen() {
     // not when the user explicitly toggles the pill. The notice exists
     // because that side-effect is silent and easy to miss.
     var autoPausedAt by remember { mutableStateOf<Long?>(null) }
+    // Long-press reveals a tone's title in the caption without selecting
+    // or playing it. The previewAt timestamp keys the auto-clear coroutine
+    // so a fresh long-press on another node resets the 2.5s window.
+    var previewed by remember { mutableStateOf<Frequency?>(null) }
+    var previewAt by remember { mutableStateOf<Long?>(null) }
 
     DisposableEffect(Unit) { onDispose { engine.release() } }
 
@@ -96,6 +101,13 @@ private fun RadioScreen() {
             }
             delay(60_000)
         }
+    }
+
+    LaunchedEffect(previewAt) {
+        if (previewAt == null) return@LaunchedEffect
+        delay(2500)
+        previewed = null
+        previewAt = null
     }
 
     // One shared breath drives every alive element (the playing node's ring
@@ -119,6 +131,8 @@ private fun RadioScreen() {
             PlaybackService.setAuto(context, false)
             autoPausedAt = System.currentTimeMillis()
         }
+        previewed = null
+        previewAt = null
         if (selected?.key == freq.key) {
             selected = null
             engine.selectFrequency(null)
@@ -126,6 +140,10 @@ private fun RadioScreen() {
             selected = freq
             engine.selectFrequency(freq)
         }
+    }
+    val onLongPress: (Frequency) -> Unit = { freq ->
+        previewed = freq
+        previewAt = System.currentTimeMillis()
     }
 
     Column(
@@ -157,6 +175,7 @@ private fun RadioScreen() {
             tunedKeys = engine.tunedKeys,
             pulse = pulse,
             onTap = onTap,
+            onLongPress = onLongPress,
         )
 
         Spacer(Modifier.height(32.dp))
@@ -176,6 +195,7 @@ private fun RadioScreen() {
         Caption(
             selected = selected,
             isTuned = selected?.let { engine.isTuned(it) } ?: false,
+            previewed = previewed,
         )
 
         Spacer(Modifier.height(28.dp))
@@ -264,12 +284,15 @@ private fun AutoPausedNotice(triggerKey: Long?) {
 }
 
 @Composable
-private fun Caption(selected: Frequency?, isTuned: Boolean) {
-    // Crossfade matches the audio crossfade in spirit: text doesn't snap
-    // when the tone underneath fades. Keying on the frequency key (or
-    // null) means re-selecting the same tone is a no-op.
+private fun Caption(selected: Frequency?, isTuned: Boolean, previewed: Frequency?) {
+    // Preview takes precedence over selection: a long-press peek shouldn't
+    // be hidden by whatever is currently playing. Details (work/performer
+    // or "untuned") only render for an actual selection — a previewed tone
+    // is a peek, not a play.
+    val displayed = previewed ?: selected
+    val showDetails = previewed == null && selected != null
     Crossfade(
-        targetState = selected?.key,
+        targetState = displayed?.key,
         animationSpec = tween(700),
         modifier = Modifier.fillMaxWidth(),
         label = "caption",
@@ -296,6 +319,7 @@ private fun Caption(selected: Frequency?, isTuned: Boolean) {
                 letterSpacing = 2.sp,
                 fontWeight = FontWeight.Light,
             )
+            if (!showDetails) return@Column
             Spacer(Modifier.height(10.dp))
             if (!isTuned) {
                 Text(

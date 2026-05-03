@@ -2,9 +2,11 @@ package com.soulradio.soulradio
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +37,7 @@ internal fun Dial(
     tunedKeys: Set<String>,
     pulse: State<Float>,
     onTap: (Frequency) -> Unit,
+    onLongPress: (Frequency) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -49,6 +52,7 @@ internal fun Dial(
                         tuned = freq.key in tunedKeys,
                         pulse = pulse,
                         onTap = onTap,
+                        onLongPress = onLongPress,
                     )
                 }
             }
@@ -56,6 +60,7 @@ internal fun Dial(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DialNode(
     freq: Frequency,
@@ -63,7 +68,12 @@ private fun DialNode(
     tuned: Boolean,
     pulse: State<Float>,
     onTap: (Frequency) -> Unit,
+    onLongPress: (Frequency) -> Unit,
 ) {
+    // Long-press reveals the tone's title in the caption without selecting
+    // or playing — discoverable for the curious, invisible for everyone else.
+    // Companions don't need this: their titles already render under the
+    // circle.
     val colors = nodeColors(selected, tuned)
     Box(
         modifier = Modifier
@@ -85,7 +95,10 @@ private fun DialNode(
                 .clip(CircleShape)
                 .background(colors.bg)
                 .border(colors.borderWidth, colors.border, CircleShape)
-                .clickable { onTap(freq) },
+                .combinedClickable(
+                    onClick = { onTap(freq) },
+                    onLongClick = { onLongPress(freq) },
+                ),
             contentAlignment = Alignment.Center,
         ) {
             Text(

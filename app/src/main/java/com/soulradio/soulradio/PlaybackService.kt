@@ -1,3 +1,5 @@
+@file:androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+
 package com.soulradio.soulradio
 
 import android.content.Context
@@ -8,7 +10,11 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.audio.AudioProcessor
+import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.audio.AudioSink
+import androidx.media3.exoplayer.audio.DefaultAudioSink
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import java.util.Calendar
@@ -30,9 +36,33 @@ class PlaybackService : MediaSessionService() {
     private var tickRunnable: Runnable? = null
     private var fadeRunnable: Runnable? = null
 
+    private val schumannUnderlay = SchumannUnderlay()
+
+    private val underlayListener = object : Player.Listener {
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            updateUnderlay()
+        }
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            updateUnderlay()
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
-        val player = ExoPlayer.Builder(this)
+        val renderersFactory = object : DefaultRenderersFactory(this) {
+            override fun buildAudioSink(
+                context: Context,
+                enableFloatOutput: Boolean,
+                enableAudioTrackPlaybackParams: Boolean,
+            ): AudioSink {
+                return DefaultAudioSink.Builder(context)
+                    .setAudioProcessors(arrayOf<AudioProcessor>(schumannUnderlay))
+                    .setEnableFloatOutput(enableFloatOutput)
+                    .setEnableAudioTrackPlaybackParams(enableAudioTrackPlaybackParams)
+                    .build()
+            }
+        }
+        val player = ExoPlayer.Builder(this, renderersFactory)
             .setAudioAttributes(
                 AudioAttributes.Builder()
                     .setUsage(C.USAGE_MEDIA)
@@ -45,6 +75,7 @@ class PlaybackService : MediaSessionService() {
             .build()
             .apply {
                 repeatMode = Player.REPEAT_MODE_ONE
+                addListener(underlayListener)
             }
         mediaSession = MediaSession.Builder(this, player).build()
     }
@@ -73,11 +104,32 @@ class PlaybackService : MediaSessionService() {
         cancelTick()
         cancelFade()
         mediaSession?.run {
+            player.removeListener(underlayListener)
             player.release()
             release()
         }
         mediaSession = null
         super.onDestroy()
+    }
+
+    /**
+     * Toggle the Schumann underlay based on the currently-playing band. The
+     * 7.83 band is the only place where amplitude modulation rides under
+     * the carrier; everywhere else the processor is a pass-through. Hooked
+     * to player events (item transition, is-playing) so the underlay tracks
+     * what's actually audible — not what AUTO thinks should be audible.
+     */
+    private fun updateUnderlay() {
+        val player = mediaSession?.player ?: return
+        val key = bandKeyOf(player.currentMediaItem)
+        val playing = player.isPlaying
+        schumannUnderlay.setEnabled(playing && key == NIGHT_BAND_KEY)
+    }
+
+    private fun bandKeyOf(item: MediaItem?): String? {
+        val uri = item?.localConfiguration?.uri?.toString() ?: return null
+        // Asset URIs are "asset:///audio/<key>/<filename>" — see Frequency.assetFolder.
+        return Regex("^asset:///audio/([^/]+)/.+$").find(uri)?.groupValues?.get(1)
     }
 
     private fun enableAuto() {
@@ -223,6 +275,8 @@ class PlaybackService : MediaSessionService() {
         private const val TARGET_VOLUME = 0.7f
         private const val FADE_MS = 1500L
         private const val FADE_STEP_MS = 30L
+
+        private const val NIGHT_BAND_KEY = "7.83"
 
         fun isAutoEnabled(context: Context): Boolean =
             context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)

@@ -1,5 +1,6 @@
 package com.soulradio.soulradio
 
+import android.view.HapticFeedbackConstants
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -26,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -75,6 +77,7 @@ private fun DialNode(
     // Companions don't need this: their titles already render under the
     // circle.
     val colors = nodeColors(selected, tuned)
+    val view = LocalView.current
     Box(
         modifier = Modifier
             .size(98.dp)
@@ -96,7 +99,10 @@ private fun DialNode(
                 .background(colors.bg)
                 .border(colors.borderWidth, colors.border, CircleShape)
                 .combinedClickable(
-                    onClick = { onTap(freq) },
+                    onClick = {
+                        view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+                        onTap(freq)
+                    },
                     onLongClick = { onLongPress(freq) },
                 ),
             contentAlignment = Alignment.Center,
@@ -143,6 +149,7 @@ private fun CompanionNode(
     onTap: (Frequency) -> Unit,
 ) {
     val colors = nodeColors(selected, tuned)
+    val view = LocalView.current
     val titleColor by animateColorAsState(
         targetValue = if (selected) Gold else MuteSoft,
         animationSpec = tween(700),
@@ -169,7 +176,10 @@ private fun CompanionNode(
                     .clip(CircleShape)
                     .background(colors.bg)
                     .border(colors.borderWidth, colors.border, CircleShape)
-                    .clickable { onTap(freq) },
+                    .clickable {
+                        view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+                        onTap(freq)
+                    },
                 contentAlignment = Alignment.Center,
             ) {
                 Text(

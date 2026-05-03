@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Foreground for the adaptive launcher icon (API 26+). Sized to the
+  108dp adaptive canvas with all marks kept inside the inner 66dp safe
+  circle, so no mask (square, round, squircle) crops the dial or pip.
+  The pip's diameter is wider than the ring stroke so it stays visible
+  as a distinct indicator at 48dp launcher size.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="2.75"
+        android:fillColor="#00000000"
+        android:pathData="M 54,33 A 21,21 0 1,0 54,75 A 21,21 0 1,0 54,33 Z"/>
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M 54,28.85 A 3.85,3.85 0 1,0 54,36.55 A 3.85,3.85 0 1,0 54,28.85 Z"/>
+</vector>

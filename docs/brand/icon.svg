@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SoulRadio launcher mark: a thin gold dial with a single bulged pip at
+  12 o'clock. Reads as the 9-tap Solfeggio dial, a clock face, and the
+  sun the auto loop is tied to.
+
+  This 48-unit, full-bleed black canvas is the source of truth for the
+  rasterized launcher PNGs (mipmap-{m,h,xh,xxh,xxxh}dpi/ic_launcher.png)
+  and for the 512x512 Play Store hi-res icon. The adaptive vector at
+  app/src/main/res/drawable/ic_launcher_foreground.xml uses the same
+  proportions on the 108-unit adaptive canvas (mark scaled to fit the
+  inner 66dp safe circle, no baked background).
+
+  Regenerate the legacy PNGs after editing:
+    cd app/src/main/res
+    convert ../../../../docs/brand/icon.svg            mipmap-mdpi/ic_launcher.png
+    convert ../../../../docs/brand/icon.svg -resize 72  mipmap-hdpi/ic_launcher.png
+    convert ../../../../docs/brand/icon.svg -resize 96  mipmap-xhdpi/ic_launcher.png
+    convert ../../../../docs/brand/icon.svg -resize 144 mipmap-xxhdpi/ic_launcher.png
+    convert ../../../../docs/brand/icon.svg -resize 192 mipmap-xxxhdpi/ic_launcher.png
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <rect width="48" height="48" fill="#000000"/>
+  <circle cx="24" cy="24" r="15.5" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <circle cx="24" cy="8.5" r="2.8" fill="#D4AF37"/>
+</svg>

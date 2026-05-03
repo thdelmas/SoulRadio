@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Horizontal SoulRadio lockup: launcher mark on the left, wordtext on
+  the right. Gold on a transparent background so it sits cleanly on
+  either light or dark surfaces. The font stack lists Liberation Serif
+  first (it's what the rasterized companion PNG bakes), then common
+  book serifs, then the generic fallback.
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="800" height="200" viewBox="0 0 800 200">
+  <!-- Mark: same proportions as docs/brand/icon.svg, scaled to 120px and offset -->
+  <g transform="translate(40 40) scale(2.5)">
+    <circle cx="24" cy="24" r="15.5" fill="none" stroke="#D4AF37" stroke-width="2"/>
+    <circle cx="24" cy="8.5" r="2.8" fill="#D4AF37"/>
+  </g>
+  <!-- Wordtext: baseline aligned roughly with the mark's optical center -->
+  <text x="200" y="138"
+        font-family="Liberation Serif, EB Garamond, Cormorant Garamond, Times New Roman, serif"
+        font-size="110"
+        font-weight="400"
+        font-style="italic"
+        fill="#D4AF37">SoulRadio</text>
+</svg>

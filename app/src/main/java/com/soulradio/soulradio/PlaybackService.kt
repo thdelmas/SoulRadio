@@ -210,6 +210,14 @@ class PlaybackService : MediaSessionService() {
             context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
                 .getBoolean(PREF_AUTO_ENABLED, false)
 
+        // Manifesto §"the promise" ends with "Tune in. Or better — don't.
+        // Just leave it on." So on the very first launch (no stored pref),
+        // start AUTO. The user can always toggle off; we then respect it.
+        fun startIfFirstLaunch(context: Context) {
+            val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            if (!prefs.contains(PREF_AUTO_ENABLED)) setAuto(context, true)
+        }
+
         fun setAuto(context: Context, enabled: Boolean) {
             context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
                 .edit()

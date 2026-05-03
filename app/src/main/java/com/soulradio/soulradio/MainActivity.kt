@@ -147,6 +147,21 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
         label = "alpha",
     )
 
+    // Contribution popup: a 90-day, paused-only ask. Settle 5 s after the
+    // screen appears (so the controller has bound and reported state, and
+    // the user has had a beat in the room) before deciding. Marking the
+    // popup shown happens up front so the cadence resets whether the user
+    // actions or dismisses — matches the portfolio guide's spec.
+    var showContribution by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        delay(5000)
+        val isPaused = engine.currentFrequency.value == null
+        if (ContributionStore.shouldOffer(context, isPaused)) {
+            ContributionStore.markShown(context)
+            showContribution = true
+        }
+    }
+
     val onTap: (Frequency) -> Unit = { freq ->
         if (auto) {
             auto = false
@@ -242,6 +257,10 @@ private fun RadioScreen(onOpenNotes: () -> Unit) {
         )
 
         Spacer(Modifier.height(28.dp))
+    }
+
+    if (showContribution) {
+        ContributionPopup(onDismiss = { showContribution = false })
     }
 }
 

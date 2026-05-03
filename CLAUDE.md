@@ -48,6 +48,17 @@ If a change risks any of these, stop and flag it.
 3. Add the attribution + license to [CREDITS.md](CREDITS.md). Only **public domain, CC0, CC BY, or CC BY-SA** — see [docs/licensing.md](docs/licensing.md) for the rule and the rejected license tiers (NC, ND, all-rights-reserved).
 4. Verify it loops cleanly (no silence gap, no click) on a real device.
 
+## Contribution popup
+
+There is a portfolio-wide spec for the monthly community-building popup (donate / Play review / feedback). SoulRadio implements it with two manifesto-driven deviations from the default:
+
+- **90-day cadence** (vs. ~30 days default) — the radio is meant to recede; the ask spaces wider.
+- **Paused-only trigger** — checked once, ~5 s after the screen appears. If the radio is playing (AUTO running, or a tone tapped on), the popup waits for the next session. It never interrupts audio.
+
+The three hard rules are absolute and apply here too: **no Play Billing, no feature gates, no donor-vs-non-donor differentiation.** The only state persisted is `contrib_last_shown_at`. Don't add any logic that pauses the popup after a donation, marks a "supporter" state, or gates anything on payment — that converts the donation into a purchase and violates Play policy. If you're touching [ContributionPopup.kt](app/src/main/java/com/soulradio/soulradio/ContributionPopup.kt) or [ContributionStore.kt](app/src/main/java/com/soulradio/soulradio/ContributionStore.kt), re-read the portfolio guide before changing the model.
+
+To update the donation URL or feedback email, edit the two `private const` lines at the top of [ContributionPopup.kt](app/src/main/java/com/soulradio/soulradio/ContributionPopup.kt).
+
 ## Before committing
 
 Run `make check` (or `./scripts/code-quality-check.sh`). It runs the same checks CI does:

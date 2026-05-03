@@ -10,6 +10,7 @@ An ambient Android radio: a 24-hour auto-loop tied to the hour of day, plus a 9-
 
 - [MANIFESTO.md](MANIFESTO.md) — the non-negotiables. Every product/UX decision must trace back here.
 - [FREQUENCIES.md](FREQUENCIES.md) — the frequency catalogue and the 24-hour map. **Source of truth** for the auto loop schedule.
+- [docs/tunables.md](docs/tunables.md) — the wider landscape of frequencies and tuning systems, with reasons each was or wasn't put on the dial. Read before proposing a new station.
 - [ORIGINS.md](ORIGINS.md) — long-form rationale and history.
 - [CREDITS.md](CREDITS.md) — audio attributions; update when adding new recordings.
 

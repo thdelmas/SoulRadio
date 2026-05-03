@@ -15,13 +15,29 @@ Each entry has four fields:
 - **Intention** — the state the tradition asks you to bring to the listening. Not a prescription. A door.
 - **Historical music** — pre-electronic recordings whose *modal character, tempo, and acoustic geometry* match the spirit of the tone. These pieces are not "tuned to" the Hz — they are siblings in feeling. (See [§ A note on tuning](#a-note-on-tuning) at the end.)
 
-The 24-hour auto loop and the 9-tap dial both draw from this map. The dial is for when you want to choose. The loop is for when you don't.
+The 24-hour auto loop and the 9-tap dial are **two different products** with different curation rules — see [§ Two modes](#two-modes) below.
 
 Several bands now bundle more than one historical recording. When a band is tuned (manually or by the auto loop) the radio picks one of its recordings for that session and loops it — see [CREDITS.md](CREDITS.md) for the full list and licenses.
 
 ---
 
-## Quick map
+## Two modes
+
+**Auto loop** — the 24-hour clock-driven schedule (`Frequencies.forHour()`). The listener hasn't asked for anything; the radio is wallpaper. The schedule has to follow the day's arc, never jolt, and never ask for energy the listener didn't volunteer. Uses **eight** of the eleven stations.
+
+**Proactive (dial tap)** — the 9-tap dial. The listener reached for a station; they have invited the register. Looser rules. Uses **all nine dial stations** plus the two companions if surfaced.
+
+Three stations are **tap-only** — they exist on the dial but never play in the auto loop:
+
+- **852 Hz** (the high window) — too vertical to surprise someone with at 4 p.m.
+- **963 Hz** (the crown) — arrival is something the listener has to ask for.
+- **432 Hz** (Verdi's A, companion) — the acoustic-era operatic voice is narrative; it asks to be sat with, and the auto loop cannot sit you down.
+
+This is not an arbitrary cut-off. It is the rule that lets the auto loop stay wallpaper. See [docs/tunables.md § Two modes, two curation rules](docs/tunables.md#two-modes-two-curation-rules) for the longer rationale.
+
+---
+
+## Quick map — the auto-loop schedule
 
 | Hour band     | Tone     | Intention                      |
 |---------------|----------|--------------------------------|
@@ -34,7 +50,7 @@ Several bands now bundle more than one historical recording. When a band is tune
 | 22:00–23:00   | 174 Hz   | Anchoring, low and warm        |
 | 23:00–06:00   | 7.83 Hz  | Held by the stone of the abbey |
 
-The dial keeps **852 Hz** and **963 Hz** as user-chosen tones — the upper register of the tradition, reserved for moments the listener picks deliberately.
+This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/src/main/java/com/soulradio/soulradio/Frequency.kt). Any change here must also change the code and the `expectedSchedule` map in [FrequenciesTest.kt](app/src/test/java/com/soulradio/soulradio/FrequenciesTest.kt).
 
 ---
 

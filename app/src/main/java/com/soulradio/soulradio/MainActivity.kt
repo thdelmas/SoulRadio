@@ -13,6 +13,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -49,6 +50,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.platform.LocalContext
@@ -68,6 +70,26 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme(colorScheme = darkColorScheme()) {
                 Surface(modifier = Modifier.fillMaxSize(), color = Bg) {
+                    val context = LocalContext.current
+                    // Screen dim follows the band's time-of-day, not the
+                    // user's selection — at 3am the room is dim whether the
+                    // radio is on AUTO, paused, or holding a tapped tone.
+                    // Re-poll every 5 min so the dim follows band crossings
+                    // without holding a precise boundary timer.
+                    var dayBand by remember {
+                        mutableStateOf(Frequencies.forNow(context))
+                    }
+                    LaunchedEffect(Unit) {
+                        while (true) {
+                            dayBand = Frequencies.forNow(context)
+                            delay(5 * 60_000L)
+                        }
+                    }
+                    val dim by animateFloatAsState(
+                        targetValue = screenDimFor(dayBand.key),
+                        animationSpec = tween(durationMillis = 5000),
+                        label = "screen-dim",
+                    )
                     var showNotes by remember { mutableStateOf(false) }
                     // The device back gesture should return to the radio when
                     // notes are open; otherwise it falls through to default
@@ -77,6 +99,7 @@ class MainActivity : ComponentActivity() {
                     Crossfade(
                         targetState = showNotes,
                         animationSpec = tween(500),
+                        modifier = Modifier.alpha(dim),
                         label = "screen",
                     ) { notes ->
                         if (notes) {

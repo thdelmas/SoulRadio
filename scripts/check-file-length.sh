@@ -25,6 +25,8 @@ mapfile -t files < <(git ls-files | grep -Ev "$exclude_re" || true)
 violations=0
 for f in "${files[@]}"; do
   [ -f "$f" ] || continue
+  # Skip binary files — `wc -l` counts 0x0A bytes inside PNGs etc.
+  grep -Iq . "$f" || continue
   lines=$(wc -l < "$f")
   if [ "$lines" -gt "$MAX_LINES" ]; then
     printf '  %s: %d lines (max %d)\n' "$f" "$lines" "$MAX_LINES"

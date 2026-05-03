@@ -82,7 +82,13 @@ object Frequencies {
     )
 
     val companions = listOf(
-        Frequency("432", "432", "Verdi's A", isCompanion = true),
+        Frequency(
+            "432", "432", "Verdi's A", isCompanion = true,
+            nowPlaying = NowPlaying(
+                work = "Verdi · Celeste Aida (Aida)",
+                performer = "Enrico Caruso (1904) · public domain",
+            ),
+        ),
         Frequency(
             "7.83", "7.83", "Schumann", isCompanion = true,
             nowPlaying = NowPlaying(

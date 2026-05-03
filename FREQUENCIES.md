@@ -144,6 +144,7 @@ These are not on the 9-tap dial. They live in the auto loop and in the night ban
 - **Status:** Not a Solfeggio tone. A *tuning standard* — the pitch the note A is set to.
 - **History:** Giuseppe Verdi formally petitioned the Italian government in 1884 to set A = 432 Hz, calling it "the scientific pitch." The petition succeeded briefly. Modern orchestras settled on A = 440 Hz at a 1939 ISO conference. Period-instrument ensembles still use lower pitches: **Baroque pitch (A = 415 Hz)** for Bach, even lower for French Baroque.
 - **What it means for SoulRadio:** When we use orchestral or choral recordings, we prefer historically-informed performances at A = 415 or A = 432 over the modern A = 440. A "Verdi tuning" preset re-tunes the room by ~32 cents — a difference the body notices without being able to name.
+- **Current build:** Caruso, "Celeste Aida" from Verdi's *Aida*, recorded for Victor on 1 February 1904. The Metropolitan Opera and most major theatres held A at 432–435 Hz from the late 19th century until WWII — Caruso recorded inside that tuning era. Pitch on acoustic-era discs drifts with playback speed, so this is a Verdi-tuning-*era* recording rather than a verifiably-432-Hz one. See [CREDITS.md §432](CREDITS.md).
 - **Music:** anything performed by *Jordi Savall / Hespèrion XXI*, *The Tallis Scholars*, *Sir John Eliot Gardiner / English Baroque Soloists*, *Philippe Herreweghe / Collegium Vocale Gent*.
 
 ### 7.83 Hz — *the Schumann resonance*

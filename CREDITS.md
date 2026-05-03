@@ -65,6 +65,14 @@ All bundled recordings are used under their original licenses. Compositions are 
   License: [CC BY-SA 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Johann_Sebastian_Bach_-_Mass_in_B_minor_-_Agnus_Dei.ogg)
 
+## 432 Hz band — *Verdi's A*
+
+- **Verdi — *Aida* — "Celeste Aida"**
+  Performed by Enrico Caruso (tenor). Recorded 1 February 1904, Carnegie Hall studio, New York, for Victor (matrix C-997 / Victor 81022 / HMV 052074). Acoustic horn recording from Caruso's first American session.
+  License: **Public domain** worldwide (1904 sound recording).
+  Tuning context: New York Metropolitan Opera and most major theatres held A at 432–435 Hz from the late 19th century until WWII — see [FREQUENCIES.md §432](FREQUENCIES.md). Pitch on acoustic-era discs varies with playback speed, so this is a Verdi-tuning-era recording rather than a verifiably-432-Hz one.
+  Source: [archive.org/details/complete-caruso-vol.-02](https://archive.org/details/complete-caruso-vol.-02)
+
 ## 7.83 Hz night band
 
 - **Gregorian chant — recorded inside the Abbey of Sant'Antimo (Tuscany)**

@@ -127,6 +127,11 @@ All bundled recordings are used under their original licenses. Compositions are 
   License: [CC BY-SA 2.0 Generic](https://creativecommons.org/licenses/by-sa/2.0/)
   Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wolfgang_Amadeus_Mozart_-_Clarinet_Concerto_-_2._Adagio.ogg)
 
+- **Bach — Well-Tempered Clavier Book I, Prelude No. 1 in C major, BWV 846**
+  Performed by Kimiko Ishizaka (Open Well-Tempered Clavier, sister project to the Open Goldberg Variations on band 741). The most-recognised Bach prelude in C major — Gounod overlaid the *Ave Maria* on top of these arpeggios in 1853, and the prelude itself is the warmest-keyed opening of the 48 in the WTC. Brings the canonical "warm Bach" voice the 528 band's lore had cited but the bundle hadn't yet held, sitting beside the Pachelbel canon and the Mozart clarinet adagio at the centre of the day.
+  License: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (public-domain dedication)
+  Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Kimiko_Ishizaka_-_Bach_-_Well-Tempered_Clavier,_Book_1_-_01_Prelude_No._1_in_C_major,_BWV_846.ogg)
+
 - **Schumann — *Träumerei* (Kinderszenen, Op. 15 No. 7)**
   Performed by Donald Betts (piano), released to the public domain via [Musopen](https://musopen.org/). The most-played miniature in the Romantic piano canon — *"Dreaming."* The chord progression is a quiet ground; the band asks for nothing more.
   License: **Public domain** (Musopen release)

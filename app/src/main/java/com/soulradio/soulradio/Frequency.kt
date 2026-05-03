@@ -162,6 +162,11 @@ object Frequencies {
                     performer = "William McColl · UW Symphony, Abraham Kaplan · CC BY-SA 2.0",
                 ),
                 NowPlaying(
+                    asset = "bach_wtc1_prelude_c_major_ishizaka.ogg",
+                    work = "Bach · Well-Tempered Clavier I, Prelude in C, BWV 846",
+                    performer = "Kimiko Ishizaka · CC0 (Open Well-Tempered Clavier)",
+                ),
+                NowPlaying(
                     asset = "schumann_traumerei_betts.ogg",
                     work = "Schumann · Träumerei (Kinderszenen, Op. 15 No. 7)",
                     performer = "Donald Betts · public domain (Musopen)",

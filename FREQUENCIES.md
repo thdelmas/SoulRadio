@@ -113,6 +113,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 - **Intention:** Warmth at the centre of the day. Where the loop spends its longest stretch. The frequency the popular tradition treats as the heart of the Solfeggio set.
 - **Historical music:**
   - **Bach — *Jesu, Joy of Man's Desiring* (from BWV 147)** — the canonical "warm" Bach, and not by accident: the chorale tune sits in C major at a tempo the heart already knows.
+  - **Bach — Well-Tempered Clavier Book I, Prelude No. 1 in C major (BWV 846, 1722)** — the most-recognised opening of the 48 in the WTC; Gounod overlaid the *Ave Maria* on top of its arpeggios in 1853. The textbook centre-of-the-day Bach in solo-keyboard form, from the same Kimiko Ishizaka / Open Bach lineage as the Goldberg Aria on 741. (Currently bundled — see [CREDITS.md §528](CREDITS.md).)
   - **Pachelbel — *Canon in D* (c. 1680)** — the most-played classical piece of the 20th century for a reason. Eight bars repeating.
   - **Vivaldi — *The Four Seasons*, "Spring", mvt. I (1725)** — bright E major; the piece every nervous system already recognises.
   - **Mozart — *Clarinet Concerto in A major*, K. 622, Adagio (1791)** — a single woodwind, no edges.

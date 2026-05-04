@@ -213,19 +213,22 @@ private fun EntryRow(entry: CatalogueEntry, active: Boolean, onTap: () -> Unit) 
                 fontWeight = FontWeight.Light,
                 modifier = Modifier.weight(1f),
             )
-            // Active row gets a small tone glyph when it's audible — a
-            // visual confirmation that "tap = read + listen." Inactive
-            // playable rows show "+", inactive non-playable rows show "+",
-            // expanded non-playable rows show "−". The glyph is the only
-            // way the user knows up front which rows have audio.
+            // The glyph column tells the listener two things at once:
+            // *can this row produce a tone?* (♪ vs +) and *is it the
+            // active row?* (Gold vs GoldDim). A faint ♪ on an inactive
+            // playable row is the up-front signal — without it, "+"
+            // reads as expand-only and the audio is a hidden feature.
+            // Sub-audible / non-numeric rows keep "+" since there is
+            // genuinely nothing to hear.
             val glyph = when {
                 active && playable -> "♪"
                 active             -> "−"
+                playable           -> "♪"
                 else               -> "+"
             }
             Text(
                 text = glyph,
-                color = if (active && playable) Gold else GoldDim,
+                color = if (active) Gold else GoldDim,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Light,
                 textAlign = TextAlign.End,

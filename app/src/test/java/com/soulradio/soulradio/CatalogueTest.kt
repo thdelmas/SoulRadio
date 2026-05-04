@@ -102,6 +102,36 @@ class CatalogueTest {
     }
 
     @Test
+    fun no_rationale_makes_a_medical_claim() {
+        // MANIFESTO §5 forbids medical/health claims about any frequency.
+        // The catalogue rationales describe *why a frequency is or isn't
+        // on the dial* — they must never describe what the tone does to
+        // the listener's body. Banned verbs catch the most common ways a
+        // claim sneaks into copy. This is a guardrail against future
+        // drift, not a comprehensive linter.
+        val bannedTerms = listOf(
+            "cures", "cure ", " cure.", "cure,",
+            "heals", "heal ", "healing",
+            "treats ", "treatment of",
+            "induces", "induce ", "induction of",
+            "balances your", "balances the body",
+            "repairs ", "repair the",
+            "DNA repair", "cellular repair",
+            "anxiety relief", "pain relief", "depression relief",
+        )
+        for (entry in Catalogue.entries) {
+            for (term in bannedTerms) {
+                assertFalse(
+                    "Catalogue rationale for ${entry.hz} contains banned medical-claim term \"$term\". " +
+                        "Rationales describe why a frequency is here, not what it does to the body. " +
+                        "See MANIFESTO.md §5.",
+                    entry.rationale.lowercase().contains(term.lowercase()),
+                )
+            }
+        }
+    }
+
+    @Test
     fun cousto_set_isComplete() {
         // The Cousto cosmic octave is documented as a *set*; partial inclusion
         // would imply curation we have not done. tunables.md: "adding one

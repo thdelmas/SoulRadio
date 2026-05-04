@@ -22,7 +22,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.delay
 
-private enum class AppSurface { Main, Notes, Radio }
+private enum class AppSurface { Main, Notes, Radio, Settings }
 
 class MainActivity : ComponentActivity() {
 
@@ -71,11 +71,15 @@ class MainActivity : ComponentActivity() {
                             AppSurface.Main -> MainScreen(
                                 onOpenNotes = { surface = AppSurface.Notes },
                                 onOpenRadio = { surface = AppSurface.Radio },
+                                onOpenSettings = { surface = AppSurface.Settings },
                             )
                             AppSurface.Notes -> AboutScreen(
                                 onClose = { surface = AppSurface.Main },
                             )
                             AppSurface.Radio -> RadioModeScreen(
+                                onClose = { surface = AppSurface.Main },
+                            )
+                            AppSurface.Settings -> SettingsScreen(
                                 onClose = { surface = AppSurface.Main },
                             )
                         }

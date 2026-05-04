@@ -15,6 +15,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,7 +52,11 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
 @Composable
-internal fun MainScreen(onOpenNotes: () -> Unit, onOpenRadio: () -> Unit) {
+internal fun MainScreen(
+    onOpenNotes: () -> Unit,
+    onOpenRadio: () -> Unit,
+    onOpenSettings: () -> Unit,
+) {
     val context = LocalContext.current
     val engine = remember { TrackEngine(context) }
     var auto by remember { mutableStateOf(PlaybackService.isAutoEnabled(context)) }
@@ -165,11 +170,11 @@ internal fun MainScreen(onOpenNotes: () -> Unit, onOpenRadio: () -> Unit) {
                     },
                 )
             }
-            // Two doors flanking the AUTO pill: "radio" (leading) opens the
-            // wider catalogue; "notes" (trailing) opens the docs. Same pill
-            // idiom as AUTO so they read as obvious tap targets without
-            // competing with it for the eye. Vertical padding clears the
-            // 48 dp tap-target floor.
+            // The "radio" pill (leading) opens the wider catalogue. The
+            // trailing edge holds two glyph doors — gear for settings,
+            // book for the docs — paired in one row so the corner reads
+            // as a single utility cluster rather than two competing pills.
+            // Vertical padding clears the 48 dp tap-target floor.
             Text(
                 text = "radio",
                 color = Gold,
@@ -183,19 +188,14 @@ internal fun MainScreen(onOpenNotes: () -> Unit, onOpenRadio: () -> Unit) {
                     .clickable { onOpenRadio() }
                     .padding(horizontal = 14.dp, vertical = 16.dp),
             )
-            Text(
-                text = "notes",
-                color = Gold,
-                fontSize = 11.sp,
-                letterSpacing = 3.sp,
-                fontWeight = FontWeight.Light,
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .clip(CircleShape)
-                    .border(1.dp, GoldDim, CircleShape)
-                    .clickable { onOpenNotes() }
-                    .padding(horizontal = 14.dp, vertical = 16.dp),
-            )
+            Row(
+                modifier = Modifier.align(Alignment.CenterEnd),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconDoor(onClick = onOpenSettings) { GearGlyph() }
+                IconDoor(onClick = onOpenNotes) { BookGlyph() }
+            }
         }
 
         Spacer(Modifier.weight(1f))

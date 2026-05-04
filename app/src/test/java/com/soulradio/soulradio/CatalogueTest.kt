@@ -26,12 +26,13 @@ class CatalogueTest {
         for (entry in Catalogue.entries) {
             assertTrue("hz blank for entry $entry", entry.hz.isNotBlank())
             assertTrue("title blank for entry $entry", entry.title.isNotBlank())
-            // Radio's product is the four sections — each one shipping
+            // Radio's product is the five sections — each one shipping
             // empty would leave the listener with a header and a void.
             assertTrue("history blank for ${entry.hz}", entry.history.isNotBlank())
-            assertTrue("believed blank for ${entry.hz}", entry.believed.isNotBlank())
+            assertTrue("uses blank for ${entry.hz}", entry.uses.isNotBlank())
             assertTrue("studies blank for ${entry.hz}", entry.studies.isNotBlank())
             assertTrue("references blank for ${entry.hz}", entry.references.isNotBlank())
+            assertTrue("usage blank for ${entry.hz}", entry.usage.isNotBlank())
         }
     }
 
@@ -106,13 +107,23 @@ class CatalogueTest {
     @Test
     fun no_radio_voice_makes_a_medical_claim() {
         // MANIFESTO §5 forbids medical/health claims about any frequency.
-        // The radio's *own* voice — history, studies, references — must
-        // never describe what the tone does to the listener's body. The
-        // `believed` field is exempt: its job is to report folklore as
-        // folklore (proponents say X), and the field name itself does the
-        // framing work. Banned verbs below catch the most common ways a
-        // claim sneaks into copy; this is a drift guardrail, not a
-        // comprehensive linter.
+        // The linter applies to fields where the radio asserts *truth*:
+        // **history** (factual provenance) and **studies** (the science).
+        // The other three fields are exempt because their job is
+        // descriptive, not assertive:
+        //   - **uses** describes what practitioners use a band *for*
+        //     ("sold for sleep onset"); naming the practice is not
+        //     prescribing the practice.
+        //   - **references** cites real-world products, channels, and
+        //     recordings by their actual names — including names that
+        //     contain words like "healing" ("Healing Vibrations" the
+        //     YouTube channel, the "sound-healing" community).
+        //   - **usage** addresses the listener as "if X is part of
+        //     your practice" — referencing a community, not claiming
+        //     an effect.
+        // Banned verbs below catch the most common ways a *truth claim*
+        // about the body sneaks into history or studies copy; this is a
+        // drift guardrail, not a comprehensive linter.
         val bannedTerms = listOf(
             "cures", "cure ", " cure.", "cure,",
             "heals", "heal ", "healing",
@@ -127,13 +138,12 @@ class CatalogueTest {
             val radioVoiceFields = mapOf(
                 "history" to entry.history,
                 "studies" to entry.studies,
-                "references" to entry.references,
             )
             for ((fieldName, content) in radioVoiceFields) {
                 for (term in bannedTerms) {
                     assertFalse(
                         "Catalogue $fieldName for ${entry.hz} contains banned medical-claim term \"$term\". " +
-                            "The radio's own voice (history/studies/references) must not describe what the tone does to the body. " +
+                            "The radio's truth-claim fields (history, studies) must not describe what the tone does to the body. " +
                             "See MANIFESTO.md §5.",
                         content.lowercase().contains(term.lowercase()),
                     )

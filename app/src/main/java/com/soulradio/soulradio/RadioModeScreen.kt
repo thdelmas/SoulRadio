@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,21 +47,36 @@ import kotlinx.coroutines.withContext
  * (≥ 20 Hz), the same tap also plays the tone as a sine demo. Sub-audible
  * and non-numeric rows expand the entry sections only.
  *
- * Each expanded entry surfaces four sections: history, what is *believed*
- * (folklore reported as folklore), scientific studies (or honest absence),
- * and artistic / traditional references in the band. The radio's voice
- * never asserts effects on the listener.
+ * Each expanded entry surfaces five sections: history, historical uses
+ * (which traditions / products / contexts have used the band — sound-
+ * healing, biohacker, neurofeedback, musical, or otherwise; descriptive,
+ * not prescriptive), scientific studies (or honest absence), concrete
+ * references the listener can chase down, and when a listener might
+ * actually reach for it. The radio's voice never asserts effects on the
+ * listener.
  *
  * Per [MANIFESTO.md](../../../../../../MANIFESTO.md): exploration is opt-in,
  * never the default surface, never bleeds into the room. The sine demo
  * stops the moment the screen closes (DisposableEffect), so the radio
  * cannot leak its exploration audio into the auto loop or dial context.
+ *
+ * The reverse direction is handled too: while Radio is open, the dial
+ * player is paused via PlaybackService so dial recordings and sine demos
+ * don't play simultaneously. On exit the service re-engages AUTO if it
+ * was on; tapped tones don't auto-resume — those are per-tap by design.
  */
 @Composable
 fun RadioModeScreen(onClose: () -> Unit) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val sineDemo = remember { SineDemo() }
-    DisposableEffect(Unit) { onDispose { sineDemo.release() } }
+    DisposableEffect(Unit) {
+        PlaybackService.pauseForRadio(context)
+        onDispose {
+            sineDemo.release()
+            PlaybackService.resumeFromRadio(context)
+        }
+    }
 
     // Single-active-row model: tapping a row makes it the active one
     // (expanding the entry + starting tone if audible); tapping the same
@@ -156,7 +172,7 @@ private fun Preamble() {
     )
     Spacer(Modifier.height(10.dp))
     Text(
-        text = "Frequencies considered for the dial that did not earn a slot. The dial stays small so the room can recede; this is where the rest of the landscape is documented. Tap a row to read its history, what is believed of it, what studies actually show, and what music lives in the band — audible Hz also play as a tone demo.",
+        text = "Frequencies considered for the dial that did not earn a slot. The dial stays small so the room can recede; this is where the rest of the landscape is documented. Tap a row for history, how the frequency is used in sound-healing, biohacker, and musical practice, what studies show, concrete references, and when a listener might reach for it — audible Hz also play as a tone demo.",
         color = MuteSoft,
         fontSize = 14.sp,
         lineHeight = 21.sp,
@@ -245,16 +261,25 @@ private fun EntryRow(entry: CatalogueEntry, active: Boolean, onTap: () -> Unit) 
             enter = fadeIn(tween(300)) + expandVertically(tween(300)),
             exit = fadeOut(tween(200)) + shrinkVertically(tween(200)),
         ) {
-            // Sections indented to the title column so the eye reads them as
-            // detail belonging to the row above, not new top-level entries.
-            Row(modifier = Modifier.padding(top = 14.dp)) {
-                Spacer(Modifier.width(84.dp))
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    EntrySection("HISTORY", entry.history)
-                    EntrySection("BELIEVED EFFECT", entry.believed)
-                    EntrySection("SCIENTIFIC STUDIES", entry.studies)
-                    EntrySection("ARTISTIC & TRADITIONAL", entry.references, isLast = true)
+            // Expanded body uses the full row width — indenting to the title
+            // column crushed body text into a 60-percent gutter on a phone
+            // and made the five sections hard to read. The HairlineDivider
+            // below the row brackets the detail visually instead.
+            //
+            // RECORDINGS sits up top when the entry has any — leading the
+            // expansion with curated artistic compositions matches the dial,
+            // which surfaces work + performer as its primary content. Bands
+            // with no genuine pre-electronic lineage (Schumann harmonics,
+            // brainwave bands, numerology) skip this section entirely.
+            Column(modifier = Modifier.padding(top = 18.dp, bottom = 6.dp)) {
+                if (entry.compositions.isNotEmpty()) {
+                    CompositionsSection(entry.compositions)
                 }
+                EntrySection("HISTORY", entry.history)
+                EntrySection("HISTORICAL USES", entry.uses)
+                EntrySection("SCIENTIFIC STUDIES", entry.studies)
+                EntrySection("REFERENCES", entry.references)
+                EntrySection("WHEN TO USE", entry.usage, isLast = true)
             }
         }
     }
@@ -262,23 +287,59 @@ private fun EntryRow(entry: CatalogueEntry, active: Boolean, onTap: () -> Unit) 
 }
 
 @Composable
+private fun CompositionsSection(compositions: List<Composition>) {
+    // Each composition renders as work (MuteSoft, prominent) + performer
+    // (Mute, smaller) — the same pairing the dial uses in its now-playing
+    // caption, so the eye reads continuity between the two modes. Stacked
+    // left-aligned with a tight inner spacer; the section trailing spacer
+    // matches EntrySection so the rhythm of the expanded panel stays even.
+    Text(
+        text = "RECORDINGS",
+        color = Gold,
+        fontSize = 11.sp,
+        letterSpacing = 2.5.sp,
+        fontWeight = FontWeight.Medium,
+    )
+    Spacer(Modifier.height(10.dp))
+    compositions.forEachIndexed { index, c ->
+        Text(
+            text = c.work,
+            color = MuteSoft,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            fontWeight = FontWeight.Light,
+        )
+        Spacer(Modifier.height(2.dp))
+        Text(
+            text = c.performer,
+            color = Mute,
+            fontSize = 12.sp,
+            lineHeight = 18.sp,
+            fontWeight = FontWeight.Light,
+        )
+        if (index < compositions.lastIndex) Spacer(Modifier.height(10.dp))
+    }
+    Spacer(Modifier.height(20.dp))
+}
+
+@Composable
 private fun EntrySection(label: String, body: String, isLast: Boolean = false) {
     Text(
         text = label,
-        color = GoldDim,
-        fontSize = 10.sp,
-        letterSpacing = 2.sp,
+        color = Gold,
+        fontSize = 11.sp,
+        letterSpacing = 2.5.sp,
         fontWeight = FontWeight.Medium,
     )
-    Spacer(Modifier.height(4.dp))
+    Spacer(Modifier.height(7.dp))
     Text(
         text = body,
-        color = Mute,
-        fontSize = 13.sp,
-        lineHeight = 20.sp,
+        color = MuteSoft,
+        fontSize = 14.sp,
+        lineHeight = 22.sp,
         fontWeight = FontWeight.Light,
     )
-    if (!isLast) Spacer(Modifier.height(14.dp))
+    if (!isLast) Spacer(Modifier.height(20.dp))
 }
 
 @Composable

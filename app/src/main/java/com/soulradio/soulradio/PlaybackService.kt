@@ -84,6 +84,8 @@ class PlaybackService : MediaSessionService() {
         when (intent?.action) {
             ACTION_AUTO_ON -> enableAuto()
             ACTION_AUTO_OFF -> disableAuto()
+            ACTION_PAUSE_FOR_RADIO -> pauseForRadio()
+            ACTION_RESUME_FROM_RADIO -> resumeFromRadio()
         }
         return super.onStartCommand(intent, flags, startId)
     }
@@ -145,6 +147,41 @@ class PlaybackService : MediaSessionService() {
         // Don't touch playback here — the activity (TrackEngine) will fade
         // out or swap to a user-tapped tone. Cancelling our fade lets it.
         cancelFade()
+    }
+
+    /**
+     * Pause the dial player while Radio mode is open. The Radio's sine demos
+     * and the dial's recordings shouldn't play simultaneously — the manifesto
+     * keeps the two surfaces apart. AUTO state in prefs is left alone, so
+     * exiting Radio can re-engage AUTO without overwriting the user's choice.
+     * The auto-tick is paused so the schedule doesn't roll the player back
+     * on while the user is in Radio.
+     */
+    private fun pauseForRadio() {
+        cancelTick()
+        cancelFade()
+        val player = mediaSession?.player ?: return
+        if (player.isPlaying || player.playWhenReady) {
+            fadeTo(player, 0f) { player.pause() }
+        }
+    }
+
+    /**
+     * Re-engage the dial when Radio mode closes. If AUTO is on per prefs,
+     * apply the schedule for now and resume ticking. If AUTO is off, the
+     * user had a tapped tone (or silence); we don't auto-resume tapped
+     * tones — the user can re-tap if they want the room back.
+     */
+    private fun resumeFromRadio() {
+        val autoOn = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            .getBoolean(PREF_AUTO_ENABLED, false)
+        if (!autoOn) return
+        if (!autoEnabled) {
+            enableAuto()
+        } else {
+            applyAutoForNow()
+            scheduleNextTick()
+        }
     }
 
     private fun scheduleNextTick() {
@@ -268,6 +305,8 @@ class PlaybackService : MediaSessionService() {
     companion object {
         const val ACTION_AUTO_ON = "com.soulradio.action.AUTO_ON"
         const val ACTION_AUTO_OFF = "com.soulradio.action.AUTO_OFF"
+        const val ACTION_PAUSE_FOR_RADIO = "com.soulradio.action.PAUSE_FOR_RADIO"
+        const val ACTION_RESUME_FROM_RADIO = "com.soulradio.action.RESUME_FROM_RADIO"
 
         private const val PREFS = "soulradio.state"
         private const val PREF_AUTO_ENABLED = "auto_enabled"
@@ -297,6 +336,29 @@ class PlaybackService : MediaSessionService() {
                 .apply()
             val intent = Intent(context, PlaybackService::class.java).apply {
                 action = if (enabled) ACTION_AUTO_ON else ACTION_AUTO_OFF
+            }
+            context.startService(intent)
+        }
+
+        /**
+         * Pause the dial player while Radio mode is open. Does NOT write to
+         * the AUTO pref — the user's AUTO choice is preserved across the
+         * Radio session.
+         */
+        fun pauseForRadio(context: Context) {
+            val intent = Intent(context, PlaybackService::class.java).apply {
+                action = ACTION_PAUSE_FOR_RADIO
+            }
+            context.startService(intent)
+        }
+
+        /**
+         * Re-engage the dial when Radio mode closes. AUTO resumes if it was
+         * on; tapped tones do not auto-resume.
+         */
+        fun resumeFromRadio(context: Context) {
+            val intent = Intent(context, PlaybackService::class.java).apply {
+                action = ACTION_RESUME_FROM_RADIO
             }
             context.startService(intent)
         }

@@ -26,10 +26,12 @@ class CatalogueTest {
         for (entry in Catalogue.entries) {
             assertTrue("hz blank for entry $entry", entry.hz.isNotBlank())
             assertTrue("title blank for entry $entry", entry.title.isNotBlank())
-            assertTrue(
-                "rationale blank for entry $entry — Radio's only product is the rationale",
-                entry.rationale.isNotBlank(),
-            )
+            // Radio's product is the four sections — each one shipping
+            // empty would leave the listener with a header and a void.
+            assertTrue("history blank for ${entry.hz}", entry.history.isNotBlank())
+            assertTrue("believed blank for ${entry.hz}", entry.believed.isNotBlank())
+            assertTrue("studies blank for ${entry.hz}", entry.studies.isNotBlank())
+            assertTrue("references blank for ${entry.hz}", entry.references.isNotBlank())
         }
     }
 
@@ -102,13 +104,15 @@ class CatalogueTest {
     }
 
     @Test
-    fun no_rationale_makes_a_medical_claim() {
+    fun no_radio_voice_makes_a_medical_claim() {
         // MANIFESTO §5 forbids medical/health claims about any frequency.
-        // The catalogue rationales describe *why a frequency is or isn't
-        // on the dial* — they must never describe what the tone does to
-        // the listener's body. Banned verbs catch the most common ways a
-        // claim sneaks into copy. This is a guardrail against future
-        // drift, not a comprehensive linter.
+        // The radio's *own* voice — history, studies, references — must
+        // never describe what the tone does to the listener's body. The
+        // `believed` field is exempt: its job is to report folklore as
+        // folklore (proponents say X), and the field name itself does the
+        // framing work. Banned verbs below catch the most common ways a
+        // claim sneaks into copy; this is a drift guardrail, not a
+        // comprehensive linter.
         val bannedTerms = listOf(
             "cures", "cure ", " cure.", "cure,",
             "heals", "heal ", "healing",
@@ -120,13 +124,20 @@ class CatalogueTest {
             "anxiety relief", "pain relief", "depression relief",
         )
         for (entry in Catalogue.entries) {
-            for (term in bannedTerms) {
-                assertFalse(
-                    "Catalogue rationale for ${entry.hz} contains banned medical-claim term \"$term\". " +
-                        "Rationales describe why a frequency is here, not what it does to the body. " +
-                        "See MANIFESTO.md §5.",
-                    entry.rationale.lowercase().contains(term.lowercase()),
-                )
+            val radioVoiceFields = mapOf(
+                "history" to entry.history,
+                "studies" to entry.studies,
+                "references" to entry.references,
+            )
+            for ((fieldName, content) in radioVoiceFields) {
+                for (term in bannedTerms) {
+                    assertFalse(
+                        "Catalogue $fieldName for ${entry.hz} contains banned medical-claim term \"$term\". " +
+                            "The radio's own voice (history/studies/references) must not describe what the tone does to the body. " +
+                            "See MANIFESTO.md §5.",
+                        content.lowercase().contains(term.lowercase()),
+                    )
+                }
             }
         }
     }

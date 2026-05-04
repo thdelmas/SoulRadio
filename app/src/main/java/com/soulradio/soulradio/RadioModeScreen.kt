@@ -42,9 +42,14 @@ import kotlinx.coroutines.withContext
 /**
  * Radio mode — the wider field, behind a deliberate door. Lists the
  * frequencies documented in `docs/tunables.md` that did *not* earn a place
- * on the dial. Tap a row to read why; if the row's Hz is audible (≥ 20 Hz),
- * the same tap also plays the tone as a sine demo. Sub-audible and
- * non-numeric rows expand the rationale only — there is nothing to hear.
+ * on the dial. Tap a row to read about it; if the row's Hz is audible
+ * (≥ 20 Hz), the same tap also plays the tone as a sine demo. Sub-audible
+ * and non-numeric rows expand the entry sections only.
+ *
+ * Each expanded entry surfaces four sections: history, what is *believed*
+ * (folklore reported as folklore), scientific studies (or honest absence),
+ * and artistic / traditional references in the band. The radio's voice
+ * never asserts effects on the listener.
  *
  * Per [MANIFESTO.md](../../../../../../MANIFESTO.md): exploration is opt-in,
  * never the default surface, never bleeds into the room. The sine demo
@@ -58,7 +63,7 @@ fun RadioModeScreen(onClose: () -> Unit) {
     DisposableEffect(Unit) { onDispose { sineDemo.release() } }
 
     // Single-active-row model: tapping a row makes it the active one
-    // (expanding rationale + starting tone if audible); tapping the same
+    // (expanding the entry + starting tone if audible); tapping the same
     // row again clears active. Coupling expand and play to one state keeps
     // the audio model trivially correct — at most one tone, ever.
     var activeHz by remember { mutableStateOf<String?>(null) }
@@ -151,7 +156,7 @@ private fun Preamble() {
     )
     Spacer(Modifier.height(10.dp))
     Text(
-        text = "Frequencies considered for the dial that did not earn a slot. The dial stays small so the room can recede; this is where the rest of the landscape is documented. Tap a row to read why a frequency is here and not there — audible Hz also play as a tone demo.",
+        text = "Frequencies considered for the dial that did not earn a slot. The dial stays small so the room can recede; this is where the rest of the landscape is documented. Tap a row to read its history, what is believed of it, what studies actually show, and what music lives in the band — audible Hz also play as a tone demo.",
         color = MuteSoft,
         fontSize = 14.sp,
         lineHeight = 21.sp,
@@ -240,22 +245,40 @@ private fun EntryRow(entry: CatalogueEntry, active: Boolean, onTap: () -> Unit) 
             enter = fadeIn(tween(300)) + expandVertically(tween(300)),
             exit = fadeOut(tween(200)) + shrinkVertically(tween(200)),
         ) {
-            // Rationale indented to the title column so the eye reads it as
-            // detail belonging to the row above, not a new top-level entry.
-            Row(modifier = Modifier.padding(top = 10.dp)) {
+            // Sections indented to the title column so the eye reads them as
+            // detail belonging to the row above, not new top-level entries.
+            Row(modifier = Modifier.padding(top = 14.dp)) {
                 Spacer(Modifier.width(84.dp))
-                Text(
-                    text = entry.rationale,
-                    color = Mute,
-                    fontSize = 13.sp,
-                    lineHeight = 20.sp,
-                    fontWeight = FontWeight.Light,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    EntrySection("HISTORY", entry.history)
+                    EntrySection("BELIEVED EFFECT", entry.believed)
+                    EntrySection("SCIENTIFIC STUDIES", entry.studies)
+                    EntrySection("ARTISTIC & TRADITIONAL", entry.references, isLast = true)
+                }
             }
         }
     }
     HairlineDivider()
+}
+
+@Composable
+private fun EntrySection(label: String, body: String, isLast: Boolean = false) {
+    Text(
+        text = label,
+        color = GoldDim,
+        fontSize = 10.sp,
+        letterSpacing = 2.sp,
+        fontWeight = FontWeight.Medium,
+    )
+    Spacer(Modifier.height(4.dp))
+    Text(
+        text = body,
+        color = Mute,
+        fontSize = 13.sp,
+        lineHeight = 20.sp,
+        fontWeight = FontWeight.Light,
+    )
+    if (!isLast) Spacer(Modifier.height(14.dp))
 }
 
 @Composable

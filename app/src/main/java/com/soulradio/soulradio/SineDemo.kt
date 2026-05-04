@@ -23,7 +23,7 @@ import kotlin.math.sin
  * Sub-audible Hz (< 20) are silently rejected — at those rates an
  * AudioTrack writes near-silence, and pretending to "play" them would
  * misrepresent what the listener is hearing. The Radio UI keeps the
- * rationale-expand affordance for those rows; only the audio is gated.
+ * entry-expand affordance for those rows; only the audio is gated.
  */
 class SineDemo {
 

@@ -26,6 +26,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -100,6 +104,10 @@ private fun DialNode(
                     .clickable {
                         view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
                         onTap(freq)
+                    }
+                    .semantics {
+                        role = Role.Button
+                        contentDescription = nodeDescription(freq, selected, tuned)
                     },
                 contentAlignment = Alignment.Center,
             ) {
@@ -184,6 +192,10 @@ private fun CompanionNode(
                     .clickable {
                         view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
                         onTap(freq)
+                    }
+                    .semantics {
+                        role = Role.Button
+                        contentDescription = nodeDescription(freq, selected, tuned)
                     },
                 contentAlignment = Alignment.Center,
             ) {
@@ -204,6 +216,18 @@ private fun CompanionNode(
         )
     }
 }
+
+// TalkBack label. Composes the Hz, the band's title, and the audible
+// state — so a blind user hears "528, the centre, currently playing"
+// instead of "528, button". Selected+tuned reads as playing whether the
+// source is AUTO or a manual tap; the listener cares what's playing,
+// not who started it.
+private fun nodeDescription(freq: Frequency, selected: Boolean, tuned: Boolean): String =
+    when {
+        selected && tuned  -> "${freq.label}, ${freq.title}, currently playing"
+        selected && !tuned -> "${freq.label}, ${freq.title}, silent — recording not yet bundled"
+        else               -> "${freq.label}, ${freq.title}"
+    }
 
 private data class NodeColors(
     val bg: Color,

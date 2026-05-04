@@ -32,6 +32,8 @@ A 24-hour loop that knows it is 7 a.m. and plays you 396 Hz. That knows it is 3 
 
 A dial for when you want to choose: nine frequencies, one tap each, no menus, no onboarding, no premium tier hiding the one you actually need.
 
+And, behind a deliberate door, a wider field. The dial stays small — so the room can recede — but for the listener who has put the radio down to look around, there is a Radio: a longer catalogue, with the reasons each frequency earned or did not earn a place on the dial. It does not run on its own. It is not the wallpaper. It is the room next door, lights on, when you choose to walk into it.
+
 A presence — in the background of your kitchen, your commute, your sleep — that asks nothing and changes everything by the small amount that small things change you when they are constant.
 
 ---
@@ -43,6 +45,7 @@ We will not stream advertisements between tones.
 We will not sell your listening data to anyone, for any price.
 We will not add features that make the app louder in your life.
 We will not pretend a frequency is a prescription.
+We will not let the Radio bleed into the room. Exploration is opt-in, never autoplay, never the default surface.
 
 ---
 

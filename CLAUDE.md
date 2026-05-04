@@ -4,7 +4,7 @@ _Conventions for any AI assistant (or human collaborator) editing this repo. Sho
 
 ## What this is
 
-An ambient Android radio: a 24-hour auto-loop tied to the hour of day, plus a 9-tap dial of Solfeggio tones and two companions (Verdi 432, Schumann 7.83). The point is the **room**, not the app — see [MANIFESTO.md](MANIFESTO.md).
+An ambient Android radio. Three modes: a 24-hour auto-loop tied to the hour of day (the wallpaper); a 9-tap dial of Solfeggio tones and two companions, Verdi 432 and Schumann 7.83 (quick, curated frequency selection); and behind a deliberate door, a Radio mode for exploring the wider frequency catalogue (opt-in, never autoplay, never the default surface). The point is the **room**, not the app — see [MANIFESTO.md](MANIFESTO.md).
 
 ## Reference docs (read before editing)
 
@@ -21,6 +21,7 @@ An ambient Android radio: a 24-hour auto-loop tied to the hour of day, plus a 9-
 - No analytics, telemetry, or sale of listening data.
 - No medical/health claims about any frequency.
 - Lossless audio when feasible; respect the ear (no jolts, no cuts).
+- Radio mode is opt-in only. Never autoplay, never the default surface, never bleeds into the room. The Dial stays at eleven so the room can recede; the Radio is a separate door the listener walks through.
 - Curated pre-electronic recordings (chant, Bach, etc.) are the **preferred** audio — but the rule is "artistic music a curator chose," not "no electronic instrument anywhere." A modern composition that uses synth, percussion, or processed sound as a compositional element is fine if it is musical work, not generic ambient slop. What we keep out: white-noise loops, sine-wave New Age fillers, AI-generated background tracks, and any "wellness" audio that wasn't made as music. Bare synthesized sine tones are a fallback, not the product.
 
 If a change risks any of these, stop and flag it.

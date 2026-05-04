@@ -69,7 +69,7 @@ The set is folkloric, not scientific. It is on the dial because it is the one ni
 | 432  | Verdi's A      | Reference pitch petitioned by Verdi to the Italian government in 1884.              |
 | 7.83 | Schumann       | Fundamental electromagnetic resonance of the Earth–ionosphere cavity (Schumann, 1952). |
 
-432 is on the dial as a *tuning* applied to acoustic-era recordings (Caruso, Patti, Tamagno, Schumann-Heink), not as a 432 Hz sine. 7.83 is below the threshold of human hearing (~20 Hz); it currently stands in for the *room* it would have ridden inside (Sant'Antimo chant, Tibetan overtone chant, late-night raga). Both are documented at length in [FREQUENCIES.md § The two ambient companions](../FREQUENCIES.md#the-two-ambient-companions).
+432 sits on the radio as a curator's call: the band plays only acoustic-era recordings cut inside the A = 432–435 tuning era (Caruso, Patti, Tamagno, Schumann-Heink). It is not a 432 Hz sine, and it is not a runtime pitch-shift applied to modern A = 440 recordings — the lower pitch is carried by the discs themselves. 7.83 is below the threshold of human hearing (~20 Hz); it currently stands in for the *room* it would have ridden inside (Sant'Antimo chant, Tibetan overtone chant, late-night raga). Both are documented at length in [FREQUENCIES.md § The two ambient companions](../FREQUENCIES.md#the-two-ambient-companions).
 
 ---
 

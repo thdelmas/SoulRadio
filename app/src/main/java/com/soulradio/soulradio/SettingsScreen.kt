@@ -31,9 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * Settings surface — the only door to user-tunable knobs. Today that's the
- * solar-aware schedule (lat/lon); future settings should land here, not in
- * the docs surface, so pedagogy stays separate from configuration.
+ * Settings surface — app-wide config knobs (today, the solar-aware schedule).
+ * Mode-specific controls live in their own surface; the library source filter,
+ * for instance, is in LibraryScreen because it's the listener's curatorial
+ * choice, not a system pref. Pedagogy lives in NotesScreen, not here.
  */
 @Composable
 fun SettingsScreen(onClose: () -> Unit) {
@@ -70,57 +71,8 @@ fun SettingsScreen(onClose: () -> Unit) {
         HairlineDivider()
         Spacer(Modifier.height(20.dp))
         LocationKnob()
-        Spacer(Modifier.height(24.dp))
-        LibrarySourceKnob()
         Spacer(Modifier.weight(1f))
     }
-}
-
-/**
- * The app-wide source filter governing which playlists feed the loop, dial,
- * and Radio: curated catalogue only, the listener's imports, or both
- * together. Defaults to APP_ONLY — the user library is opt-in.
- */
-@Composable
-private fun LibrarySourceKnob() {
-    val context = LocalContext.current
-    var current by remember { mutableStateOf(LibrarySourceStore.get(context)) }
-
-    Column {
-        Text(
-            text = "the library · " + sourceLabel(current),
-            color = MuteSoft,
-            fontSize = 11.sp,
-            letterSpacing = 1.sp,
-        )
-        Spacer(Modifier.height(10.dp))
-        Row {
-            for (src in LibrarySource.values()) {
-                val selected = src == current
-                Text(
-                    text = sourceLabel(src),
-                    color = if (selected) Gold else GoldDim,
-                    fontSize = 11.sp,
-                    letterSpacing = 2.sp,
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .border(1.dp, if (selected) Gold else GoldDim, CircleShape)
-                        .clickable {
-                            LibrarySourceStore.set(context, src)
-                            current = src
-                        }
-                        .padding(horizontal = 14.dp, vertical = 8.dp),
-                )
-                Spacer(Modifier.width(8.dp))
-            }
-        }
-    }
-}
-
-private fun sourceLabel(s: LibrarySource): String = when (s) {
-    LibrarySource.APP_ONLY -> "app"
-    LibrarySource.MIXED -> "mixed"
-    LibrarySource.USER_ONLY -> "user"
 }
 
 /**

@@ -69,7 +69,7 @@ Architecture:
 Three things this is **not**:
 
 - **Not an autoplay path.** `LibrarySource.APP_ONLY` is the default and the loop / dial are unaffected until the listener flips the source filter from inside the Library screen.
-- **Not a curation event.** `Frequencies.all` is never mutated at runtime, and `tunedKeys` (the dial's "this band has audio" indicator) reflects the curated catalogue only — the dial remains the curator's view, even when the listener has filed user content under a curator-empty band.
+- **Not a curation event.** `Frequencies.all` is never mutated at runtime — the 9-station structure of the dial is fixed, regardless of what the listener files. The `tunedKeys` "this band has audio" indicator widens with `LibrarySource`: under `APP_ONLY` it reflects the curated catalogue only (user files do not light up curator-empty bands); under `MIXED` / `USER_ONLY` it includes bands the listener has filed audio under, so the dial stays tappable in those modes. The dial *grammar* — nine fixed stations — is the curator's; the *lit set* tracks whatever source the listener has chosen.
 - **Not a prescription.** The auto-profile labels (`528 Hz`, `240 BPM`, `pink`, `sub-60 47%`) describe the **file**, never what it will do to a listener — MANIFESTO §5 holds equally for the curated catalogue and the listener's library.
 
 The catalogue's licensing rules ([docs/licensing.md](docs/licensing.md)) apply only to the curated catalogue under `assets/audio/`. What the listener brings into their own library is theirs to file; the radio takes a persistable read permission on the SAF Uri at import and stores no copy.

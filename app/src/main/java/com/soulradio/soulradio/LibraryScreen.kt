@@ -116,6 +116,8 @@ internal fun LibraryScreen(onClose: () -> Unit) {
             fontSize = 11.sp,
         )
         Spacer(Modifier.height(20.dp))
+        SourceToggle()
+        Spacer(Modifier.height(20.dp))
         HairlineDivider()
         Spacer(Modifier.height(16.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -335,6 +337,55 @@ private fun doImport(context: Context, uri: Uri): UserTrack? {
         assignedBands = initialBands,
         manualOverride = false,
     )
+}
+
+// The three-pill source filter. Lives here (not Settings) because the
+// listener decides what plays *while looking at* their imports — flipping
+// to MIXED or USER_ONLY is the act that wakes the library up.
+@Composable
+private fun SourceToggle() {
+    val context = LocalContext.current
+    var current by remember { mutableStateOf(LibrarySourceStore.get(context)) }
+    Column {
+        Row {
+            for (src in LibrarySource.values()) {
+                val selected = src == current
+                Text(
+                    text = sourceLabel(src),
+                    color = if (selected) Gold else GoldDim,
+                    fontSize = 11.sp,
+                    letterSpacing = 2.sp,
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clip(CircleShape)
+                        .border(1.dp, if (selected) Gold else GoldDim, CircleShape)
+                        .clickable {
+                            LibrarySourceStore.set(context, src)
+                            current = src
+                        }
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                )
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = sourceCaption(current),
+            color = MuteSoft,
+            fontSize = 10.sp,
+        )
+    }
+}
+
+private fun sourceLabel(s: LibrarySource): String = when (s) {
+    LibrarySource.APP_ONLY -> "app"
+    LibrarySource.MIXED -> "mixed"
+    LibrarySource.USER_ONLY -> "user"
+}
+
+private fun sourceCaption(s: LibrarySource): String = when (s) {
+    LibrarySource.APP_ONLY -> "loop · dial · radio play the curated catalogue."
+    LibrarySource.MIXED -> "curated first, then your imports — under each band."
+    LibrarySource.USER_ONLY -> "your imports only. empty bands stay silent."
 }
 
 private fun queryDisplayName(context: Context, uri: Uri): String? {

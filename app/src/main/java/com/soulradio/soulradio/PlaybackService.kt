@@ -210,7 +210,8 @@ class PlaybackService : MediaSessionService() {
 
     private fun switchTo(freq: Frequency) {
         val player = mediaSession?.player ?: return
-        if (freq.tracks.isEmpty()) {
+        val uris = TrackResolver.urisFor(this, freq)
+        if (uris.isEmpty()) {
             cancelFade()
             fadeTo(player, 0f) { player.pause() }
             autoCurrent = null
@@ -218,7 +219,7 @@ class PlaybackService : MediaSessionService() {
         }
         cancelFade()
         if (!player.isPlaying) {
-            applyMedia(player, freq)
+            applyMedia(player, uris)
             autoCurrent = freq
             player.volume = 0f
             player.play()
@@ -226,7 +227,7 @@ class PlaybackService : MediaSessionService() {
         } else {
             // fade-out → swap → fade-in (single player, but no hard cuts).
             fadeTo(player, 0f) {
-                applyMedia(player, freq)
+                applyMedia(player, uris)
                 autoCurrent = freq
                 player.play()
                 fadeTo(player, TARGET_VOLUME) {}
@@ -234,10 +235,8 @@ class PlaybackService : MediaSessionService() {
         }
     }
 
-    private fun applyMedia(player: Player, freq: Frequency) {
-        val items = freq.tracks.map {
-            MediaItem.fromUri("asset:///${freq.assetPath(it)}")
-        }
+    private fun applyMedia(player: Player, uris: List<String>) {
+        val items = uris.map { MediaItem.fromUri(it) }
         player.setMediaItems(items)
         // Mirrors TrackEngine: multi-track bands shuffle the pool and loop the
         // playlist so the radio rotates through every recording while the

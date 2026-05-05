@@ -41,11 +41,15 @@ class TrackEngine(private val context: Context) {
     private var pending: Frequency? = null
     private var current: Frequency? = null
 
-    /** Frequencies that bundle at least one playable recording. */
-    val tunedKeys: Set<String> = Frequencies.all
-        .filter { it.tracks.isNotEmpty() }
-        .map { it.key }
-        .toSet()
+    /**
+     * Frequencies that would yield a non-empty playlist under the active
+     * [LibrarySource]. Computed on access so a fresh read picks up changes
+     * the listener made on the Library screen — switching source, adding
+     * or removing files. The Set is small (≤ 11 entries); the read is
+     * cheap (SharedPreferences + a JSON parse).
+     */
+    val tunedKeys: Set<String>
+        get() = TrackResolver.tunedKeys(context)
 
     private val _currentFrequency = mutableStateOf<Frequency?>(null)
     /**
@@ -104,7 +108,7 @@ class TrackEngine(private val context: Context) {
         }
         pending = null
 
-        if (freq == null || !isTuned(freq)) {
+        if (freq == null) {
             cancelFade()
             fadeTo(c, 0f) { c.pause() }
             current = null
@@ -112,7 +116,12 @@ class TrackEngine(private val context: Context) {
         }
         if (current?.key == freq.key && c.isPlaying) return
 
-        if (freq.tracks.isEmpty()) {
+        // Resolve the band's playlist via [TrackResolver] — curated, user
+        // imports, or a mix, depending on the active LibrarySource. An
+        // empty list under USER_ONLY (no user files filed on this band) is
+        // valid; we fade out and let the loop's next tick roll on.
+        val uris = TrackResolver.urisFor(context, freq)
+        if (uris.isEmpty()) {
             cancelFade()
             fadeTo(c, 0f) { c.pause() }
             current = null
@@ -121,7 +130,7 @@ class TrackEngine(private val context: Context) {
 
         cancelFade()
         if (!c.isPlaying) {
-            applyMedia(c, freq)
+            applyMedia(c, uris)
             current = freq
             c.volume = 0f
             c.play()
@@ -130,7 +139,7 @@ class TrackEngine(private val context: Context) {
             // fade-out → swap → fade-in. Not a true overlap (single player),
             // but keeps the manifesto's "no hard cuts" promise.
             fadeTo(c, 0f) {
-                applyMedia(c, freq)
+                applyMedia(c, uris)
                 current = freq
                 c.play()
                 fadeTo(c, targetVolume) {}
@@ -171,10 +180,8 @@ class TrackEngine(private val context: Context) {
         return m.groupValues[1] to m.groupValues[2]
     }
 
-    private fun applyMedia(c: MediaController, freq: Frequency) {
-        val items = freq.tracks.map {
-            MediaItem.fromUri("asset:///${freq.assetPath(it)}")
-        }
+    private fun applyMedia(c: MediaController, uris: List<String>) {
+        val items = uris.map { MediaItem.fromUri(it) }
         // Multi-track: shuffle the pool and loop the playlist so we rotate
         // through different takes. shuffleModeEnabled only affects what comes
         // *next* — the playhead still starts on items[0] — so we also seed a

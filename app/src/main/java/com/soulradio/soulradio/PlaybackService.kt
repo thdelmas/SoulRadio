@@ -122,8 +122,16 @@ class PlaybackService : MediaSessionService() {
         schumannUnderlay.setEnabled(playing && key == NIGHT_BAND_KEY)
     }
 
+    // Prefer mediaId (stamped at queue-time with freq.key) so user-imported
+    // content:// URIs identify the band correctly. Falls back to the asset
+    // URI regex for any item that bypassed the queue path.
     private fun bandKeyOf(item: MediaItem?): String? {
-        val uri = item?.localConfiguration?.uri?.toString() ?: return null
+        item ?: return null
+        val stamped = item.mediaId.takeIf {
+            it.isNotBlank() && it != MediaItem.DEFAULT_MEDIA_ID
+        }
+        if (stamped != null) return stamped
+        val uri = item.localConfiguration?.uri?.toString() ?: return null
         return Regex("^asset:///audio/([^/]+)/.+$").find(uri)?.groupValues?.get(1)
     }
 
@@ -199,7 +207,7 @@ class PlaybackService : MediaSessionService() {
         }
         cancelFade()
         if (!player.isPlaying) {
-            applyMedia(player, uris)
+            applyMedia(player, freq, uris)
             autoCurrent = freq
             player.volume = 0f
             player.play()
@@ -207,7 +215,7 @@ class PlaybackService : MediaSessionService() {
         } else {
             // fade-out → swap → fade-in (manifesto: no hard cuts).
             fadeTo(player, 0f) {
-                applyMedia(player, uris)
+                applyMedia(player, freq, uris)
                 autoCurrent = freq
                 player.play()
                 fadeTo(player, TARGET_VOLUME) {}
@@ -215,8 +223,10 @@ class PlaybackService : MediaSessionService() {
         }
     }
 
-    private fun applyMedia(player: Player, uris: List<String>) {
-        val items = uris.map { MediaItem.fromUri(it) }
+    private fun applyMedia(player: Player, freq: Frequency, uris: List<String>) {
+        val items = uris.map {
+            MediaItem.Builder().setUri(it).setMediaId(freq.key).build()
+        }
         player.setMediaItems(items)
         player.shuffleModeEnabled = items.size > 1
         player.repeatMode = if (items.size > 1) Player.REPEAT_MODE_ALL else Player.REPEAT_MODE_ONE

@@ -99,7 +99,7 @@ class TrackEngine(private val context: Context) {
 
         cancelFade()
         if (!c.isPlaying) {
-            applyMedia(c, uris)
+            applyMedia(c, freq, uris)
             current = freq
             c.volume = 0f
             c.play()
@@ -107,7 +107,7 @@ class TrackEngine(private val context: Context) {
         } else {
             // fade-out → swap → fade-in (manifesto: no hard cuts).
             fadeTo(c, 0f) {
-                applyMedia(c, uris)
+                applyMedia(c, freq, uris)
                 current = freq
                 c.play()
                 fadeTo(c, targetVolume) {}
@@ -131,25 +131,41 @@ class TrackEngine(private val context: Context) {
         _currentTrack.value = if (playing) trackFromMediaItem(item) else null
     }
 
+    // mediaId is stamped at queue-time with freq.key, so user-imported
+    // content:// URIs identify the band correctly. The asset URI regex
+    // remains for NowPlaying lookup (curated tracks only — user files
+    // have no NowPlaying entry).
     private fun frequencyFromMediaItem(item: MediaItem?): Frequency? {
-        val key = keyAndAssetFromMediaItem(item)?.first ?: return null
+        val key = bandKeyOf(item) ?: return null
         return Frequencies.byKey(key)
     }
 
     private fun trackFromMediaItem(item: MediaItem?): NowPlaying? {
-        val (key, asset) = keyAndAssetFromMediaItem(item) ?: return null
+        val key = bandKeyOf(item) ?: return null
+        val asset = assetNameOf(item) ?: return null
         val freq = Frequencies.byKey(key) ?: return null
         return Frequencies.trackByAsset(freq, asset)
     }
 
-    private fun keyAndAssetFromMediaItem(item: MediaItem?): Pair<String, String>? {
-        val uri = item?.localConfiguration?.uri?.toString() ?: return null
-        val m = Regex("^asset:///audio/([^/]+)/(.+)$").find(uri) ?: return null
-        return m.groupValues[1] to m.groupValues[2]
+    private fun bandKeyOf(item: MediaItem?): String? {
+        item ?: return null
+        val stamped = item.mediaId.takeIf {
+            it.isNotBlank() && it != MediaItem.DEFAULT_MEDIA_ID
+        }
+        if (stamped != null) return stamped
+        val uri = item.localConfiguration?.uri?.toString() ?: return null
+        return Regex("^asset:///audio/([^/]+)/.+$").find(uri)?.groupValues?.get(1)
     }
 
-    private fun applyMedia(c: MediaController, uris: List<String>) {
-        val items = uris.map { MediaItem.fromUri(it) }
+    private fun assetNameOf(item: MediaItem?): String? {
+        val uri = item?.localConfiguration?.uri?.toString() ?: return null
+        return Regex("^asset:///audio/[^/]+/(.+)$").find(uri)?.groupValues?.get(1)
+    }
+
+    private fun applyMedia(c: MediaController, freq: Frequency, uris: List<String>) {
+        val items = uris.map {
+            MediaItem.Builder().setUri(it).setMediaId(freq.key).build()
+        }
         // Random start index so multi-track bands don't always open on
         // items[0]. shuffleModeEnabled only affects subsequent tracks.
         val startIndex = if (items.size > 1) items.indices.random() else 0

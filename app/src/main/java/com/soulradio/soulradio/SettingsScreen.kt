@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -42,7 +41,6 @@ fun SettingsScreen(onClose: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(Bg)
-            .systemBarsPadding()
             .padding(horizontal = 24.dp),
     ) {
         Spacer(Modifier.height(20.dp))
@@ -77,8 +75,57 @@ fun SettingsScreen(onClose: () -> Unit) {
         )
         Spacer(Modifier.height(20.dp))
         LocationKnob()
+        Spacer(Modifier.height(24.dp))
+        LibrarySourceKnob()
         Spacer(Modifier.weight(1f))
     }
+}
+
+/**
+ * The app-wide source filter governing which playlists feed the loop, dial,
+ * and Radio: curated catalogue only, the listener's imports, or both
+ * together. Defaults to APP_ONLY — the user library is opt-in.
+ */
+@Composable
+private fun LibrarySourceKnob() {
+    val context = LocalContext.current
+    var current by remember { mutableStateOf(LibrarySourceStore.get(context)) }
+
+    Column {
+        Text(
+            text = "the library · " + sourceLabel(current),
+            color = MuteSoft,
+            fontSize = 11.sp,
+            letterSpacing = 1.sp,
+        )
+        Spacer(Modifier.height(10.dp))
+        Row {
+            for (src in LibrarySource.values()) {
+                val selected = src == current
+                Text(
+                    text = sourceLabel(src),
+                    color = if (selected) Gold else GoldDim,
+                    fontSize = 11.sp,
+                    letterSpacing = 2.sp,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .border(1.dp, if (selected) Gold else GoldDim, CircleShape)
+                        .clickable {
+                            LibrarySourceStore.set(context, src)
+                            current = src
+                        }
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                )
+                Spacer(Modifier.width(8.dp))
+            }
+        }
+    }
+}
+
+private fun sourceLabel(s: LibrarySource): String = when (s) {
+    LibrarySource.APP_ONLY -> "app"
+    LibrarySource.MIXED -> "mixed"
+    LibrarySource.USER_ONLY -> "user"
 }
 
 /**

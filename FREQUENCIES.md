@@ -12,6 +12,7 @@ Each entry has four fields:
 
 - **Hz** — the tone, as a single sine value.
 - **Folk name** — the label the modern Solfeggio tradition gives it.
+- **Chakra** — the body-centre the modern Solfeggio→chakra pairing assigns to the tone, where one is assigned. The tradition's own anatomy, not the radio's. Same status as **Folk name**: reported, not endorsed; the body decides whether it agrees.
 - **Intention** — the state the tradition asks you to bring to the listening. Not a prescription. A door.
 - **Historical music** — pre-electronic recordings whose *modal character, tempo, and acoustic geometry* match the spirit of the tone. These pieces are not "tuned to" the Hz — they are siblings in feeling. (See [§ A note on tuning](#a-note-on-tuning) at the end.)
 
@@ -61,6 +62,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 174 Hz — *the foundation*
 
 - **Folk name:** "Pain relief / sense of security."
+- **Chakra:** Outside the canonical seven-chakra map. The seven-chakra schema starts at *Muladhara* (root); 174 sits below it. Some modern Solfeggio teachers pair the tone with an "earth-star" sub-personal grounding centre below the body, but the older yogic anatomy has no chakra at this register. Read here as a ground note, not a body-centre.
 - **Intention:** Settling. The lowest tone in the Solfeggio set, sitting near the open low strings of the cello and the chest register of the bass voice — a register the body has spent its whole evolutionary history associating with shelter, not alarm. Used as a ground note: the floor a room is built on. The listener does not lean *toward* it, the listener leans *on* it. A station to put on when the day has stacked up vertical and a horizontal surface is needed.
 - **Historical music:**
   - **Gregorian chant in low Dorian or Mixolydian mode** — the *bourdon* (drone) of monastic plainchant. Recordings from the *Solesmes* abbey tradition (Dom Joseph Pothier, late 19th c.) preserve this register.
@@ -73,6 +75,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 285 Hz — *the slow turn*
 
 - **Folk name:** "Tissue and field."
+- **Chakra:** Outside the canonical seven. Modern Solfeggio practice pairs 285 with the etheric field / soft tissue rather than a chakra; the older yogic anatomy has no centre at this register. The dial's "ask the least" tone has no body location to point at.
 - **Intention:** A frequency for letting the body do what it does without supervision. The hour after a long walk — when the muscle has stopped working but has not yet stopped *un*-working. The pulse the listener finds in this band is slower than speech and slower than thought: closer to the rhythm of breath at rest. Bring nothing to it; do not ask it for anything. Of all the dial tones it is the one that asks the least and rewards inattention the most.
 - **Historical music:**
   - **Thomas Tallis — *Spem in Alium* (c. 1570)** — forty independent voices weaving. The piece breathes at the speed of a sleeping body.
@@ -86,6 +89,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 396 Hz — *the morning gate*
 
 - **Folk name:** "Liberating guilt and fear."
+- **Chakra:** **Muladhara — root** (Sanskrit *mūlādhāra*, "root support"); base of the spine. The first chakra in the canonical seven, paired by the Solfeggio→chakra tradition with belonging, ground, and the threshold of waking — the tradition's own reason for opening the day on this tone.
 - **Intention:** A clearing tone. Traditionally used at the start of a practice — meditation, prayer, the first hour of work — to set down what was carried in from sleep or from yesterday. Our 7 a.m. tone. The intention is not to *banish* anything; it is to acknowledge what the body brought across the threshold of waking and then turn deliberately toward the day. Monastic traditions across Europe, India, and Japan all open the day with a sung threshold of this shape — Lauds, the morning raga, the dawn shakuhachi — for the same reason: a door is more useful when it is opened on purpose.
 - **Historical music:**
   - **Gregorian *Lauds*** — the dawn office of the Divine Office, sung at first light in monasteries since the 6th century. *Aeterne rerum conditor* (Ambrose, 4th c.) is the classical Lauds hymn.
@@ -98,6 +102,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 417 Hz — *the dissolver*
 
 - **Folk name:** "Undoing situations / change."
+- **Chakra:** **Svadhisthana — sacral** (Sanskrit *svādhiṣṭhāna*, "one's own seat"); below the navel. Second chakra; paired by the tradition with movement, water, transition — the same shape as the dissolver's *softening rather than forcing*.
 - **Intention:** A tone for transition — leaving work, leaving an argument, leaving a room you were stuck in. Used in our early-evening band, when the day's residue is still close enough to taste. The Solfeggio tradition treats it as a *softening* rather than a forcing: the listener does not push the day off, the listener watches it dissolve. The practical rule is to put the tone on **before** the body thinks the transition is needed; by the time the listener notices the room has changed temperature, the band has already done its work.
 - **Historical music:**
   - **Gregory Allegri — *Miserere mei, Deus* (c. 1638)** — sung in the Sistine Chapel during Holy Week. A piece literally written for the act of letting go.
@@ -112,6 +117,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 528 Hz — *the centre*
 
 - **Folk name:** "The Love frequency / Miracle tone."
+- **Chakra:** **Manipura — solar plexus** (Sanskrit *maṇipūra*, "city of jewels"); upper abdomen. Third chakra, the centre of the trunk — where the Solfeggio→chakra pairing and the dial's name converge on the same word. (Some modern sources file 528 at the heart instead, conflating "love frequency" with the heart chakra; the older Solfeggio→chakra mapping keeps it at the solar plexus and reserves the heart for 639.)
 - **Intention:** Warmth at the centre of the day. Where the loop spends its longest stretch — four hours, the longest single band on the schedule, because midday is the hour the body is most willing to be met where it already is. The popular tradition treats this as the heart of the Solfeggio set; whatever the numerology, the register itself sits in the bright-but-not-glaring middle of the human voice — the same place lullabies, wedding hymns, and the major-key Bach chorales reach for. The listener is not asked to rise to it. It meets the body at the temperature of an ordinary good hour, and that is the entire instruction.
 - **Historical music:**
   - **Bach — *Jesu, Joy of Man's Desiring* (from BWV 147)** — the canonical "warm" Bach, and not by accident: the chorale tune sits in C major at a tempo the heart already knows.
@@ -127,6 +133,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 639 Hz — *the table*
 
 - **Folk name:** "Connecting / harmonious relationships."
+- **Chakra:** **Anahata — heart** (Sanskrit *anāhata*, "unstruck"); chest centre. Fourth chakra; paired by the tradition with relationship, agreement, and the *unstruck sound* of yogic acoustics — the architecture-of-agreement intention the band already carries.
 - **Intention:** The frequency for shared rooms — meals, conversation, reunion. Used in our late-afternoon band: the hour work is loosening, a household is reassembling, and the day's first horizontal silence is a few minutes off. The pedagogical kernel here is not the Hz value but the **architecture of agreement**: every recording chosen for this band is built on the principle of independent voices that come into accord without losing themselves — Renaissance polyphony, Bach's three-by-three Brandenburg, a Persian *santur* in conversation with an ensemble. Put it on **before** guests arrive, not after; the band's job is to make the room ready, not to fill silence that was already going to fill itself.
 - **Historical music:**
   - **Renaissance polyphonic Mass settings** — Josquin, Palestrina, Lassus. Music *built on* the principle of independent voices that agree.
@@ -140,6 +147,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 741 Hz — *the clearing*
 
 - **Folk name:** "Awakening intuition / detox."
+- **Chakra:** **Vishuddha — throat** (Sanskrit *viśuddha*, "purest"); throat. Fifth chakra; paired by the tradition with speech, articulation, and the rinse — the same register the band's keyboard-led repertoire (Bach, Couperin, Scarlatti) reaches for.
 - **Intention:** A late-morning tone, used when the head needs to rinse — the hour the night's residue has burned off but the day's complications have not yet stacked up. Bright but not sharp. Articulate without being loud. The musical companions on this band are deliberately keyboard-led — Bach's Goldberg Aria, a Couperin *pièce*, a Scarlatti sonata, a Chaminade flute concertino — because clear single lines, audibly *thinking*, are the texture this register asks for. Detergent, not stimulant; the listener brings a question to it and lets the music answer at its own speed.
 - **Historical music:**
   - **Bach — *Goldberg Variations*, Aria (BWV 988, 1741)** — a piece written, by tradition, to pass a sleepless night clearly.
@@ -152,6 +160,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 852 Hz — *the high window*
 
 - **Folk name:** "Returning to spiritual order."
+- **Chakra:** **Ajna — third eye** (Sanskrit *ājñā*, "command"); between the brows. Sixth chakra; paired by the tradition with perception, altitude, and stepping back — the same vertical air the band's name names.
 - **Intention:** A tone for stepping back from the immediate — for the moment the listener wants altitude on the day rather than warmth inside it. The dial's penultimate option, chosen and not auto-played, because vertical air is something a body has to **ask** for; the 24-hour loop has no business surprising someone with it at 4 p.m. (See [§ Three modes](#three-modes) for the rule.) Use it the way one would open a high window in a closed room: deliberately, and only when the room has become too close to think in. Stay with it long enough that the room re-arranges around the open window — then close it.
 - **Historical music:**
   - **Hildegard von Bingen — *O ignis Spiritus Paracliti* (12th c.)** — soaring single-voice chant, written by a mystic who described her music as light.
@@ -168,6 +177,7 @@ This is the source of truth for `Frequencies.forHour()` in [Frequency.kt](app/sr
 ### 963 Hz — *the crown*
 
 - **Folk name:** "The God frequency."
+- **Chakra:** **Sahasrara — crown** (Sanskrit *sahasrāra*, "thousand-petalled"); top of the head. Seventh and highest chakra; paired by the tradition with arrival — the dial's name was already this one.
 - **Intention:** The top of the Solfeggio scale. The dial keeps it as the rightmost tone — present, but reserved for moments the listener reaches for. The traditional reading frames it as *arrival*: the upper register where many traditions place the choir's last sustained chord, the bell at the end of a long practice, the line of plainchant that hangs above the others. The pedagogical instruction is restraint — three traditions arrive at this register from different directions (Bach's *Sanctus*, the Byzantine *cherubic hymn*, the guqin's *Liu Shui*) and all three earn their altitude only because they have spent time on the ground first. Not a daily station. A station for endings, and for the rare hours that feel like one.
 - **Historical music:**
   - **Tallis — *Spem in Alium* (c. 1570), final cadence** — forty voices arriving on the same chord. The Western canon's most sustained moment of "everything in agreement."
@@ -188,6 +198,7 @@ These are not on the 9-tap dial. They live in the auto loop and in the night ban
 ### 432 Hz — *Verdi's A*
 
 - **Folk name:** "Scientific pitch / the natural A."
+- **Chakra:** Not on the chakra map. Verdi's A is a *tuning standard* — the pitch the note A is set to — not a Solfeggio tone, so it has no entry in the modern Solfeggio→chakra pairing. The acoustic-era voice this companion carries is sat *with*, not located at a body centre.
 - **Intention:** Sitting *with* a voice. Where the night band is a room and the dial tones are doors, Verdi's A is a **chair pulled up to a singer**. The acoustic-era operatic disc was made to be heard with the lights down and one's whole attention given over — Caruso, Patti, Tamagno, Schumann-Heink were not background music in the homes that owned them. The proper posture for this companion is opposite to the loop's: not wallpaper but audience. The 32-cent drop from modern A=440 takes the edge off the soprano top, restores the baritone its weight, and warms the orchestral middle — a difference the body notices without being able to name.
 - **Status:** Not a Solfeggio tone. A *tuning standard* — the pitch the note A is set to.
 - **History:** Giuseppe Verdi formally petitioned the Italian government in 1884 to set A = 432 Hz, calling it "the scientific pitch." The petition succeeded briefly. Modern orchestras settled on A = 440 Hz at a 1939 ISO conference. Period-instrument ensembles still use lower pitches: **Baroque pitch (A = 415 Hz)** for Bach, even lower for French Baroque.
@@ -198,6 +209,7 @@ These are not on the 9-tap dial. They live in the auto loop and in the night ban
 ### 7.83 Hz — *the Schumann resonance*
 
 - **Folk name:** "Earth's pulse / the planetary heartbeat."
+- **Chakra:** Below the audible range, and below the chakra map. The seven-chakra schema pairs *tones* with body centres; 7.83 is a sub-audible *cadence*, not a tone the body locates. The radio frames it as the room rather than a station, and the chakra map has nothing to mount on it.
 - **Intention:** Being held without being addressed. The listener does not listen *to* the night band; the listener listens *from inside* it. Where the dial tones are doors, this one is the room itself — the cadence under the music, not a thing to be reached for. The proper posture is to forget it is on.
 - **Status:** Not audible. The fundamental electromagnetic resonance of the cavity between Earth's surface and the ionosphere — measured by Winfried Otto Schumann in 1952.
 - **Intended use:** Below the threshold of human hearing (~20 Hz). The design role is a *pulse* — a soft amplitude modulation riding under whatever else is playing — not an audible tone. The body senses it as cadence, not sound.

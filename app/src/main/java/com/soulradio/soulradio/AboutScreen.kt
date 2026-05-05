@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -52,7 +51,6 @@ fun AboutScreen(onClose: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(Bg)
-            .systemBarsPadding()
             .padding(horizontal = 24.dp),
     ) {
         Spacer(Modifier.height(20.dp))

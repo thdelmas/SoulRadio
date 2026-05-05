@@ -12,9 +12,11 @@ SoulRadio is a return. Not to a sound, but to a *practice* — the practice of l
 
 **1. The day has a shape.** A human is not a machine that needs the same input from sunrise to midnight. The morning wants clarity. The afternoon wants connection. The night wants to be let go of. A single playlist, a single tone, a single mood applied to all of it — that is noise dressed as music.
 
-**2. Frequency is wallpaper, not wallpaper-paste.** SoulRadio does not demand attention. It is the air in the room. You should be able to forget it is on and still feel different at the end of the week. If we are loud enough to interrupt your thinking, we have failed.
+**2. Frequency is wallpaper, not wallpaper-paste.** The 24-hour auto-loop does not demand attention. It is the air in the room. You should be able to forget it is on and still feel different at the end of the week. If the loop is loud enough to interrupt your thinking, we have failed.
 
-**3. Ancient and exact are the same thing.** A Gregorian chant in a stone abbey and a 528 Hz sine wave from a tone generator are not in opposition. They are the same instinct, separated by a thousand years of instrument design. We treat both with the same seriousness.
+The dial is different. The dial is the station the listener reached for, and on the dial, music that works by *mechanism* — engineered crescendo, percussive arrival, climactic release — is welcome to do its work. A Bach *Sanctus* at its peak is not a jolt. A Beethoven slow movement that earns its altitude is not a violation. Orff's *Carmina Burana* on a dial station is not a betrayal of the room. The loop refuses that vocabulary only because the loop has not been asked; the dial has been. The "respect the ear" rule of §6 is about transitions and engineering — crossfades, gain staging, no clicks — not about whether a curator's chosen recording is allowed to crescendo.
+
+**3. Ancient and exact are the same instinct, on different shelves.** A Gregorian chant in a stone abbey and a 528 Hz sine wave from a tone generator come from the same impulse, separated by a thousand years of instrument design. We honor both — but not on the same surface. Curated music holds the dial and the loop; bare tones and sound-category exhibits (binaural beats, noise colors, vibroacoustic drones) live behind the Radio's deliberate door, labeled honestly, never the wallpaper.
 
 **4. Access is sacred.** A frequency you cannot find in three seconds is a frequency you will not use. The shortest distance between a person and the tone they need is the entire product. Everything else is decoration.
 
@@ -32,7 +34,9 @@ A 24-hour loop that knows it is 7 a.m. and plays you 396 Hz. That knows it is 3 
 
 A dial for when you want to choose: nine frequencies, one tap each, no menus, no onboarding, no premium tier hiding the one you actually need.
 
-And, behind a deliberate door, a wider field. The dial stays small — so the room can recede — but for the listener who has put the radio down to look around, there is a Radio: a longer catalogue, with the reasons each frequency earned or did not earn a place on the dial. It does not run on its own. It is not the wallpaper. It is the room next door, lights on, when you choose to walk into it.
+And, behind a deliberate door, a wider field. The dial stays small — so the room can recede — but for the listener who has put the radio down to look around, there is a Radio: a longer catalogue of stations, alongside labeled exhibits of sound categories that don't earn a music station of their own (binaural beats, noise colors, vibroacoustic drones), each with the reason it sits where it does. It does not run on its own. It is not the wallpaper. It is the room next door, lights on, when you choose to walk into it.
+
+And another door, the listener's own. SoulRadio profiles each file you bring it — what it sustains, where it pulses, where in the body it sits — and files it under a band on the dial alongside what the curator chose. The catalogue is the radio's; the library is yours. You play either, or both. The default is the radio's. Nothing you import plays unless you ask for it.
 
 A presence — in the background of your kitchen, your commute, your sleep — that asks nothing and changes everything by the small amount that small things change you when they are constant.
 
@@ -46,6 +50,7 @@ We will not sell your listening data to anyone, for any price.
 We will not add features that make the app louder in your life.
 We will not pretend a frequency is a prescription.
 We will not let the Radio bleed into the room. Exploration is opt-in, never autoplay, never the default surface.
+We will not autoplay the listener's own library. Imports play only when the listener asks for them; the radio's catalogue is the default.
 
 ---
 

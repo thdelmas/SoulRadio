@@ -4,7 +4,7 @@ _Conventions for any AI assistant (or human collaborator) editing this repo. Sho
 
 ## What this is
 
-An ambient Android radio. Three modes: a 24-hour auto-loop tied to the hour of day (the wallpaper); a 9-tap dial of Solfeggio tones and two companions, Verdi 432 and Schumann 7.83 (quick, curated frequency selection); and behind a deliberate door, a Radio mode for exploring the wider frequency catalogue (opt-in, never autoplay, never the default surface). The point is the **room**, not the app — see [MANIFESTO.md](MANIFESTO.md).
+An ambient Android radio. Four audio modes: a 24-hour auto-loop tied to the hour of day (the wallpaper); a 9-tap dial of Solfeggio tones and two companions, Verdi 432 and Schumann 7.83 (quick, curated frequency selection); behind a deliberate door, a Radio mode for exploring the wider frequency catalogue (opt-in, never autoplay, never the default surface); and behind another, a Library — the listener's own files, auto-profiled and filed under the dial's bands. Alongside those, two cartography surfaces — Body (a lever map: nervous-system / neurochemical / compositional registers) and Chakra (the Solfeggio→chakra body-centre map) — that are peer-class with the audio modes but carry no audio of their own; see [§ Cartography surfaces](#cartography-surfaces). The point is the **room**, not the app — see [MANIFESTO.md](MANIFESTO.md).
 
 ## Reference docs (read before editing)
 
@@ -22,6 +22,7 @@ An ambient Android radio. Three modes: a 24-hour auto-loop tied to the hour of d
 - No medical/health claims about any frequency.
 - Lossless audio when feasible; respect the ear (no jolts, no cuts).
 - Radio mode is opt-in only. Never autoplay, never the default surface, never bleeds into the room. The Dial stays at eleven so the room can recede; the Radio is a separate door the listener walks through.
+- The user library is opt-in. Default `LibrarySource.APP_ONLY` keeps the loop and dial on the curated catalogue; imports play only when the listener flips the source filter to `MIXED` or `USER_ONLY` from the Library screen. `Frequencies.all` is never mutated at runtime — user files live in [UserTracksStore](app/src/main/java/com/soulradio/soulradio/UserTrack.kt), not in the catalogue.
 - Curated pre-electronic recordings (chant, Bach, etc.) are the **preferred** audio — but the rule is "artistic music a curator chose," not "no electronic instrument anywhere." A modern composition that uses synth, percussion, or processed sound as a compositional element is fine if it is musical work, not generic ambient slop. What we keep out: white-noise loops, sine-wave New Age fillers, AI-generated background tracks, and any "wellness" audio that wasn't made as music. Bare synthesized sine tones are a fallback, not the product.
 
 If a change risks any of these, stop and flag it.
@@ -32,7 +33,7 @@ If a change risks any of these, stop and flag it.
 - **UI:** Jetpack Compose + Material3.
 - **Audio:** AndroidX Media3 (ExoPlayer + MediaSession). The `PlaybackService` owns the player so audio survives screen lock and shows on the lockscreen / Bluetooth.
 - **Build:** Gradle 8 + AGP 8.0.2. `minSdk 24`, `targetSdk 34`.
-- **Tests:** JUnit 4 unit tests; see [app/src/test/.../FrequenciesTest.kt](app/src/test/java/com/soulradio/soulradio/FrequenciesTest.kt).
+- **Tests:** JUnit 4 unit tests; see [app/src/test/.../FrequenciesTest.kt](app/src/test/java/com/soulradio/soulradio/FrequenciesTest.kt). One test-only dep: `org.json:json` provides a real implementation in the JVM unit-test runtime — Android's stub `android.jar` throws on `JSONObject` / `JSONArray` calls, and [UserTracksStore](app/src/main/java/com/soulradio/soulradio/UserTrack.kt) round-trip tests need the real one.
 
 ## Code conventions
 
@@ -49,6 +50,49 @@ If a change risks any of these, stop and flag it.
 2. Add a `NowPlaying(work, performer)` entry on the `Frequency` in [Frequency.kt](app/src/main/java/com/soulradio/soulradio/Frequency.kt).
 3. Add the attribution + license to [CREDITS.md](CREDITS.md). Only **public domain, CC0, CC BY, or CC BY-SA** — see [docs/licensing.md](docs/licensing.md) for the rule and the rejected license tiers (NC, ND, all-rights-reserved).
 4. Verify it loops cleanly (no silence gap, no click) on a real device.
+
+The above is the curated catalogue path. Listener-imported recordings (the user library) follow a separate flow — see § The user library below.
+
+## The user library
+
+The listener can import their own audio (SAF picker, `audio/*` mime), and SoulRadio auto-profiles each file at import. The framework — three layers, spectral / temporal / spatial — is documented at [docs/tunables.md § Reading a recording's profile](docs/tunables.md#reading-a-recordings-profile); [AudioProfiler](app/src/main/java/com/soulradio/soulradio/AudioProfiler.kt) implements it. The library is the **fourth mode**: the listener-as-curator surface, parallel to the loop, dial, and Radio.
+
+Architecture:
+
+- **[AudioProfiler.kt](app/src/main/java/com/soulradio/soulradio/AudioProfiler.kt)** — pure-JVM analyzer. PCM in, [BandAssignment](app/src/main/java/com/soulradio/soulradio/AudioProfile.kt) out. Multi-band: a recording can match more than one Solfeggio band (octave coincidences, overtones), or none at all. Empty `matches` is the canonical ancestral case (a 4 Hz drum has signals but no Solfeggio fundamental); the listener files such recordings manually.
+- **[Decoder.kt](app/src/main/java/com/soulradio/soulradio/Decoder.kt)** — `MediaCodec` wrapper, `content://` Uri → PCM, capped at 30 s by default. Run on `Dispatchers.IO`.
+- **[UserTrack.kt](app/src/main/java/com/soulradio/soulradio/UserTrack.kt)** — the parallel store. Lives next to (never inside) `Frequencies.all`. JSON-persisted in the same `soulradio.state` SharedPreferences as the other single-fact stores. Each track has a `Set<String> assignedBands` so a Tibetan overtone chant can sit on `{"396", "7.83"}` simultaneously. The listener can override the auto-suggestion at any time.
+- **[LibrarySource.kt](app/src/main/java/com/soulradio/soulradio/LibrarySource.kt)** — three-way filter: `APP_ONLY` (default, manifesto-aligned), `MIXED` (curated first, then user, in that order), `USER_ONLY` (strict — empty playlist on a band the listener hasn't filed under means silence; the loop's next-hour tick rolls on).
+- **[TrackResolver.kt](app/src/main/java/com/soulradio/soulradio/TrackResolver.kt)** — the union point. `urisFor(context, freq)` returns the URI playlist for a band according to `LibrarySource`. Both [PlaybackService.switchTo](app/src/main/java/com/soulradio/soulradio/PlaybackService.kt) (the loop) and [TrackEngine.selectFrequency](app/src/main/java/com/soulradio/soulradio/TrackEngine.kt) (the dial) consult it. The Library screen surfaces it as a three-pill source toggle.
+- **[LibraryScreen.kt](app/src/main/java/com/soulradio/soulradio/LibraryScreen.kt)** — Compose UI for import, signal display, and per-track band assignment. Reachable from the `lib` pill in [ModeStrip](app/src/main/java/com/soulradio/soulradio/ModeStrip.kt).
+
+Three things this is **not**:
+
+- **Not an autoplay path.** `LibrarySource.APP_ONLY` is the default and the loop / dial are unaffected until the listener flips the source filter from inside the Library screen.
+- **Not a curation event.** `Frequencies.all` is never mutated at runtime, and `tunedKeys` (the dial's "this band has audio" indicator) reflects the curated catalogue only — the dial remains the curator's view, even when the listener has filed user content under a curator-empty band.
+- **Not a prescription.** The auto-profile labels (`528 Hz`, `240 BPM`, `pink`, `sub-60 47%`) describe the **file**, never what it will do to a listener — MANIFESTO §5 holds equally for the curated catalogue and the listener's library.
+
+The catalogue's licensing rules ([docs/licensing.md](docs/licensing.md)) apply only to the curated catalogue under `assets/audio/`. What the listener brings into their own library is theirs to file; the radio takes a persistable read permission on the SAF Uri at import and stores no copy.
+
+## Cartography surfaces
+
+Two read-only screens sit alongside the audio modes as peer-class surfaces — same screen-class, same pause-the-player-while-open lifecycle, but they bundle no audio. They are different reading frames for the same field of sound:
+
+- **[BodyScreen.kt](app/src/main/java/com/soulradio/soulradio/BodyScreen.kt)** — *the lever map*. The third reading frame (after Solfeggio name on the dial and Hz in Radio): four registers — Neurological, Autonomic, Neurochemical, Music structure — describing what a listener might *reach for*, with a "where in the radio" pointer at the end of each section. Mirrors the descriptive (never prescriptive) register of [RadioModeScreen](app/src/main/java/com/soulradio/soulradio/RadioModeScreen.kt). Reachable via the `body` pill in [ModeStrip](app/src/main/java/com/soulradio/soulradio/ModeStrip.kt).
+- **[ChakraScreen.kt](app/src/main/java/com/soulradio/soulradio/ChakraScreen.kt)** — *the body-centre map*. The fourth reading frame: the seven canonical chakras and where the modern Solfeggio→chakra pairing locates each tone, plus an "outside the seven" section for 174 / 285 / 432 / 7.83. Same status as [FREQUENCIES.md](FREQUENCIES.md)'s **Chakra** field — the tradition's own anatomy, *reported* by the radio, never *endorsed*.
+
+These two are explicitly **not on the strip**. The [ModeStrip](app/src/main/java/com/soulradio/soulradio/ModeStrip.kt) holds five mode pills (`dj`, `dial`, `radio`, `body`, `lib`) plus two utility icons (settings gear, notes book), and is at its width budget on a 360 dp phone. Chakra is reached one click in via a "see also" link at the bottom of [BodyScreen](app/src/main/java/com/soulradio/soulradio/BodyScreen.kt) — same architectural tier, deferred entry path. The dial-smallness rule ("the room recedes when there is space between the things the dial offers") applies equally to the navigation strip.
+
+When adding another reading frame, the test is the same as for the dial in [docs/tunables.md](docs/tunables.md): does this reframe earn its space, or does it crowd the strip? A sixth pill is the same conversation as a twelfth dial station.
+
+## Radio mode catalogue
+
+The wider field exposed in Radio mode (the rows under [RadioModeScreen.kt](app/src/main/java/com/soulradio/soulradio/RadioModeScreen.kt)) is data-driven, not hand-coded into the screen.
+
+- **[Catalogue.kt](app/src/main/java/com/soulradio/soulradio/Catalogue.kt)** — the data model. `CatalogueEntry` (hz, title, group, history, uses, studies, references, usage, optional compositions); `CatalogueGroup` enum for the section headings (reference pitches, Cousto, Schumann harmonics, brainwave bands, entrainment delivery, noise colors, vibroacoustic, named, numerology); `audibleHzFor()` gates the sine-demo-on-tap behaviour to entries whose Hz lands inside [SineDemo.MIN_AUDIBLE_HZ, ∞). Sub-audible and non-numeric rows expand the entry sections only.
+- **[CatalogueEntries.kt](app/src/main/java/com/soulradio/soulradio/CatalogueEntries.kt)** — the actual entries. Split off from `Catalogue.kt` so the data file can grow without putting the model file at the 500-line cap.
+
+The five-section structure (history / uses / studies / references / usage) is the contract: Radio is descriptive of practice, never prescriptive of effect. Adding an entry means filling all five — the **studies** field says "no controlled studies" honestly when there are none, and the **references** field names concrete products (Holosync, Brain.fm, Meditative Mind) for biohacker bands or specific recordings for musical bands. Mention in [docs/tunables.md](docs/tunables.md) is required before adding a row — the doc is the gate, the entry is the surface.
 
 ## Contribution popup
 

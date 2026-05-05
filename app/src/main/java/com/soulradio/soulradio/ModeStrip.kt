@@ -26,55 +26,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/**
- * Top-level surfaces. The strip-reachable mode surfaces — [Main] (dial),
- * [Radio], [Body], [Library] — are peers in the [ModeStrip]: tapping a
- * pill switches modes. `dj` and `dial` both map to [Main] and are
- * distinguished by the auto state, not by surface — they share the dial
- * visual.
- *
- * [Chakra] is a peer-class cartography surface (same screen-class as
- * [Body], no audio of its own) but is *not* on the strip — the strip is
- * already at its width budget on a 360 dp phone, and a sixth pill would
- * overflow. Reached instead via a "see also" link at the bottom of
- * [BodyScreen]: one click in, same architectural tier.
- *
- * [Notes] and [Settings] are utilities, not modes. The strip is hidden
- * while they are open and they keep their own close affordance.
- */
 internal enum class AppSurface { Main, Radio, Body, Chakra, Library, Notes, Settings }
 
-/**
- * Shared header across the four peer modes. Renders four lowercase pills
- * — `dj`, `dial`, `radio`, `body` — with a small dot under the active
- * label. Same indicator the NOTES tab row uses, so the visual language
- * across the app stays in one key.
- *
- * - **dj** — enables the auto loop and surfaces [AppSurface.Main]. When
- *   on, the pill suffixes the current hour so the listener can read when
- *   the schedule will roll over.
- * - **dial** — disables the auto loop, *clears any selected tone*, and
- *   surfaces [AppSurface.Main]. The clear is the difference between a
- *   side-effect `setAuto(false)` (a tap on the dial pauses DJ but keeps
- *   the just-tapped tone playing) and the explicit *intent* of pressing
- *   the dial pill itself, which is "silence + dial mode."
- * - **radio** — opens [AppSurface.Radio], the wider catalogue.
- * - **body** — opens [AppSurface.Body], the lever map: sound categorised
- *   by what the listener reaches for, not by name or Hz.
- * - **library** — opens [AppSurface.Library], the listener's imported
- *   audio, auto-profiled and grouped by band. The fourth mode; the
- *   listener-as-curator surface.
- *
- * Callbacks are *semantic* — the strip says what the listener pressed,
- * not what state to mutate. The activity composes the right cleanup
- * (clear-on-dial, no-clear-on-dj) without the strip having to know
- * about [TrackEngine] or selection state.
- *
- * The trailing [GearGlyph] (settings) and [BookGlyph] (notes) sit on the
- * end of the strip as small utilities. They are not modes; they are
- * doors that the strip provides a parking spot for so the corner of the
- * screen has a single navigation surface rather than two.
- */
+// Surfaces that hide the ModeStrip when active.
+internal val UTILITY_SURFACES = setOf(AppSurface.Notes, AppSurface.Settings)
+
+// Chakra is intentionally absent from the strip: it lives one click in
+// from BodyScreen because a sixth pill would overflow a 360 dp phone.
 @Composable
 internal fun ModeStrip(
     currentSurface: AppSurface,

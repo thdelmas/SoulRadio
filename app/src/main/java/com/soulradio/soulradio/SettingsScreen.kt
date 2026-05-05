@@ -67,12 +67,7 @@ fun SettingsScreen(onClose: () -> Unit) {
             letterSpacing = 3.sp,
         )
         Spacer(Modifier.height(20.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(Hairline),
-        )
+        HairlineDivider()
         Spacer(Modifier.height(20.dp))
         LocationKnob()
         Spacer(Modifier.height(24.dp))

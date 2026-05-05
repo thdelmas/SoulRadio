@@ -1,7 +1,6 @@
 package com.soulradio.soulradio
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,61 +11,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/**
- * Chakra — the body-centre map. A fourth way to read the field of sound:
- * not by tradition (Solfeggio, the dial), not by Hz (the radio), not by
- * what the listener reaches *for* ([BodyScreen]'s lever map), but by where
- * the modern Solfeggio→chakra pairing locates the tone in the body.
- *
- * Seven canonical centres, root → crown:
- * - **Muladhara** (root) ↔ 396.
- * - **Svadhisthana** (sacral) ↔ 417.
- * - **Manipura** (solar plexus) ↔ 528.
- * - **Anahata** (heart) ↔ 639.
- * - **Vishuddha** (throat) ↔ 741.
- * - **Ajna** (third eye) ↔ 852.
- * - **Sahasrara** (crown) ↔ 963.
- *
- * Plus a closing section on the four bands that sit *outside* the seven —
- * 174 / 285 (below the root in the Solfeggio set, no chakra in the older
- * yogic anatomy), 432 (a tuning standard, not a Solfeggio tone), and
- * 7.83 (sub-audible cadence, not a tone the body locates).
- *
- * Reached from the bottom of [BodyScreen] as a "see also" link rather
- * than a sixth strip pill — the [ModeStrip] is already at its width
- * budget, and the dial's "stays at eleven so the room can recede" rule
- * applies equally to the navigation strip. Chakra is peer-class with
- * [BodyScreen] (same screen-class, no audio of its own); the entry path
- * is one click in.
- *
- * Per [MANIFESTO.md](../../../../../../MANIFESTO.md): no medical claims.
- * Same status as the **Folk name** field in [FREQUENCIES.md][freqs]: the
- * tradition's own anatomy, *reported* by the radio, never *endorsed*.
- * The body decides whether it agrees.
- *
- * [freqs]: ../../../../../../FREQUENCIES.md
- */
 @Composable
 fun ChakraScreen() {
-    val context = LocalContext.current
     val scrollState = rememberScrollState()
-
-    // Pause the dial's player while the chakra map is open — same
-    // lifecycle as [BodyScreen] and [RadioModeScreen]; a cartography page
-    // is for reading, not for listening.
-    DisposableEffect(Unit) {
-        PlaybackService.pauseForRadio(context)
-        onDispose {
-            PlaybackService.resumeFromRadio(context)
-        }
-    }
+    PauseDialWhileOpen()
 
     Column(
         modifier = Modifier
@@ -251,14 +204,4 @@ private fun OutsideTheSeven() {
         fontWeight = FontWeight.Light,
     )
     Spacer(Modifier.height(16.dp))
-}
-
-@Composable
-private fun HairlineDivider() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(1.dp)
-            .background(Hairline),
-    )
 }

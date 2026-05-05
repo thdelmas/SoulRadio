@@ -2,7 +2,6 @@ package com.soulradio.soulradio
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,52 +12,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/**
- * Body — the lever map. A third way to read the field of sound: not by
- * tradition (Solfeggio, the dial) and not by Hz (the radio), but by what
- * the listener reaches *for* — the register of nervous-system,
- * neurochemical, or compositional work the sound is being used for.
- *
- * Four registers:
- * - **Neurological** — brainwave entrainment (delta sleep ↔ gamma).
- * - **Autonomic** — vagus, HRV, parasympathetic down-regulation.
- * - **Neurochemical** — oxytocin / dopamine; "musical chills" and the
- *   slow-tempo / predictable-melody literature.
- * - **Music structure** — tempo, harmonic surprise, compositional
- *   density across the field.
- *
- * Each section names the dial / radio entries that live in the register
- * so the listener can move from "what am I reaching for" → "which
- * tradition or recording lives here." The body bundles no audio; it is
- * a map, not a sound.
- *
- * Per [MANIFESTO.md](../../../../../../MANIFESTO.md): no medical claims.
- * The body describes practice — what listeners and communities have
- * used these registers for, what the literature reports — not effect on
- * the reader's body. The voice mirrors [RadioModeScreen]'s descriptive
- * register, not a wellness-product prescriptive register.
- */
 @Composable
 fun BodyScreen(onOpenChakra: () -> Unit) {
-    val context = LocalContext.current
     val scrollState = rememberScrollState()
-
-    // Pause the dial's player while body is open so reading the map is
-    // quiet. Resume on close — same lifecycle as [RadioModeScreen].
-    DisposableEffect(Unit) {
-        PlaybackService.pauseForRadio(context)
-        onDispose {
-            PlaybackService.resumeFromRadio(context)
-        }
-    }
+    PauseDialWhileOpen()
 
     Column(
         modifier = Modifier
@@ -113,13 +75,6 @@ fun BodyScreen(onOpenChakra: () -> Unit) {
     }
 }
 
-/**
- * Footer link to [ChakraScreen]. The chakra map is a peer-class cartography
- * surface — same screen-class as the body, named by tradition rather than
- * lever — but lives one click in from here rather than as a sixth strip
- * pill (the strip is already at its width budget). The link is plain text
- * with a hairline above so it reads as cross-reference, not call-to-action.
- */
 @Composable
 private fun SeeAlsoChakra(onOpen: () -> Unit) {
     HairlineDivider()
@@ -221,14 +176,4 @@ private fun LeverSection(
         fontWeight = FontWeight.Light,
     )
     Spacer(Modifier.height(28.dp))
-}
-
-@Composable
-private fun HairlineDivider() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(1.dp)
-            .background(Hairline),
-    )
 }

@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -19,13 +22,8 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import java.util.Calendar
 
-/**
- * Hosts the ExoPlayer + MediaSession so audio survives screen lock and
- * surfaces lockscreen / Bluetooth controls. Also owns the 24-hour AUTO
- * schedule: when AUTO is on, the service swaps the playing track at
- * each hour boundary — so the loop keeps advancing overnight even
- * after the activity is destroyed.
- */
+// Owns the AUTO hour-boundary tick so the loop advances even after the
+// activity is destroyed (the radio is meant to be left on).
 class PlaybackService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
@@ -93,9 +91,9 @@ class PlaybackService : MediaSessionService() {
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
         mediaSession
 
+    // Swipe-away while paused stops the service; while playing keeps going
+    // (the radio is meant to be left on).
     override fun onTaskRemoved(rootIntent: Intent?) {
-        // If user swipes the app away while paused, stop the service.
-        // While playing, keep going (the radio is meant to be left on).
         val player = mediaSession?.player
         if (player != null && (!player.playWhenReady || player.mediaItemCount == 0)) {
             stopSelf()
@@ -114,13 +112,9 @@ class PlaybackService : MediaSessionService() {
         super.onDestroy()
     }
 
-    /**
-     * Toggle the Schumann underlay based on the currently-playing band. The
-     * 7.83 band is the only place where amplitude modulation rides under
-     * the carrier; everywhere else the processor is a pass-through. Hooked
-     * to player events (item transition, is-playing) so the underlay tracks
-     * what's actually audible — not what AUTO thinks should be audible.
-     */
+    // Tracks what's actually audible (not what AUTO thinks should be):
+    // hooked to player events so the underlay only rides 7.83 when 7.83
+    // is the playing item.
     private fun updateUnderlay() {
         val player = mediaSession?.player ?: return
         val key = bandKeyOf(player.currentMediaItem)
@@ -130,7 +124,6 @@ class PlaybackService : MediaSessionService() {
 
     private fun bandKeyOf(item: MediaItem?): String? {
         val uri = item?.localConfiguration?.uri?.toString() ?: return null
-        // Asset URIs are "asset:///audio/<key>/<filename>" — see Frequency.assetFolder.
         return Regex("^asset:///audio/([^/]+)/.+$").find(uri)?.groupValues?.get(1)
     }
 
@@ -144,19 +137,10 @@ class PlaybackService : MediaSessionService() {
     private fun disableAuto() {
         autoEnabled = false
         cancelTick()
-        // Don't touch playback here — the activity (TrackEngine) will fade
-        // out or swap to a user-tapped tone. Cancelling our fade lets it.
+        // Cancel only our fade — TrackEngine handles the playback change.
         cancelFade()
     }
 
-    /**
-     * Pause the dial player while Radio mode is open. The Radio's sine demos
-     * and the dial's recordings shouldn't play simultaneously — the manifesto
-     * keeps the two surfaces apart. AUTO state in prefs is left alone, so
-     * exiting Radio can re-engage AUTO without overwriting the user's choice.
-     * The auto-tick is paused so the schedule doesn't roll the player back
-     * on while the user is in Radio.
-     */
     private fun pauseForRadio() {
         cancelTick()
         cancelFade()
@@ -166,12 +150,8 @@ class PlaybackService : MediaSessionService() {
         }
     }
 
-    /**
-     * Re-engage the dial when Radio mode closes. If AUTO is on per prefs,
-     * apply the schedule for now and resume ticking. If AUTO is off, the
-     * user had a tapped tone (or silence); we don't auto-resume tapped
-     * tones — the user can re-tap if they want the room back.
-     */
+    // AUTO resumes if it was on; tapped tones don't auto-resume — the user
+    // can re-tap if they want the room back.
     private fun resumeFromRadio() {
         val autoOn = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .getBoolean(PREF_AUTO_ENABLED, false)
@@ -225,7 +205,7 @@ class PlaybackService : MediaSessionService() {
             player.play()
             fadeTo(player, TARGET_VOLUME) {}
         } else {
-            // fade-out → swap → fade-in (single player, but no hard cuts).
+            // fade-out → swap → fade-in (manifesto: no hard cuts).
             fadeTo(player, 0f) {
                 applyMedia(player, uris)
                 autoCurrent = freq
@@ -238,10 +218,6 @@ class PlaybackService : MediaSessionService() {
     private fun applyMedia(player: Player, uris: List<String>) {
         val items = uris.map { MediaItem.fromUri(it) }
         player.setMediaItems(items)
-        // Mirrors TrackEngine: multi-track bands shuffle the pool and loop the
-        // playlist so the radio rotates through every recording while the
-        // hour holds. Single-track bands stay on REPEAT_MODE_ONE for the
-        // gapless seek-loop ExoPlayer does best.
         player.shuffleModeEnabled = items.size > 1
         player.repeatMode = if (items.size > 1) Player.REPEAT_MODE_ALL else Player.REPEAT_MODE_ONE
         player.prepare()
@@ -320,30 +296,26 @@ class PlaybackService : MediaSessionService() {
             context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
                 .getBoolean(PREF_AUTO_ENABLED, false)
 
-        // Manifesto §"the promise" ends with "Tune in. Or better — don't.
-        // Just leave it on." So on the very first launch (no stored pref),
-        // start AUTO. The user can always toggle off; we then respect it.
+        // Manifesto §"the promise": "Just leave it on." First launch defaults to AUTO.
         fun startIfFirstLaunch(context: Context) {
             val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             if (!prefs.contains(PREF_AUTO_ENABLED)) setAuto(context, true)
         }
 
         fun setAuto(context: Context, enabled: Boolean) {
-            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-                .edit()
-                .putBoolean(PREF_AUTO_ENABLED, enabled)
-                .apply()
+            val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            if (prefs.contains(PREF_AUTO_ENABLED) &&
+                prefs.getBoolean(PREF_AUTO_ENABLED, false) == enabled) {
+                return
+            }
+            prefs.edit().putBoolean(PREF_AUTO_ENABLED, enabled).apply()
             val intent = Intent(context, PlaybackService::class.java).apply {
                 action = if (enabled) ACTION_AUTO_ON else ACTION_AUTO_OFF
             }
             context.startService(intent)
         }
 
-        /**
-         * Pause the dial player while Radio mode is open. Does NOT write to
-         * the AUTO pref — the user's AUTO choice is preserved across the
-         * Radio session.
-         */
+        // Does NOT write to AUTO pref — the user's choice is preserved.
         fun pauseForRadio(context: Context) {
             val intent = Intent(context, PlaybackService::class.java).apply {
                 action = ACTION_PAUSE_FOR_RADIO
@@ -351,15 +323,20 @@ class PlaybackService : MediaSessionService() {
             context.startService(intent)
         }
 
-        /**
-         * Re-engage the dial when Radio mode closes. AUTO resumes if it was
-         * on; tapped tones do not auto-resume.
-         */
         fun resumeFromRadio(context: Context) {
             val intent = Intent(context, PlaybackService::class.java).apply {
                 action = ACTION_RESUME_FROM_RADIO
             }
             context.startService(intent)
         }
+    }
+}
+
+@Composable
+internal fun PauseDialWhileOpen() {
+    val context = LocalContext.current
+    DisposableEffect(Unit) {
+        PlaybackService.pauseForRadio(context)
+        onDispose { PlaybackService.resumeFromRadio(context) }
     }
 }

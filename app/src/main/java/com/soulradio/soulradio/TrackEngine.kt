@@ -2,6 +2,7 @@ package com.soulradio.soulradio
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.runtime.State
@@ -13,20 +14,9 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 
-/**
- * Frequency-aware playback wrapper over a MediaController bound to
- * PlaybackService. The service owns the single ExoPlayer (so playback
- * survives screen lock and surfaces lockscreen / Bluetooth controls);
- * this class chooses what plays and rides the volume ramp for fades.
- *
- * Each Frequency may bundle one or more recordings (see [Frequency.tracks]).
- * Multi-track bands are loaded as a shuffled playlist on REPEAT_MODE_ALL so
- * the order is different every session AND the radio rotates through the
- * pool while the user stays tuned — no more hearing the same take on loop
- * for an hour. Single-track bands stay on REPEAT_MODE_ONE for gapless loop.
- * Frequencies with zero tracks bundled are "untuned" — selectable in the UI
- * but no audio plays.
- */
+// Multi-track bands shuffle on REPEAT_MODE_ALL so each session rotates
+// through different recordings; single-track bands use REPEAT_MODE_ONE
+// for ExoPlayer's gapless seek-loop.
 class TrackEngine(private val context: Context) {
 
     private val handler = Handler(Looper.getMainLooper())
@@ -41,35 +31,20 @@ class TrackEngine(private val context: Context) {
     private var pending: Frequency? = null
     private var current: Frequency? = null
 
-    /**
-     * Frequencies that would yield a non-empty playlist under the active
-     * [LibrarySource]. Computed on access so a fresh read picks up changes
-     * the listener made on the Library screen — switching source, adding
-     * or removing files. The Set is small (≤ 11 entries); the read is
-     * cheap (SharedPreferences + a JSON parse).
-     */
-    val tunedKeys: Set<String>
-        get() = TrackResolver.tunedKeys(context)
+    private val _tunedKeys = mutableStateOf(TrackResolver.tunedKeys(context))
+    val tunedKeys: Set<String> get() = _tunedKeys.value
+
+    private val prefs = context.getSharedPreferences("soulradio.state", Context.MODE_PRIVATE)
+    private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == "library_source" || key == "user_tracks_json") {
+            _tunedKeys.value = TrackResolver.tunedKeys(context)
+        }
+    }
 
     private val _currentFrequency = mutableStateOf<Frequency?>(null)
-    /**
-     * The frequency actually playing in the service, derived from the
-     * MediaController's current item and play state. Drives the dial
-     * highlight so the UI stays honest after the activity is recreated
-     * (audio kept playing in the service while we were gone) and so the
-     * AUTO band update is instant when the schedule rolls over at the
-     * hour boundary, instead of lagging behind a 60 s poll.
-     */
     val currentFrequency: State<Frequency?> = _currentFrequency
 
     private val _currentTrack = mutableStateOf<NowPlaying?>(null)
-    /**
-     * The specific recording (work + performer) that is playing now,
-     * resolved from the MediaController's current asset URI. The dial card
-     * binds to this rather than to a static field on the Frequency, so
-     * the now-playing label tracks the track that was actually picked
-     * for this session.
-     */
     val currentTrack: State<NowPlaying?> = _currentTrack
 
     private val playerListener = object : Player.Listener {
@@ -85,6 +60,7 @@ class TrackEngine(private val context: Context) {
     }
 
     init {
+        prefs.registerOnSharedPreferenceChangeListener(prefsListener)
         val token = SessionToken(context, ComponentName(context, PlaybackService::class.java))
         controllerFuture = MediaController.Builder(context, token).buildAsync()
         controllerFuture.addListener({
@@ -96,10 +72,6 @@ class TrackEngine(private val context: Context) {
 
     fun isTuned(freq: Frequency): Boolean = freq.key in tunedKeys
 
-    /**
-     * Switch playback to [freq]. Null or untuned frequencies fade the
-     * current track out. If [freq] is already current, no-op.
-     */
     fun selectFrequency(freq: Frequency?) {
         val c = controller
         if (c == null) {
@@ -116,10 +88,7 @@ class TrackEngine(private val context: Context) {
         }
         if (current?.key == freq.key && c.isPlaying) return
 
-        // Resolve the band's playlist via [TrackResolver] — curated, user
-        // imports, or a mix, depending on the active LibrarySource. An
-        // empty list under USER_ONLY (no user files filed on this band) is
-        // valid; we fade out and let the loop's next tick roll on.
+        // USER_ONLY may yield an empty list — fade out, let the loop roll on.
         val uris = TrackResolver.urisFor(context, freq)
         if (uris.isEmpty()) {
             cancelFade()
@@ -136,8 +105,7 @@ class TrackEngine(private val context: Context) {
             c.play()
             fadeTo(c, targetVolume) {}
         } else {
-            // fade-out → swap → fade-in. Not a true overlap (single player),
-            // but keeps the manifesto's "no hard cuts" promise.
+            // fade-out → swap → fade-in (manifesto: no hard cuts).
             fadeTo(c, 0f) {
                 applyMedia(c, uris)
                 current = freq
@@ -149,6 +117,7 @@ class TrackEngine(private val context: Context) {
 
     fun release() {
         cancelFade()
+        prefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
         controller?.removeListener(playerListener)
         MediaController.releaseFuture(controllerFuture)
         controller = null
@@ -175,19 +144,14 @@ class TrackEngine(private val context: Context) {
 
     private fun keyAndAssetFromMediaItem(item: MediaItem?): Pair<String, String>? {
         val uri = item?.localConfiguration?.uri?.toString() ?: return null
-        // Asset URIs are "asset:///audio/<key>/<filename>" — see assetFolder.
         val m = Regex("^asset:///audio/([^/]+)/(.+)$").find(uri) ?: return null
         return m.groupValues[1] to m.groupValues[2]
     }
 
     private fun applyMedia(c: MediaController, uris: List<String>) {
         val items = uris.map { MediaItem.fromUri(it) }
-        // Multi-track: shuffle the pool and loop the playlist so we rotate
-        // through different takes. shuffleModeEnabled only affects what comes
-        // *next* — the playhead still starts on items[0] — so we also seed a
-        // random start index, otherwise every session opens on the same
-        // recording. Single-track: REPEAT_MODE_ONE keeps the gapless seek-loop
-        // ExoPlayer does best.
+        // Random start index so multi-track bands don't always open on
+        // items[0]. shuffleModeEnabled only affects subsequent tracks.
         val startIndex = if (items.size > 1) items.indices.random() else 0
         c.setMediaItems(items, startIndex, 0L)
         c.shuffleModeEnabled = items.size > 1

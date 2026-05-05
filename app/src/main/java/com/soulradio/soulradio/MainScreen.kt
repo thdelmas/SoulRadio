@@ -37,27 +37,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Text
 import kotlinx.coroutines.delay
 
-// Sentinel key for the first-launch hint inside the caption Crossfade —
-// can't collide with any real Frequency.key (which are all numeric).
+// Sentinel for the first-launch hint slot in the caption Crossfade —
+// can't collide with numeric Frequency.keys.
 private const val CAPTION_HINT_KEY = "__hint__"
 
-/**
- * The dial home — shared by `dj` (auto on) and `dial` (auto off) modes
- * in the [ModeStrip] vocabulary. The strip lives above this screen in
- * [MainActivity], so this composable starts directly with the dial layout
- * and consumes [autoOn] from the parent rather than owning that state.
- *
- * The tap-pauses-auto interaction stays local: when the listener taps a
- * tone while DJ is on, that tap silently flips `autoOn` to false (via
- * [onSetAuto]) and bumps the [autoPausedAt] notice slot below the dial.
- *
- * [dialPillTrigger] is a counter the activity bumps when the listener
- * presses the strip's `dial` pill — the explicit "silence + dial mode"
- * intent. Each increment clears the current selection. Initial value of
- * 0 is a no-op on first composition; the side-effect `setAuto(false)`
- * from a dial tap does NOT touch this counter, so a tapped tone keeps
- * playing through the auto-pause.
- */
 @Composable
 internal fun MainScreen(
     autoOn: Boolean,
@@ -69,18 +52,15 @@ internal fun MainScreen(
     var selected by remember {
         mutableStateOf(if (autoOn) Frequencies.forNow(context) else null)
     }
-    // Bumped only when DJ flips off as a *side effect* of a dial tap —
-    // not when the user explicitly presses the dial pill in the strip.
-    // The notice exists because that side-effect is silent and easy to
-    // miss.
+    // Set only when DJ flips off as a side-effect of a dial tap — drives
+    // the transient "dj · paused" notice. Explicit dial-pill press uses
+    // dialPillTrigger instead.
     var autoPausedAt by remember { mutableStateOf<Long?>(null) }
 
     DisposableEffect(Unit) { onDispose { engine.release() } }
 
-    // The strip's `dial` pill press signals "silence + dial mode" — clear
-    // any current selection. Initial composition runs with trigger = 0,
-    // which we ignore so a fresh launch never silences a service-side
-    // playing track. Subsequent increments fire the clear.
+    // Initial composition runs with trigger = 0; ignore so a fresh launch
+    // doesn't silence a service-side playing track.
     LaunchedEffect(dialPillTrigger) {
         if (dialPillTrigger > 0) {
             selected = null
@@ -88,14 +68,10 @@ internal fun MainScreen(
         }
     }
 
-    // The engine reports what is *actually* playing in the service — the
-    // source of truth for the dial highlight after the activity has been
-    // recreated, and the signal that lets us drop the 60 s DJ poll.
     val playing by engine.currentFrequency
 
-    // After the controller binds, if the activity has no selection but a
-    // track is playing in the service (the user reopened the app while
-    // audio kept going), adopt that tone so the dial reflects the room.
+    // Adopt the service's playing track when the activity opens with no
+    // selection (audio kept playing while we were gone).
     LaunchedEffect(Unit) {
         snapshotFlow { engine.currentFrequency.value }
             .collect { freq ->
@@ -105,20 +81,14 @@ internal fun MainScreen(
             }
     }
 
-    // While DJ is on, mirror what the service is playing onto the dial.
-    // Falls back to the schedule until the controller binds, so the dial
-    // is correct on the very first frame.
     LaunchedEffect(autoOn, playing) {
         if (!autoOn) return@LaunchedEffect
         val target = playing ?: Frequencies.forNow(context)
         if (selected?.key != target.key) selected = target
     }
 
-    // One shared breath drives every alive element (the playing node's
-    // ring), so the whole dial pulses in unison. ~4 s cycle, faint — a
-    // pilot light, not a pulse animation. Passed as State<Float> and read
-    // inside drawBehind so frame-rate updates invalidate only the draw
-    // layer.
+    // One shared breath: the whole dial pulses in unison. Read inside
+    // drawBehind so frame updates invalidate only the draw layer.
     val transition = rememberInfiniteTransition(label = "breath")
     val pulse = transition.animateFloat(
         initialValue = 0.30f,
@@ -130,11 +100,8 @@ internal fun MainScreen(
         label = "alpha",
     )
 
-    // First-launch hint. DJ starts on the very first open, so the
-    // empty-state caption ("tap a tone to listen…") never renders for a
-    // new user — they see a glowing dial of unexplained numbers. Borrow
-    // the caption slot for ~6 s on launch #1 to point at the book glyph,
-    // then dissolve back to the normal now-playing line.
+    // First-launch hint borrows the caption slot for ~6 s — DJ is on by
+    // default so the empty-state caption never shows for a new user.
     var firstLaunchHint by remember { mutableStateOf(HintStore.shouldShow(context)) }
     LaunchedEffect(Unit) {
         if (!firstLaunchHint) return@LaunchedEffect
@@ -143,11 +110,9 @@ internal fun MainScreen(
         firstLaunchHint = false
     }
 
-    // Contribution popup: a 90-day, paused-only ask. Settle 5 s after the
-    // screen appears (so the controller has bound and reported state, and
-    // the user has had a beat in the room) before deciding. Marking the
-    // popup shown happens up front so the cadence resets whether the user
-    // actions or dismisses — matches the portfolio guide's spec.
+    // Contribution popup: 90-day, paused-only. Settle 5 s so the controller
+    // has bound. Mark shown up front so the cadence resets whether the
+    // listener actions or dismisses.
     var showContribution by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         delay(5000)

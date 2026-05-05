@@ -10,7 +10,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -44,19 +43,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
-/**
- * The Library surface — the fourth mode, alongside loop / dial / Radio.
- * The listener imports local audio files; each is auto-profiled by
- * [AudioProfiler] at import and grouped by the band(s) it was filed
- * under. The app-wide source filter (curated / mixed / user) lives in
- * Settings — it governs the loop and dial as much as this screen, so it
- * doesn't belong here.
- *
- * The radio's framing rule is preserved: the UI describes what the file
- * contains (dominant Hz, BPM, tilt class, sub-60 fraction), never what
- * the file will do to the listener — see MANIFESTO.md §5 and the
- * pedagogical section in docs/tunables.md.
- */
 @Composable
 internal fun LibraryScreen(onClose: () -> Unit) {
     val context = LocalContext.current
@@ -91,8 +77,7 @@ internal fun LibraryScreen(onClose: () -> Unit) {
                 doImport(context, uri)
             }
             if (track != null) {
-                UserTracksStore.add(context, track)
-                tracks = UserTracksStore.all(context)
+                tracks = UserTracksStore.add(context, track)
             }
             importing = false
         }
@@ -131,9 +116,7 @@ internal fun LibraryScreen(onClose: () -> Unit) {
             fontSize = 11.sp,
         )
         Spacer(Modifier.height(20.dp))
-        Box(
-            modifier = Modifier.fillMaxWidth().height(1.dp).background(Hairline),
-        )
+        HairlineDivider()
         Spacer(Modifier.height(16.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
@@ -163,14 +146,12 @@ internal fun LibraryScreen(onClose: () -> Unit) {
                 tracks = tracks,
                 isMissing = { id -> missingIds[id] == true },
                 onChangeBands = { id, newBands ->
-                    UserTracksStore.update(context, id) { t ->
+                    tracks = UserTracksStore.update(context, id) { t ->
                         t.copy(assignedBands = newBands, manualOverride = true)
                     }
-                    tracks = UserTracksStore.all(context)
                 },
                 onRemove = { id ->
-                    UserTracksStore.remove(context, id)
-                    tracks = UserTracksStore.all(context)
+                    tracks = UserTracksStore.remove(context, id)
                     missingIds.remove(id)
                 },
             )
@@ -312,9 +293,7 @@ private fun tiltLabel(slope: Float): String = when {
     else -> "bright"
 }
 
-private val ALL_BANDS = listOf(
-    "174", "285", "396", "417", "528", "639", "741", "852", "963", "432", "7.83",
-)
+private val ALL_BANDS: List<String> = Frequencies.all.map { it.key }
 
 @Composable
 private fun BandChooser(assigned: Set<String>, onChange: (Set<String>) -> Unit) {

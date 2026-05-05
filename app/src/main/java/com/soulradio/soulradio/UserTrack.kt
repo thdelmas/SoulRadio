@@ -4,27 +4,6 @@ import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
 
-/**
- * A user-imported audio file. The user's library lives parallel to
- * [Frequencies.all] — the curated catalogue is never mutated. Each track
- * carries the auto-profile [AudioProfiler] read at import plus the bands
- * the listener has filed it under (multi-band: a Tibetan overtone chant
- * could sit on 396 for its tonic *and* on 7.83 for its sub-60 drone).
- *
- * - [sourceUri]: the SAF Uri the system picker returned. The import flow
- *   takes persistable read permission so the file remains accessible
- *   after process restart.
- * - [displayName]: short label for the UI, taken from the document's
- *   metadata at import time.
- * - [profile]: the auto-profile read by [AudioProfiler] at import.
- * - [assignedBands]: the bands the listener has filed this track under.
- *   Defaults to the top auto-match's bandKey at import; empty when the
- *   auto-profile yielded no Solfeggio match (the ancestral case — the
- *   listener files manually).
- * - [manualOverride]: true once the listener has changed [assignedBands]
- *   away from the auto-suggestion. UI uses it to mark which files the
- *   listener has chosen vs. accepted-as-suggested.
- */
 data class UserTrack(
     val id: String,
     val sourceUri: String,
@@ -35,12 +14,6 @@ data class UserTrack(
     val manualOverride: Boolean,
 )
 
-/**
- * Persistent store for user-imported tracks. JSON-serialised list inside
- * the same `soulradio.state` SharedPreferences as the rest of the
- * single-fact stores; uses [org.json] (built-in to Android) so no new
- * dependency is added — see CLAUDE.md.
- */
 object UserTracksStore {
     private const val PREFS = "soulradio.state"
     private const val KEY = "user_tracks_json"
@@ -54,18 +27,26 @@ object UserTracksStore {
     fun byBand(context: Context, bandKey: String): List<UserTrack> =
         all(context).filter { bandKey in it.assignedBands }
 
-    fun add(context: Context, track: UserTrack) {
+    fun add(context: Context, track: UserTrack): List<UserTrack> {
         val updated = all(context).filterNot { it.id == track.id } + track
         write(context, updated)
+        return updated
     }
 
-    fun update(context: Context, id: String, transform: (UserTrack) -> UserTrack) {
+    fun update(
+        context: Context,
+        id: String,
+        transform: (UserTrack) -> UserTrack,
+    ): List<UserTrack> {
         val updated = all(context).map { if (it.id == id) transform(it) else it }
         write(context, updated)
+        return updated
     }
 
-    fun remove(context: Context, id: String) {
-        write(context, all(context).filterNot { it.id == id })
+    fun remove(context: Context, id: String): List<UserTrack> {
+        val updated = all(context).filterNot { it.id == id }
+        write(context, updated)
+        return updated
     }
 
     fun clear(context: Context) {
@@ -78,8 +59,6 @@ object UserTracksStore {
             .putString(KEY, encode(tracks))
             .apply()
     }
-
-    // -- JSON round-trip (org.json, built-in) --
 
     internal fun encode(tracks: List<UserTrack>): String {
         val arr = JSONArray()

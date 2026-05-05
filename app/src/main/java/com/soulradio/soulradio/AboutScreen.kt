@@ -157,16 +157,6 @@ private fun TabRow(current: String, onSelect: (String) -> Unit) {
     }
 }
 
-@Composable
-private fun HairlineDivider() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(1.dp)
-            .background(Hairline),
-    )
-}
-
 private fun readAsset(context: Context, path: String): String =
     runCatching {
         context.assets.open(path).bufferedReader().use { it.readText() }

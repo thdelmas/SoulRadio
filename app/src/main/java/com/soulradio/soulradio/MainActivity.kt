@@ -42,11 +42,8 @@ class MainActivity : ComponentActivity() {
             MaterialTheme(colorScheme = darkColorScheme()) {
                 M3Surface(modifier = Modifier.fillMaxSize(), color = Bg) {
                     val context = LocalContext.current
-                    // Screen dim follows the band's time-of-day, not the
-                    // user's selection — at 3am the room is dim whether the
-                    // radio is on dj, paused, or holding a tapped tone.
-                    // Re-poll every 5 min so the dim follows band crossings
-                    // without holding a precise boundary timer.
+                    // Dim follows time-of-day, not user selection: at 3am
+                    // the room stays dim regardless of dj/paused/tapped.
                     var dayBand by remember {
                         mutableStateOf(Frequencies.forNow(context))
                     }
@@ -64,12 +61,8 @@ class MainActivity : ComponentActivity() {
                         label = "screen-dim",
                     )
                     var surface by remember { mutableStateOf(AppSurface.Main) }
-                    // Single source of truth for the auto-loop state. Lifted
-                    // here so the [ModeStrip] (which sits above the surface
-                    // Crossfade) and [MainScreen] (which still owns the
-                    // tap-pauses-auto interaction) read and write the same
-                    // value. PlaybackService is the persistent backing store;
-                    // this state mirrors it for Compose recomposition.
+                    // Mirror of PlaybackService's persisted auto state, lifted
+                    // so ModeStrip and MainScreen read/write one value.
                     var autoOn by remember {
                         mutableStateOf(PlaybackService.isAutoEnabled(context))
                     }
@@ -77,19 +70,13 @@ class MainActivity : ComponentActivity() {
                         autoOn = value
                         PlaybackService.setAuto(context, value)
                     }
-                    // Bumped only when the listener presses the `dial` pill
-                    // in the strip. MainScreen observes this counter and
-                    // clears its selection on increment — restoring the
-                    // explicit "silence + dial mode" intent the old AUTO
-                    // toggle carried. A side-effect `setAuto(false)` from a
-                    // dial tap does *not* increment, so the just-tapped
-                    // tone keeps playing.
+                    // Increment-only signal. Bumped by the dial *pill*
+                    // (explicit "silence + dial mode") to clear MainScreen's
+                    // selection. A side-effect setAuto(false) from a dial
+                    // tap does NOT increment — the tapped tone keeps playing.
                     var dialPillTrigger by remember { mutableStateOf(0) }
 
-                    // Device back returns to Main from any non-Main surface;
-                    // Chakra is the one exception — it's reached from Body
-                    // (not the strip) so back returns to Body to match the
-                    // entry path. Root-level back falls through to finish.
+                    // Chakra back returns to Body (its entry path), not Main.
                     BackHandler(enabled = surface != AppSurface.Main) {
                         surface = if (surface == AppSurface.Chakra) {
                             AppSurface.Body
@@ -98,17 +85,8 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    val isMode = surface == AppSurface.Main ||
-                        surface == AppSurface.Radio ||
-                        surface == AppSurface.Body ||
-                        surface == AppSurface.Chakra ||
-                        surface == AppSurface.Library
+                    val isMode = surface !in UTILITY_SURFACES
 
-                    // Parent Column owns the system-bar inset and the dim;
-                    // child screens drop their own systemBarsPadding and dim
-                    // so things don't double up. Each screen keeps its own
-                    // horizontal padding (24 dp) — the strip is allowed
-                    // tighter horizontal so its pills cluster cleanly.
                     Column(
                         modifier = Modifier
                             .fillMaxSize()

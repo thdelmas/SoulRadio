@@ -8,7 +8,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,53 +35,21 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/**
- * Radio mode — the wider field, behind a deliberate door. Lists the
- * frequencies documented in `docs/tunables.md` that did *not* earn a place
- * on the dial. Tap a row to read about it; if the row's Hz is audible
- * (≥ 20 Hz), the same tap also plays the tone as a sine demo. Sub-audible
- * and non-numeric rows expand the entry sections only.
- *
- * Each expanded entry surfaces five sections: history, historical uses
- * (which traditions / products / contexts have used the band — sound-
- * healing, biohacker, neurofeedback, musical, or otherwise; descriptive,
- * not prescriptive), scientific studies (or honest absence), concrete
- * references the listener can chase down, and when a listener might
- * actually reach for it. The radio's voice never asserts effects on the
- * listener.
- *
- * Per [MANIFESTO.md](../../../../../../MANIFESTO.md): exploration is opt-in,
- * never the default surface, never bleeds into the room. The sine demo
- * stops the moment the screen closes (DisposableEffect), so the radio
- * cannot leak its exploration audio into the auto loop or dial context.
- *
- * The reverse direction is handled too: while Radio is open, the dial
- * player is paused via PlaybackService so dial recordings and sine demos
- * don't play simultaneously. On exit the service re-engages AUTO if it
- * was on; tapped tones don't auto-resume — those are per-tap by design.
- */
 @Composable
 fun RadioModeScreen() {
-    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val sineDemo = remember { SineDemo() }
-    DisposableEffect(Unit) {
-        PlaybackService.pauseForRadio(context)
-        onDispose {
-            sineDemo.release()
-            PlaybackService.resumeFromRadio(context)
-        }
+    PauseDialWhileOpen()
+    DisposableEffect(sineDemo) {
+        onDispose { sineDemo.release() }
     }
 
-    // Single-active-row model: tapping a row makes it the active one
-    // (expanding the entry + starting tone if audible); tapping the same
-    // row again clears active. Coupling expand and play to one state keeps
-    // the audio model trivially correct — at most one tone, ever.
+    // Coupling expand and play to one state keeps the audio model trivially
+    // correct — at most one tone, ever.
     var activeHz by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(activeHz) {
-        // Run AudioTrack lifecycle off the main thread; start/stop
-        // synchronise internally and may briefly block on thread join.
+        // AudioTrack start/stop may briefly block on thread join.
         withContext(Dispatchers.IO) {
             val hz = activeHz?.let { Catalogue.audibleHzFor(it) }
             if (hz != null) sineDemo.start(hz) else sineDemo.stop()
@@ -304,14 +270,4 @@ private fun EntrySection(label: String, body: String, isLast: Boolean = false) {
         fontWeight = FontWeight.Light,
     )
     if (!isLast) Spacer(Modifier.height(20.dp))
-}
-
-@Composable
-private fun HairlineDivider() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(1.dp)
-            .background(Hairline),
-    )
 }

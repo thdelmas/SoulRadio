@@ -2,23 +2,11 @@ package com.soulradio.soulradio
 
 import android.content.Context
 
-/**
- * Which sources contribute to a band's playlist when the loop, dial, or
- * Radio plays it.
- *
- * Default is [APP_ONLY] so existing behaviour is unchanged until the
- * listener opts in — the manifesto's "exploration is opt-in, never the
- * default surface" applies to user-imported audio too. The user's library
- * does not bleed into the room without consent.
- */
+// Default APP_ONLY: user library is opt-in (manifesto §"exploration is
+// opt-in, never the default surface").
 enum class LibrarySource {
-    /** Curated catalogue only. The radio as it ships. */
     APP_ONLY,
-
-    /** Curated catalogue + user-imported, drawn together by the band's profile. */
     MIXED,
-
-    /** User-imported only. The listener becomes the sole curator. */
     USER_ONLY;
 
     companion object {
@@ -37,6 +25,7 @@ object LibrarySourceStore {
     }
 
     fun set(context: Context, source: LibrarySource) {
+        if (get(context) == source) return
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .edit()
             .putString(KEY, source.name)

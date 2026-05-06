@@ -3,8 +3,6 @@ package com.soulradio.soulradio
 import android.content.ComponentName
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
@@ -14,22 +12,14 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 
-// Multi-track bands shuffle on REPEAT_MODE_ALL so each session rotates
-// through different recordings; single-track bands use REPEAT_MODE_ONE
-// for ExoPlayer's gapless seek-loop.
+// Activity-side controller surface for the dial. Reads playback state via
+// MediaController; routes band-switch requests through PlaybackService so
+// the service's two-player crossfade is the only path that changes the
+// audible band (manifesto §6 — crossfades that do not jolt).
 class TrackEngine(private val context: Context) {
 
-    private val handler = Handler(Looper.getMainLooper())
     private val controllerFuture: ListenableFuture<MediaController>
     private var controller: MediaController? = null
-
-    private var fadeRunnable: Runnable? = null
-    private val targetVolume = 0.7f
-    private val fadeStepMs = 30L
-    private val fadeMs = 1500L
-
-    private var pending: Frequency? = null
-    private var current: Frequency? = null
 
     private val _tunedKeys = mutableStateOf(TrackResolver.tunedKeys(context))
     val tunedKeys: Set<String> get() = _tunedKeys.value
@@ -66,57 +56,20 @@ class TrackEngine(private val context: Context) {
         controllerFuture.addListener({
             controller = controllerFuture.get()?.also { it.addListener(playerListener) }
             recomputeCurrentFrequency()
-            pending?.let { selectFrequency(it) }
         }, ContextCompat.getMainExecutor(context))
     }
 
     fun isTuned(freq: Frequency): Boolean = freq.key in tunedKeys
 
     fun selectFrequency(freq: Frequency?) {
-        val c = controller
-        if (c == null) {
-            pending = freq
-            return
-        }
-        pending = null
-
         if (freq == null) {
-            cancelFade()
-            fadeTo(c, 0f) { c.pause() }
-            current = null
-            return
-        }
-        if (current?.key == freq.key && c.isPlaying) return
-
-        // USER_ONLY may yield an empty list — fade out, let the loop roll on.
-        val uris = TrackResolver.urisFor(context, freq)
-        if (uris.isEmpty()) {
-            cancelFade()
-            fadeTo(c, 0f) { c.pause() }
-            current = null
-            return
-        }
-
-        cancelFade()
-        if (!c.isPlaying) {
-            applyMedia(c, freq, uris)
-            current = freq
-            c.volume = 0f
-            c.play()
-            fadeTo(c, targetVolume) {}
+            PlaybackService.stopDial(context)
         } else {
-            // fade-out → swap → fade-in (manifesto: no hard cuts).
-            fadeTo(c, 0f) {
-                applyMedia(c, freq, uris)
-                current = freq
-                c.play()
-                fadeTo(c, targetVolume) {}
-            }
+            PlaybackService.playBand(context, freq.key)
         }
     }
 
     fun release() {
-        cancelFade()
         prefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
         controller?.removeListener(playerListener)
         MediaController.releaseFuture(controllerFuture)
@@ -148,46 +101,5 @@ class TrackEngine(private val context: Context) {
     private fun assetNameOf(item: MediaItem?): String? {
         val uri = item?.localConfiguration?.uri?.toString() ?: return null
         return Regex("^asset:///audio/[^/]+/(.+)$").find(uri)?.groupValues?.get(1)
-    }
-
-    private fun applyMedia(c: MediaController, freq: Frequency, uris: List<String>) {
-        val items = uris.map {
-            MediaItem.Builder().setUri(it).setMediaId(freq.key).build()
-        }
-        // Random start index so multi-track bands don't always open on
-        // items[0]. shuffleModeEnabled only affects subsequent tracks.
-        val startIndex = if (items.size > 1) items.indices.random() else 0
-        c.setMediaItems(items, startIndex, 0L)
-        c.shuffleModeEnabled = items.size > 1
-        c.repeatMode = if (items.size > 1) Player.REPEAT_MODE_ALL else Player.REPEAT_MODE_ONE
-        c.prepare()
-    }
-
-    private fun fadeTo(c: MediaController, target: Float, onDone: () -> Unit) {
-        val start = c.volume
-        val steps = (fadeMs / fadeStepMs).toInt().coerceAtLeast(1)
-        var step = 0
-        val r = object : Runnable {
-            override fun run() {
-                val live = controller ?: return
-                step++
-                val t = step.toFloat() / steps
-                live.volume = start + (target - start) * t
-                if (step < steps) {
-                    handler.postDelayed(this, fadeStepMs)
-                } else {
-                    live.volume = target
-                    fadeRunnable = null
-                    onDone()
-                }
-            }
-        }
-        fadeRunnable = r
-        handler.postDelayed(r, fadeStepMs)
-    }
-
-    private fun cancelFade() {
-        fadeRunnable?.let { handler.removeCallbacks(it) }
-        fadeRunnable = null
     }
 }

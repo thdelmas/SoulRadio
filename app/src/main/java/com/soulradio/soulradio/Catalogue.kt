@@ -25,6 +25,7 @@ enum class CatalogueGroup(val label: String) {
     VIBROACOUSTIC("Vibroacoustic / sub-audible"),
     NAMED("Other named tones"),
     NUMEROLOGY("Numerological"),
+    ANCIENT("Ancient music traditions"),
 }
 
 object Catalogue {

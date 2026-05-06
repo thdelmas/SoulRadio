@@ -460,4 +460,27 @@ internal val catalogueEntries: List<CatalogueEntry> = listOf(
         references = "Doreen Virtue, Angel Numbers (2005); Mike Dooley, Notes from the Universe; manifestation-culture YouTube channels; numerology / synchronicity playlists. No musical tradition.",
         usage = "If numerology, manifestation, or synchronicity-watching is part of your day — a tone selected by whichever repeating digit the moment seems to call for. The radio plays the lowest of the set (111 Hz) as a worked example.",
     ),
+
+    // — Ancient music traditions. Reconstructed pieces with documented
+    // archaeology — older than the Solfeggio set, older than Greek
+    // theory. Not Hz values; specific compositions with a real
+    // performance lineage. The Hurrian Hymn h.6 is the deepest
+    // documented anchor; see tunables.md § Ancient music traditions
+    // for the gate.
+    CatalogueEntry(
+        hz = "h.6",
+        title = "Hurrian Hymn to Nikkal — c. 1400 BCE",
+        group = CatalogueGroup.ANCIENT,
+        history = "The earliest substantially complete notated composition known. Recovered from clay tablets at the Royal Palace of Ugarit (modern Ras Shamra, Syria) excavated in the 1950s; tablet h.6 — a hymn to the Hurrian goddess Nikkal, consort of the moon god — is preserved well enough to permit reconstruction. The cuneiform notation prescribes intervals on a heptatonic diatonic scale played on a nine-string lyre, documenting the diatonic system roughly a thousand years before Pythagoras. The instrumental lineage runs further back still: the Sumerian Royal Cemetery of Ur (c. 2500 BCE) contained the bull-headed Silver Lyre and Golden Lyre — the instruments Hurrian musicians inherited — though no Sumerian compositions survive.",
+        uses = "Performed in modern reconstruction by lyre players and academic ensembles — Michael Levy (solo lyre), the Lyre 2.0 Project, Ensemble De Organographia, Peter Pringle. Used in archaeology and music-history teaching as evidence that the diatonic scale predates Greek theory by a millennium. Studied in Mesopotamian and ancient-Near-Eastern musicology since Anne Draffkorn Kilmer's first decoding in the 1970s. Sat with by some contemporary lyre and harp practitioners as a contemplative practice — listening to a piece older than every other piece in the canon.",
+        studies = "No biological-effect literature — this is musicology and archaeology, not wellness research. The interest is historical: the cuneiform documents diatonic scale-tuning rules and interval names, which reframes the conventional Western narrative locating the origin of harmonic theory in 6th-c. BCE Greece. Decipherment of the rhythmic and modal layer is contested — Kilmer, Duchesne-Guillemin, Dumbrill, and M. L. West offer different readings, while agreeing on the diatonic skeleton.",
+        references = "Anne Draffkorn Kilmer's foundational publications (1974, 1976) on the Ugarit tablets; Richard Dumbrill, *The Archaeomusicology of the Ancient Near East* (2005); M. L. West's reconstructions; Michael Levy's reconstruction recordings (Bandcamp, Spotify); the Lyre 2.0 Project; Peter Pringle's reconstructions; Ensemble De Organographia, *Music of the Ancient Sumerians, Egyptians, & Greeks* (1997); the British Museum's Lyre of Ur reconstruction project.",
+        usage = "If the deep lineage of notated music — heptatonic diatonic scale, lyre timbre, ritual hymnody older than Pythagoras — is part of your interest. The radio documents the tradition; specific reconstructions can be filed in the listener's library under whichever band the performance sits in (174 foundation for slow lyre reconstructions, 7.83 for the night-time devotional register, 396 morning gate for a Nikkal hymn at dawn).",
+        compositions = listOf(
+            Composition("Hurrian Hymn h.6 — lyre reconstruction", "Michael Levy"),
+            Composition("Music of the Ancient Sumerians, Egyptians, & Greeks", "Ensemble De Organographia"),
+            Composition("Hurrian Hymn — multi-version reconstructions", "Lyre 2.0 Project"),
+            Composition("Hurrian Hymn (Kilmer / West reconstruction)", "Peter Pringle"),
+        ),
+    ),
 )

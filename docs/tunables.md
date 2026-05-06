@@ -242,6 +242,20 @@ Three layers carry the signals. Any spectral analyser (Audacity, Sonic Visualise
 
 ---
 
+## Ancient music traditions
+
+The radio's catalogue grew out of the modern Solfeggio set and post-Renaissance Western tuning history. A different lineage sits beneath both: notated music older than Greek theory, played on instruments older than the lute. The cut for this territory is **piece vs. system.**
+
+**Pieces** — specific reconstructed compositions with documented archaeology — earn Radio admission on the same terms as any other documented practice. The Hurrian Hymn (h.6, c. 1400 BCE), recovered from cuneiform tablets at Ugarit, is the earliest known substantially-complete notated music; it has multiple modern reconstructions (Kilmer 1974, Dumbrill, Michael Levy, Ensemble De Organographia) and a real performance lineage. The Sumerian lyre tradition (Royal Cemetery of Ur, c. 2500 BCE) is its instrumental ancestor — predates the hymn by a thousand years, but no compositions survive. Listed as one entry in [CatalogueEntries.kt](../app/src/main/java/com/soulradio/soulradio/CatalogueEntries.kt) under the `ANCIENT` group, with the Sumerian lyre context carried in its history field.
+
+**Tuning systems** — the heptatonic diatonic scale the Hurrian tablets describe, the 22 shrutis of Hindustani classical, maqam quarter-tones, slendro and pelog — remain in [Out of scope — different product](#out-of-scope--different-product) for the reason given there: a tuning system is the rule by which the whole musical universe is divided, not a single Hz value. A radio that lets the listener select tuning system becomes a teaching tool. The Hurrian entry references diatonic tuning in its history; the entry is the *piece*, not the *system*.
+
+**Other ancient pieces** with strong archaeological reconstruction (the Seikilos epitaph c. 100 CE, the Delphic hymns 2nd c. BCE, the Pap. Berlin 6873 Egyptian fragments) are admissible on the same terms as Hurrian if added — same five-section contract, same Radio gate. The catalogue starts at Hurrian as the deepest documented anchor and grows from there.
+
+The cut: an ancient *piece* with documented reconstructions can be a Radio catalogue entry; the *tuning system* it implies cannot.
+
+---
+
 ## Out of scope — different product
 
 These are tuning *systems* (not single Hz values). Exposing them would mean letting the user choose how the *whole* musical universe is divided, which is a teaching tool, not a radio.

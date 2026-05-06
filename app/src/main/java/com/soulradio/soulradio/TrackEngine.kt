@@ -131,30 +131,18 @@ class TrackEngine(private val context: Context) {
         _currentTrack.value = if (playing) trackFromMediaItem(item) else null
     }
 
-    // mediaId is stamped at queue-time with freq.key, so user-imported
-    // content:// URIs identify the band correctly. The asset URI regex
-    // remains for NowPlaying lookup (curated tracks only — user files
-    // have no NowPlaying entry).
+    // The asset URI regex remains here for NowPlaying lookup (curated
+    // tracks only — user files have no NowPlaying entry).
     private fun frequencyFromMediaItem(item: MediaItem?): Frequency? {
-        val key = bandKeyOf(item) ?: return null
+        val key = TrackResolver.bandKeyOf(item) ?: return null
         return Frequencies.byKey(key)
     }
 
     private fun trackFromMediaItem(item: MediaItem?): NowPlaying? {
-        val key = bandKeyOf(item) ?: return null
+        val key = TrackResolver.bandKeyOf(item) ?: return null
         val asset = assetNameOf(item) ?: return null
         val freq = Frequencies.byKey(key) ?: return null
         return Frequencies.trackByAsset(freq, asset)
-    }
-
-    private fun bandKeyOf(item: MediaItem?): String? {
-        item ?: return null
-        val stamped = item.mediaId.takeIf {
-            it.isNotBlank() && it != MediaItem.DEFAULT_MEDIA_ID
-        }
-        if (stamped != null) return stamped
-        val uri = item.localConfiguration?.uri?.toString() ?: return null
-        return Regex("^asset:///audio/([^/]+)/.+$").find(uri)?.groupValues?.get(1)
     }
 
     private fun assetNameOf(item: MediaItem?): String? {

@@ -1,10 +1,25 @@
 package com.soulradio.soulradio
 
 import android.content.Context
+import androidx.media3.common.MediaItem
 
 // USER_ONLY is strict by design: an empty user list yields silence, the
 // auto-loop's next-hour tick rolls on. MIXED is the soft fallback.
 internal object TrackResolver {
+
+    // Inverse of urisFor()'s "asset:///${freq.assetPath(it)}" — used by the
+    // service and the controller to recover the band of a playing item.
+    // Prefers the queue-time mediaId stamp (works for content:// imports);
+    // falls back to the asset URI regex for items that bypassed the queue.
+    fun bandKeyOf(item: MediaItem?): String? {
+        item ?: return null
+        val stamped = item.mediaId.takeIf {
+            it.isNotBlank() && it != MediaItem.DEFAULT_MEDIA_ID
+        }
+        if (stamped != null) return stamped
+        val uri = item.localConfiguration?.uri?.toString() ?: return null
+        return Regex("^asset:///audio/([^/]+)/.+$").find(uri)?.groupValues?.get(1)
+    }
 
     fun urisFor(context: Context, freq: Frequency): List<String> =
         urisFor(

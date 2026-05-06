@@ -39,6 +39,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -55,11 +58,14 @@ internal fun LibraryScreen(onClose: () -> Unit) {
     // as healthy by default — better than flashing "missing" then correcting.
     val missingIds = remember { mutableStateMapOf<String, Boolean>() }
     LaunchedEffect(tracks) {
-        withContext(Dispatchers.IO) {
-            for (t in tracks) {
-                missingIds[t.id] = !UriHealth.isReadable(context, t.sourceUri)
+        val results = withContext(Dispatchers.IO) {
+            coroutineScope {
+                tracks.map { t ->
+                    async { t.id to !UriHealth.isReadable(context, t.sourceUri) }
+                }.awaitAll()
             }
         }
+        for ((id, missing) in results) missingIds[id] = missing
     }
 
     val picker = rememberLauncherForActivityResult(
@@ -168,13 +174,14 @@ private fun TrackList(
     onChangeBands: (id: String, newBands: Set<String>) -> Unit,
     onRemove: (id: String) -> Unit,
 ) {
-    LazyColumn {
-        // Group by primary assigned band (first), with "—" for tracks the
-        // listener has not filed yet (the ancestral / signals-only case).
+    // Group by primary assigned band (first), with "—" for tracks the
+    // listener has not filed yet (the ancestral / signals-only case).
+    val sections = remember(tracks) {
         val grouped = tracks.groupBy { it.assignedBands.firstOrNull() ?: "—" }
-        val keys = grouped.keys.toList().sortedWith(compareBy { groupOrder(it) })
-        for (band in keys) {
-            val group = grouped[band] ?: continue
+        grouped.keys.sortedWith(compareBy { groupOrder(it) }).map { it to grouped.getValue(it) }
+    }
+    LazyColumn {
+        for ((band, group) in sections) {
             item(key = "h-$band") {
                 Spacer(Modifier.height(12.dp))
                 Text(

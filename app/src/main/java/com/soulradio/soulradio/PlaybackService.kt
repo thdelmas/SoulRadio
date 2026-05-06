@@ -117,22 +117,9 @@ class PlaybackService : MediaSessionService() {
     // is the playing item.
     private fun updateUnderlay() {
         val player = mediaSession?.player ?: return
-        val key = bandKeyOf(player.currentMediaItem)
+        val key = TrackResolver.bandKeyOf(player.currentMediaItem)
         val playing = player.isPlaying
         schumannUnderlay.setEnabled(playing && key == NIGHT_BAND_KEY)
-    }
-
-    // Prefer mediaId (stamped at queue-time with freq.key) so user-imported
-    // content:// URIs identify the band correctly. Falls back to the asset
-    // URI regex for any item that bypassed the queue path.
-    private fun bandKeyOf(item: MediaItem?): String? {
-        item ?: return null
-        val stamped = item.mediaId.takeIf {
-            it.isNotBlank() && it != MediaItem.DEFAULT_MEDIA_ID
-        }
-        if (stamped != null) return stamped
-        val uri = item.localConfiguration?.uri?.toString() ?: return null
-        return Regex("^asset:///audio/([^/]+)/.+$").find(uri)?.groupValues?.get(1)
     }
 
     private fun enableAuto() {

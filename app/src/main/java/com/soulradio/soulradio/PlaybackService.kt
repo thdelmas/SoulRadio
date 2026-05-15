@@ -23,9 +23,9 @@ import androidx.media3.session.MediaSessionService
 import java.util.Calendar
 
 // Owns the AUTO hour-boundary tick so the loop advances even after the
-// activity is destroyed (the radio is meant to be left on). Also owns
-// dial-tap band switches: both AUTO and the dial route through switchTo
-// so the two-player crossfade is the only path that changes audible band.
+// activity is destroyed (the radio is meant to be left on). Both AUTO
+// and the dial route through switchTo so the two-player crossfade is
+// the only path that changes audible band.
 class PlaybackService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
@@ -37,15 +37,21 @@ class PlaybackService : MediaSessionService() {
     private var fadeRunnable: Runnable? = null
 
     // Two ExoPlayers alternate roles. The one bound to mediaSession is
-    // "active"; the other is "standby". A band switch loads new content on
-    // standby at vol 0, ramps both in opposite directions in lockstep, then
-    // promotes standby (mediaSession.setPlayer) so the listener never
-    // hears silence between bands. Manifesto §6 — crossfades that do not
-    // jolt.
+    // "active"; the other is "standby". Band switches and track rotations
+    // both load on standby at vol 0, crossfade in lockstep, then promote
+    // standby. Manifesto §6 — crossfades that do not jolt.
     private var playerA: ExoPlayer? = null
     private var playerB: ExoPlayer? = null
     private val underlayA = SchumannUnderlay()
     private val underlayB = SchumannUnderlay()
+
+    // Multi-track bands carry one MediaItem at a time with REPEAT_MODE_OFF;
+    // rotateRunnable polls position and fires the standby preload +
+    // crossfade ROTATE_LEAD_MS before end-of-stream.
+    private var bandQueue: List<String> = emptyList()
+    private var bandIndex: Int = -1
+    private var bandFreq: Frequency? = null
+    private var rotateRunnable: Runnable? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -127,6 +133,7 @@ class PlaybackService : MediaSessionService() {
     override fun onDestroy() {
         cancelTick()
         cancelFade()
+        cancelRotateWatch()
         mediaSession?.release()
         playerA?.release()
         playerB?.release()
@@ -154,12 +161,12 @@ class PlaybackService : MediaSessionService() {
     private fun disableAuto() {
         autoEnabled = false
         cancelTick()
-        // Cancel only our fade — TrackEngine handles the playback change.
         cancelInFlightCrossfade()
     }
 
     private fun pauseForRadio() {
         cancelTick()
+        cancelRotateWatch()
         cancelInFlightCrossfade()
         val active = activePlayer() ?: return
         if (active.isPlaying || active.playWhenReady) {
@@ -182,6 +189,7 @@ class PlaybackService : MediaSessionService() {
     }
 
     private fun stopDial() {
+        cancelRotateWatch()
         cancelInFlightCrossfade()
         val active = activePlayer() ?: return
         fadeTo(active, 0f) { active.pause() }
@@ -221,24 +229,34 @@ class PlaybackService : MediaSessionService() {
         val uris = TrackResolver.urisFor(this, freq)
 
         if (uris.isEmpty()) {
+            cancelRotateWatch()
             cancelInFlightCrossfade()
             fadeTo(active, 0f) { active.pause() }
             if (fromAuto) autoCurrent = null
+            bandFreq = null
+            bandQueue = emptyList()
+            bandIndex = -1
             return
         }
 
+        cancelRotateWatch()
         cancelInFlightCrossfade()
 
+        val startIndex = if (uris.size > 1) uris.indices.random() else 0
+        bandQueue = uris
+        bandIndex = startIndex
+        bandFreq = freq
+
         if (!active.isPlaying) {
-            applyMedia(active, freq, uris)
+            loadTrack(active, freq, uris[startIndex])
             if (fromAuto) autoCurrent = freq
             active.volume = 0f
             active.play()
-            fadeTo(active, TARGET_VOLUME) {}
+            fadeTo(active, TARGET_VOLUME) { startRotateWatch() }
             return
         }
 
-        applyMedia(standby, freq, uris)
+        loadTrack(standby, freq, uris[startIndex])
         if (fromAuto) autoCurrent = freq
         standby.volume = 0f
         standby.play()
@@ -250,50 +268,102 @@ class PlaybackService : MediaSessionService() {
                 mediaSession?.player = standby
                 active.pause()
                 active.clearMediaItems()
+                startRotateWatch()
             },
         )
     }
 
-    private fun applyMedia(player: Player, freq: Frequency, uris: List<String>) {
-        val items = uris.map {
-            MediaItem.Builder().setUri(it).setMediaId(freq.key).build()
-        }
-        // Random start index so multi-track bands don't always open on
-        // items[0]. shuffleModeEnabled only affects subsequent tracks.
-        val startIndex = if (items.size > 1) items.indices.random() else 0
-        player.setMediaItems(items, startIndex, 0L)
-        player.shuffleModeEnabled = items.size > 1
-        player.repeatMode = if (items.size > 1) Player.REPEAT_MODE_ALL else Player.REPEAT_MODE_ONE
+    private fun loadTrack(player: Player, freq: Frequency, uri: String) {
+        val item = MediaItem.Builder().setUri(uri).setMediaId(freq.key).build()
+        player.setMediaItems(listOf(item), 0, 0L)
+        player.shuffleModeEnabled = false
+        // Multi-track bands stop at end-of-stream so the rotation watcher
+        // can fade to the next file; single-track bands self-loop.
+        player.repeatMode =
+            if (bandQueue.size > 1) Player.REPEAT_MODE_OFF else Player.REPEAT_MODE_ONE
         player.prepare()
+    }
+
+    private fun startRotateWatch() {
+        cancelRotateWatch()
+        if (bandQueue.size <= 1) return
+        val r = object : Runnable {
+            override fun run() {
+                val active = activePlayer()
+                val freq = bandFreq
+                if (active == null || freq == null || mediaSession == null ||
+                    bandQueue.size <= 1) {
+                    rotateRunnable = null
+                    return
+                }
+                if (!active.isPlaying || fadeRunnable != null) {
+                    handler.postDelayed(this, ROTATE_TICK_MS)
+                    return
+                }
+                val dur = active.duration
+                val pos = active.currentPosition
+                if (dur != C.TIME_UNSET && dur - pos <= FADE_MS + ROTATE_LEAD_MS) {
+                    rotateRunnable = null
+                    rotateToNextTrack(freq)
+                } else {
+                    handler.postDelayed(this, ROTATE_TICK_MS)
+                }
+            }
+        }
+        rotateRunnable = r
+        handler.postDelayed(r, ROTATE_TICK_MS)
+    }
+
+    private fun cancelRotateWatch() {
+        rotateRunnable?.let { handler.removeCallbacks(it) }
+        rotateRunnable = null
+    }
+
+    private fun rotateToNextTrack(freq: Frequency) {
+        val active = activePlayer() ?: return
+        val standby = standbyPlayer() ?: return
+        val nextIdx = nextBandIndex()
+        bandIndex = nextIdx
+        loadTrack(standby, freq, bandQueue[nextIdx])
+        standby.volume = 0f
+        standby.play()
+        crossfade(
+            from = active,
+            to = standby,
+            fromStart = active.volume,
+            onDone = {
+                mediaSession?.player = standby
+                active.pause()
+                active.clearMediaItems()
+                startRotateWatch()
+            },
+        )
+    }
+
+    private fun nextBandIndex(): Int {
+        val size = bandQueue.size
+        if (size <= 1) return 0
+        var n = (0 until size).random()
+        if (n == bandIndex) n = (n + 1) % size
+        return n
     }
 
     private fun fadeTo(player: Player, target: Float, onDone: () -> Unit) {
         val start = player.volume
-        val steps = (FADE_MS / FADE_STEP_MS).toInt().coerceAtLeast(1)
-        var step = 0
-        val r = object : Runnable {
-            override fun run() {
-                if (mediaSession == null) return
-                step++
-                val t = step.toFloat() / steps
-                player.volume = start + (target - start) * t
-                if (step < steps) {
-                    handler.postDelayed(this, FADE_STEP_MS)
-                } else {
-                    player.volume = target
-                    fadeRunnable = null
-                    onDone()
-                }
-            }
-        }
-        fadeRunnable = r
-        handler.postDelayed(r, FADE_STEP_MS)
+        ramp({ t -> player.volume = start + (target - start) * t }, onDone)
     }
 
     // 'from' fades fromStart→0, 'to' fades 0→TARGET_VOLUME, in lockstep.
     // Both players are audible across the fade window so the listener
     // hears the new piece rising before the old one is gone.
     private fun crossfade(from: Player, to: Player, fromStart: Float, onDone: () -> Unit) {
+        ramp({ t ->
+            from.volume = fromStart * (1f - t)
+            to.volume = TARGET_VOLUME * t
+        }, onDone)
+    }
+
+    private fun ramp(apply: (t: Float) -> Unit, onDone: () -> Unit) {
         val steps = (FADE_MS / FADE_STEP_MS).toInt().coerceAtLeast(1)
         var step = 0
         val r = object : Runnable {
@@ -301,13 +371,11 @@ class PlaybackService : MediaSessionService() {
                 if (mediaSession == null) return
                 step++
                 val t = step.toFloat() / steps
-                from.volume = fromStart * (1f - t)
-                to.volume = TARGET_VOLUME * t
+                apply(t)
                 if (step < steps) {
                     handler.postDelayed(this, FADE_STEP_MS)
                 } else {
-                    from.volume = 0f
-                    to.volume = TARGET_VOLUME
+                    apply(1f)
                     fadeRunnable = null
                     onDone()
                 }
@@ -376,6 +444,9 @@ class PlaybackService : MediaSessionService() {
         private const val TARGET_VOLUME = 0.7f
         private const val FADE_MS = 1500L
         private const val FADE_STEP_MS = 30L
+        private const val ROTATE_TICK_MS = 250L
+        // Headroom over FADE_MS so handler jitter can't starve the tail.
+        private const val ROTATE_LEAD_MS = 500L
 
         private const val NIGHT_BAND_KEY = "7.83"
 
@@ -396,39 +467,24 @@ class PlaybackService : MediaSessionService() {
                 return
             }
             prefs.edit().putBoolean(PREF_AUTO_ENABLED, enabled).apply()
-            val intent = Intent(context, PlaybackService::class.java).apply {
-                action = if (enabled) ACTION_AUTO_ON else ACTION_AUTO_OFF
-            }
-            context.startService(intent)
+            fire(context, if (enabled) ACTION_AUTO_ON else ACTION_AUTO_OFF)
         }
 
         // Does NOT write to AUTO pref — the user's choice is preserved.
-        fun pauseForRadio(context: Context) {
-            val intent = Intent(context, PlaybackService::class.java).apply {
-                action = ACTION_PAUSE_FOR_RADIO
-            }
-            context.startService(intent)
-        }
+        fun pauseForRadio(context: Context) = fire(context, ACTION_PAUSE_FOR_RADIO)
+        fun resumeFromRadio(context: Context) = fire(context, ACTION_RESUME_FROM_RADIO)
+        fun playBand(context: Context, key: String) =
+            fire(context, ACTION_PLAY_BAND) { putExtra(EXTRA_BAND_KEY, key) }
+        fun stopDial(context: Context) = fire(context, ACTION_STOP_DIAL)
 
-        fun resumeFromRadio(context: Context) {
-            val intent = Intent(context, PlaybackService::class.java).apply {
-                action = ACTION_RESUME_FROM_RADIO
-            }
-            context.startService(intent)
-        }
-
-        fun playBand(context: Context, key: String) {
-            val intent = Intent(context, PlaybackService::class.java).apply {
-                action = ACTION_PLAY_BAND
-                putExtra(EXTRA_BAND_KEY, key)
-            }
-            context.startService(intent)
-        }
-
-        fun stopDial(context: Context) {
-            val intent = Intent(context, PlaybackService::class.java).apply {
-                action = ACTION_STOP_DIAL
-            }
+        private fun fire(
+            context: Context,
+            action: String,
+            extras: Intent.() -> Unit = {},
+        ) {
+            val intent = Intent(context, PlaybackService::class.java)
+                .also { it.action = action }
+                .apply(extras)
             context.startService(intent)
         }
     }

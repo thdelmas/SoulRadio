@@ -11,6 +11,7 @@ An ambient Android radio. Four audio modes: a 24-hour auto-loop tied to the hour
 - [MANIFESTO.md](MANIFESTO.md) — the non-negotiables. Every product/UX decision must trace back here.
 - [FREQUENCIES.md](FREQUENCIES.md) — the frequency catalogue and the 24-hour map. **Source of truth** for the auto loop schedule.
 - [docs/tunables.md](docs/tunables.md) — the wider landscape of frequencies and tuning systems, with reasons each was or wasn't put on the dial. Read before proposing a new station.
+- [docs/ECOSYSTEM.md](docs/ECOSYSTEM.md) — what SoulRadio accepts from sibling apps (Bios, W2F, Virgil) and what it refuses. Read before adding any intent filter, broadcast receiver, or external-control surface. Suite-wide rule lives in `~/Bios/docs/ECOSYSTEM_BOUNDARIES.md`.
 - [ORIGINS.md](ORIGINS.md) — long-form rationale and history.
 - [CREDITS.md](CREDITS.md) — audio attributions; update when adding new recordings.
 

@@ -177,9 +177,7 @@ class PlaybackService : MediaSessionService() {
     // AUTO resumes if it was on; tapped tones don't auto-resume — the user
     // can re-tap if they want the room back.
     private fun resumeFromRadio() {
-        val autoOn = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-            .getBoolean(PREF_AUTO_ENABLED, false)
-        if (!autoOn) return
+        if (!AutoStore.isEnabled(this)) return
         if (!autoEnabled) {
             enableAuto()
         } else {
@@ -247,16 +245,19 @@ class PlaybackService : MediaSessionService() {
         bandIndex = startIndex
         bandFreq = freq
 
+        val incoming = uris[startIndex]
+        val incomingTarget = TARGET_VOLUME * LoudnessNormalization.factorFor(this, incoming)
+
         if (!active.isPlaying) {
-            loadTrack(active, freq, uris[startIndex])
+            loadTrack(active, freq, incoming)
             if (fromAuto) autoCurrent = freq
             active.volume = 0f
             active.play()
-            fadeTo(active, TARGET_VOLUME) { startRotateWatch() }
+            fadeTo(active, incomingTarget) { startRotateWatch() }
             return
         }
 
-        loadTrack(standby, freq, uris[startIndex])
+        loadTrack(standby, freq, incoming)
         if (fromAuto) autoCurrent = freq
         standby.volume = 0f
         standby.play()
@@ -264,6 +265,7 @@ class PlaybackService : MediaSessionService() {
             from = active,
             to = standby,
             fromStart = active.volume,
+            toTarget = incomingTarget,
             onDone = {
                 mediaSession?.player = standby
                 active.pause()
@@ -324,13 +326,15 @@ class PlaybackService : MediaSessionService() {
         val standby = standbyPlayer() ?: return
         val nextIdx = nextBandIndex()
         bandIndex = nextIdx
-        loadTrack(standby, freq, bandQueue[nextIdx])
+        val incoming = bandQueue[nextIdx]
+        loadTrack(standby, freq, incoming)
         standby.volume = 0f
         standby.play()
         crossfade(
             from = active,
             to = standby,
             fromStart = active.volume,
+            toTarget = TARGET_VOLUME * LoudnessNormalization.factorFor(this, incoming),
             onDone = {
                 mediaSession?.player = standby
                 active.pause()
@@ -353,13 +357,22 @@ class PlaybackService : MediaSessionService() {
         ramp({ t -> player.volume = start + (target - start) * t }, onDone)
     }
 
-    // 'from' fades fromStart→0, 'to' fades 0→TARGET_VOLUME, in lockstep.
+    // 'from' fades fromStart→0, 'to' fades 0→toTarget, in lockstep.
     // Both players are audible across the fade window so the listener
-    // hears the new piece rising before the old one is gone.
-    private fun crossfade(from: Player, to: Player, fromStart: Float, onDone: () -> Unit) {
+    // hears the new piece rising before the old one is gone. The
+    // per-call toTarget carries the incoming track's loudness-normalized
+    // ceiling so a rotation onto a quiet 1925 recording ramps to its own
+    // boosted level, not a uniform TARGET_VOLUME.
+    private fun crossfade(
+        from: Player,
+        to: Player,
+        fromStart: Float,
+        toTarget: Float,
+        onDone: () -> Unit,
+    ) {
         ramp({ t ->
             from.volume = fromStart * (1f - t)
-            to.volume = TARGET_VOLUME * t
+            to.volume = toTarget * t
         }, onDone)
     }
 
@@ -438,10 +451,11 @@ class PlaybackService : MediaSessionService() {
         const val ACTION_STOP_DIAL = "com.soulradio.action.STOP_DIAL"
         const val EXTRA_BAND_KEY = "band_key"
 
-        private const val PREFS = "soulradio.state"
-        private const val PREF_AUTO_ENABLED = "auto_enabled"
-
-        private const val TARGET_VOLUME = 0.7f
+        // Headroom for per-track loudness normalization: a -33 LUFS asset
+        // at the +12 dB boost cap reaches 0.25 * 3.98 ≈ 0.995, just under
+        // ExoPlayer's 1.0 ceiling. Lowering the baseline shifts loudness
+        // calibration to Android's system volume — wallpaper-aligned.
+        private const val TARGET_VOLUME = 0.25f
         private const val FADE_MS = 1500L
         private const val FADE_STEP_MS = 30L
         private const val ROTATE_TICK_MS = 250L
@@ -449,26 +463,6 @@ class PlaybackService : MediaSessionService() {
         private const val ROTATE_LEAD_MS = 500L
 
         private const val NIGHT_BAND_KEY = "7.83"
-
-        fun isAutoEnabled(context: Context): Boolean =
-            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-                .getBoolean(PREF_AUTO_ENABLED, false)
-
-        // Manifesto §"the promise": "Just leave it on." First launch defaults to AUTO.
-        fun startIfFirstLaunch(context: Context) {
-            val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-            if (!prefs.contains(PREF_AUTO_ENABLED)) setAuto(context, true)
-        }
-
-        fun setAuto(context: Context, enabled: Boolean) {
-            val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-            if (prefs.contains(PREF_AUTO_ENABLED) &&
-                prefs.getBoolean(PREF_AUTO_ENABLED, false) == enabled) {
-                return
-            }
-            prefs.edit().putBoolean(PREF_AUTO_ENABLED, enabled).apply()
-            fire(context, if (enabled) ACTION_AUTO_ON else ACTION_AUTO_OFF)
-        }
 
         // Does NOT write to AUTO pref — the user's choice is preserved.
         fun pauseForRadio(context: Context) = fire(context, ACTION_PAUSE_FOR_RADIO)

@@ -119,7 +119,7 @@ internal fun MainScreen(
     LaunchedEffect(Unit) {
         delay(5000)
         val isPaused = engine.currentFrequency.value == null &&
-            !PlaybackService.isAutoEnabled(context)
+            !AutoStore.isEnabled(context)
         if (ContributionStore.shouldOffer(context, isPaused)) {
             ContributionStore.markShown(context)
             showContribution = true

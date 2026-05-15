@@ -50,7 +50,8 @@ If a change risks any of these, stop and flag it.
 1. Drop the lossless file in `app/src/main/assets/audio/<key>/` (e.g. `audio/528/`). Only the first non-hidden file in the folder is played; the `.gitkeep` stays.
 2. Add a `NowPlaying(work, performer)` entry on the `Frequency` in [Frequency.kt](app/src/main/java/com/soulradio/soulradio/Frequency.kt).
 3. Add the attribution + license to [CREDITS.md](CREDITS.md). Only **public domain, CC0, CC BY, or CC BY-SA** — see [docs/licensing.md](docs/licensing.md) for the rule and the rejected license tiers (NC, ND, all-rights-reserved).
-4. Verify it loops cleanly (no silence gap, no click) on a real device.
+4. Re-run `scripts/measure-loudness.sh` so the new file appears in [app/src/main/assets/loudness.json](app/src/main/assets/loudness.json) with its integrated LUFS. Without this entry the runtime plays the file at unity gain (1.0×) instead of normalized — fine for one rotation, but a 5–15 dB loudness step on every other transition until measured. See [LoudnessNormalization.kt](app/src/main/java/com/soulradio/soulradio/LoudnessNormalization.kt) for the runtime path.
+5. Verify it loops cleanly (no silence gap, no click) on a real device.
 
 The above is the curated catalogue path. Listener-imported recordings (the user library) follow a separate flow — see § The user library below.
 

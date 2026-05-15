@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        PlaybackService.startIfFirstLaunch(this)
+        AutoStore.startIfFirstLaunch(this)
         setContent {
             MaterialTheme(colorScheme = darkColorScheme()) {
                 M3Surface(modifier = Modifier.fillMaxSize(), color = Bg) {
@@ -64,11 +64,11 @@ class MainActivity : ComponentActivity() {
                     // Mirror of PlaybackService's persisted auto state, lifted
                     // so ModeStrip and MainScreen read/write one value.
                     var autoOn by remember {
-                        mutableStateOf(PlaybackService.isAutoEnabled(context))
+                        mutableStateOf(AutoStore.isEnabled(context))
                     }
                     val setAuto: (Boolean) -> Unit = { value ->
                         autoOn = value
-                        PlaybackService.setAuto(context, value)
+                        AutoStore.set(context, value)
                     }
                     // Increment-only signal. Bumped by the dial *pill*
                     // (explicit "silence + dial mode") to clear MainScreen's

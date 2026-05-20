@@ -8,6 +8,8 @@ reached for.
 
 For the suite-wide rule, see Bios's
 [`docs/ECOSYSTEM_BOUNDARIES.md`](../../Bios/docs/ECOSYSTEM_BOUNDARIES.md).
+For the **visual map** of all data flows across the six apps, see
+[miam-knowledge-base/docs/ecosystem-map.md](https://github.com/mi4m/miam-knowledge-base/blob/main/docs/ecosystem-map.md).
 
 ## The wallpaper rule applies to integrations too
 

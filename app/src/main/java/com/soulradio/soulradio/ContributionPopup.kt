@@ -72,9 +72,15 @@ fun ContributionPopup(onDismiss: () -> Unit) {
                     openUrl(context, DONATE_URL)
                     onDismiss()
                 }
-                ActionButton(label = "leave a review") {
-                    openReview(context)
-                    onDismiss()
+                // The review path only exists on Play builds. On the foss
+                // flavor (F-Droid / Accrescent / sideload) there is no store
+                // to review into, so the action is omitted rather than
+                // deep-linking de-Googled users into a Play listing.
+                if (BuildConfig.PLAY_STORE_BUILD) {
+                    ActionButton(label = "leave a review") {
+                        openReview(context)
+                        onDismiss()
+                    }
                 }
                 ActionButton(label = "send feedback") {
                     openFeedback(context)

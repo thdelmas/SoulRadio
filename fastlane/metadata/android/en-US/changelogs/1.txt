@@ -1,0 +1,9 @@
+First public release.
+
+* 24-hour auto-loop tied to the hour of day (with optional sun-following).
+* Nine-frequency dial: Solfeggio tones plus Verdi 432 and Schumann 7.83.
+* Radio mode: the wider frequency catalogue, behind a deliberate door.
+* Library: import your own audio, auto-profiled and filed under the dial's bands.
+* Body and Chakra cartography surfaces.
+* Curated catalogue of 60+ PD/CC recordings, credited in-app.
+* Fully offline — no internet permission, no tracking.

@@ -12,6 +12,7 @@ An ambient Android radio. Four audio modes: a 24-hour auto-loop tied to the hour
 - [FREQUENCIES.md](FREQUENCIES.md) — the frequency catalogue and the 24-hour map. **Source of truth** for the auto loop schedule.
 - [docs/tunables.md](docs/tunables.md) — the wider landscape of frequencies and tuning systems, with reasons each was or wasn't put on the dial. Read before proposing a new station.
 - [docs/ECOSYSTEM.md](docs/ECOSYSTEM.md) — what SoulRadio accepts from sibling apps (Bios, W2F, Virgil) and what it refuses. Read before adding any intent filter, broadcast receiver, or external-control surface. Suite-wide rule lives in `~/Bios/docs/ECOSYSTEM_BOUNDARIES.md`.
+- [`~/Bios/docs/DESIGN_SYSTEM.md`](../Bios/docs/DESIGN_SYSTEM.md) — ecosystem visual & design system. Identity palette = Broadcast gold `#D4AF37` on black, dark mode. Map the canonical 14-role token set in `res/values/colors.xml`; don't invent new roles or component anatomy outside the spec.
 - [ORIGINS.md](ORIGINS.md) — long-form rationale and history.
 - [CREDITS.md](CREDITS.md) — audio attributions; update when adding new recordings.
 
@@ -96,16 +97,11 @@ The wider field exposed in Radio mode (the rows under [RadioModeScreen.kt](app/s
 
 The five-section structure (history / uses / studies / references / usage) is the contract: Radio is descriptive of practice, never prescriptive of effect. Adding an entry means filling all five — the **studies** field says "no controlled studies" honestly when there are none, and the **references** field names concrete products (Holosync, Brain.fm, Meditative Mind) for biohacker bands or specific recordings for musical bands. Mention in [docs/tunables.md](docs/tunables.md) is required before adding a row — the doc is the gate, the entry is the surface.
 
-## Contribution popup
+## No contribution popup
 
-There is a portfolio-wide spec for the monthly community-building popup (donate / Play review / feedback). SoulRadio implements it with two manifesto-driven deviations from the default:
+SoulRadio once carried the portfolio-wide community-building popup (donate / Play review / feedback). It was **removed** in the paid-distribution pivot — see git history (`ContributionPopup.kt` / `ContributionStore.kt`) and [docs/STORE-LISTING.md](docs/STORE-LISTING.md). The app is now **bought, not extracted** (MANIFESTO: "We will not monetize *you*"): a one-time price replaces the donation ask, so there is no in-app prompt to donate, rate, or give feedback. The passive contact channel is the address in [docs/PRIVACY.md](docs/PRIVACY.md) and the NOTICE file.
 
-- **90-day cadence** (vs. ~30 days default) — the radio is meant to recede; the ask spaces wider.
-- **Paused-only trigger** — checked once, ~5 s after the screen appears. If the radio is playing (AUTO running, or a tone tapped on), the popup waits for the next session. It never interrupts audio.
-
-The three hard rules are absolute and apply here too: **no Play Billing, no feature gates, no donor-vs-non-donor differentiation.** The only state persisted is `contrib_last_shown_at`. Don't add any logic that pauses the popup after a donation, marks a "supporter" state, or gates anything on payment — that converts the donation into a purchase and violates Play policy. If you're touching [ContributionPopup.kt](app/src/main/java/com/soulradio/soulradio/ContributionPopup.kt) or [ContributionStore.kt](app/src/main/java/com/soulradio/soulradio/ContributionStore.kt), re-read the portfolio guide before changing the model.
-
-To update the donation URL or feedback email, edit the two `private const` lines at the top of [ContributionPopup.kt](app/src/main/java/com/soulradio/soulradio/ContributionPopup.kt).
+Do **not** re-add an in-app donate/review/feedback popup. If the FOSS flavor ever needs a voluntary-support path (the paid model doesn't fit a free channel), restore it from git history as a **foss-flavor-only** surface, and re-read the portfolio guide first — the three hard rules still bind: **no Play Billing, no feature gates, no donor-vs-non-donor differentiation.**
 
 ## Before committing
 

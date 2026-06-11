@@ -1,0 +1,17 @@
+SoulRadio
+Copyright 2026 Théophile Delmas-Leguery
+
+This product's SOURCE CODE is licensed under the Apache License, Version 2.0
+(see the LICENSE file).
+
+The bundled AUDIO RECORDINGS are NOT covered by the Apache License. Each
+recording is distributed under its own Public Domain, CC0, CC BY, or CC BY-SA
+license, as documented in:
+  - app/src/main/assets/docs/CREDITS.md   (per-track performer, source, license)
+  - docs/licensing.md                     (which licenses are accepted and why)
+
+Attribution for CC BY / CC BY-SA works is provided in-app via the Credits screen.
+No bundled recording carries a NonCommercial (NC) or NoDerivatives (ND) clause;
+every track is cleared for commercial distribution.
+
+The name "SoulRadio" and its logo are not granted by the Apache License.

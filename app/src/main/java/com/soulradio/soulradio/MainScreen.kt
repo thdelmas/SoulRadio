@@ -110,22 +110,6 @@ internal fun MainScreen(
         firstLaunchHint = false
     }
 
-    // Contribution popup: 90-day, paused-only. Settle 5 s so the controller
-    // has bound. AUTO-enabled is treated as playing even if the controller
-    // hasn't bound yet — listener intent, not just instantaneous state.
-    // Mark shown up front so the cadence resets whether the listener
-    // actions or dismisses.
-    var showContribution by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        delay(5000)
-        val isPaused = engine.currentFrequency.value == null &&
-            !AutoStore.isEnabled(context)
-        if (ContributionStore.shouldOffer(context, isPaused)) {
-            ContributionStore.markShown(context)
-            showContribution = true
-        }
-    }
-
     val onTap: (Frequency) -> Unit = { freq ->
         if (autoOn) {
             onSetAuto(false)
@@ -179,10 +163,6 @@ internal fun MainScreen(
         )
 
         Spacer(Modifier.height(28.dp))
-    }
-
-    if (showContribution) {
-        ContributionPopup(onDismiss = { showContribution = false })
     }
 }
 

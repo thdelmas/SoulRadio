@@ -8,9 +8,14 @@ See [MANIFESTO.md](MANIFESTO.md) for the project ethos, [ORIGINS.md](ORIGINS.md)
 
 ## Install
 
+SoulRadio has **no Google dependencies** (no Play Services, no Firebase) and no `INTERNET` permission, so it runs fully on de-Googled phones (GrapheneOS, CalyxOS, /e/OS, LineageOS). Each release publishes two APKs:
+
+- **`SoulRadio-foss-*.apk`** — for de-Googled phones / sideload. Identical app; the "leave a review" prompt is omitted since there's no Play Store to review into.
+- **`SoulRadio-play-*.apk`** — the Google Play build.
+
 ### Option 1: Direct download
 
-Grab the latest signed APK from [Releases](https://github.com/thdelmas/SoulRadio/releases/latest). Verify SHA-256 against the published `.sha256` file, then sideload. "Install unknown apps" must be enabled.
+Grab the latest signed APK from [Releases](https://github.com/thdelmas/SoulRadio/releases/latest) (use the `foss` one off Play). Verify SHA-256 against the published `.sha256` file, then sideload. "Install unknown apps" must be enabled.
 
 ### Option 2: Obtainium (recommended for updates)
 
@@ -19,6 +24,12 @@ Grab the latest signed APK from [Releases](https://github.com/thdelmas/SoulRadio
 ```
 https://github.com/thdelmas/SoulRadio
 ```
+
+Set the APK filter to `foss` so Obtainium picks the de-Googled build.
+
+### Option 3: F-Droid family (planned)
+
+Store metadata lives in [`fastlane/`](fastlane/). IzzyOnDroid and F-Droid inclusion are on the roadmap — IzzyOnDroid pulls the signed `foss` APK from Releases directly; F-Droid builds the `foss` flavor from source (reproducible build, verified against this repo's signing key).
 
 ### Signing identity
 

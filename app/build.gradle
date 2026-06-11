@@ -45,6 +45,27 @@ android {
     }
     buildFeatures {
         compose true
+        buildConfig true
+    }
+
+    // Distribution flavors. The app is identical across both; the only
+    // difference is which contribution paths make sense on the channel.
+    //  - play: Google Play build. The "leave a review" action deep-links
+    //    into the Play listing (PLAY_STORE_BUILD = true).
+    //  - foss: F-Droid / IzzyOnDroid / Accrescent / GitHub-sideload build
+    //    for de-Googled phones. No Play Store to review into, so that
+    //    action is dropped (PLAY_STORE_BUILD = false). See the rationale in
+    //    docs/STORE-LISTING.md and the manifesto's "no louder in your life".
+    flavorDimensions += "distribution"
+    productFlavors {
+        play {
+            dimension "distribution"
+            buildConfigField "boolean", "PLAY_STORE_BUILD", "true"
+        }
+        foss {
+            dimension "distribution"
+            buildConfigField "boolean", "PLAY_STORE_BUILD", "false"
+        }
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.14'

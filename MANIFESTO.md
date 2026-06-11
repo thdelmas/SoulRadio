@@ -47,6 +47,7 @@ A presence — in the background of your kitchen, your commute, your sleep — t
 We will not gamify your interface with the radio (no streaks, no notifications, no points). What the audio itself does to you is between you and the curator's choice; the *app around it* will not pull at you.
 We will not stream advertisements between tones.
 We will not sell your listening data to anyone, for any price.
+We will not monetize *you*. SoulRadio is bought, not extracted — so we never have to sell your attention, your data, or your time back to you. You are the listener, not the product.
 We will not add features that make the app louder in your life.
 We will not pretend a frequency is a prescription.
 We will not let the Radio bleed into the room. Exploration is opt-in, never autoplay, never the default surface.

@@ -54,7 +54,17 @@ class TrackEngine(private val context: Context) {
         val token = SessionToken(context, ComponentName(context, PlaybackService::class.java))
         controllerFuture = MediaController.Builder(context, token).buildAsync()
         controllerFuture.addListener({
-            controller = controllerFuture.get()?.also { it.addListener(playerListener) }
+            // The listener also fires when the future is cancelled (e.g. release()
+            // ran before the controller finished binding, or a fast activity
+            // create/destroy on launch). get() would then throw on the main
+            // thread, so guard cancellation and surface no controller — the dial
+            // still works, it just reads playback state once binding succeeds.
+            if (controllerFuture.isCancelled) return@addListener
+            controller = try {
+                controllerFuture.get()
+            } catch (e: Exception) {
+                null
+            }?.also { it.addListener(playerListener) }
             recomputeCurrentFrequency()
         }, ContextCompat.getMainExecutor(context))
     }

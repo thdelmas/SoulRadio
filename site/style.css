@@ -1,0 +1,117 @@
+/* SoulRadio static site — ecosystem design system.
+   Identity palette: Broadcast gold #D4AF37 on black, dark mode only. */
+
+:root {
+  --gold: #D4AF37;
+  --gold-dim: #9c8128;
+  --bg: #000000;
+  --surface: #0c0c0c;
+  --ink: #e8e4d8;
+  --ink-dim: #8a877e;
+  --line: #1f1d17;
+  --maxw: 46rem;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.65 ui-serif, Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 5rem;
+}
+
+/* --- masthead --- */
+
+.mast { text-align: center; margin-bottom: 3.5rem; }
+
+.dial {
+  width: 88px; height: 88px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  position: relative;
+  box-shadow: 0 0 48px -8px rgba(212, 175, 55, 0.45);
+}
+.dial::after {
+  content: "";
+  position: absolute;
+  top: 8px; left: 50%;
+  width: 2px; height: 34px;
+  background: var(--gold);
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+}
+
+h1 {
+  font-size: 2.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin: 0 0 0.4rem;
+  color: var(--gold);
+}
+
+.tagline {
+  font-size: 1.05rem;
+  color: var(--ink-dim);
+  font-style: italic;
+  margin: 0;
+}
+
+/* --- prose --- */
+
+h2 {
+  font-size: 1.05rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 400;
+  margin: 3rem 0 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+p, li { color: var(--ink); }
+
+.lead { font-size: 1.15rem; color: var(--ink); }
+
+ul { padding-left: 1.2rem; }
+li { margin: 0.4rem 0; }
+
+strong { color: var(--gold); font-weight: 400; }
+
+.meta { color: var(--ink-dim); font-size: 0.92rem; }
+
+/* --- never-list --- */
+
+.never li::marker { content: "✕  "; color: var(--gold-dim); }
+
+/* --- footer --- */
+
+footer {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-dim);
+  font-size: 0.88rem;
+  text-align: center;
+}
+footer a { color: var(--ink-dim); }
+footer .sep { margin: 0 0.6rem; opacity: 0.4; }
+
+/* --- back link --- */
+.back { display: inline-block; margin-bottom: 2rem; font-size: 0.9rem; }

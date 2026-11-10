@@ -11,8 +11,8 @@ An ambient Android radio. Four audio modes: a 24-hour auto-loop tied to the hour
 - [MANIFESTO.md](MANIFESTO.md) — the non-negotiables. Every product/UX decision must trace back here.
 - [FREQUENCIES.md](FREQUENCIES.md) — the frequency catalogue and the 24-hour map. **Source of truth** for the auto loop schedule.
 - [docs/tunables.md](docs/tunables.md) — the wider landscape of frequencies and tuning systems, with reasons each was or wasn't put on the dial. Read before proposing a new station.
-- [docs/ECOSYSTEM.md](docs/ECOSYSTEM.md) — what SoulRadio accepts from sibling apps (Bios, W2F, Virgil) and what it refuses. Read before adding any intent filter, broadcast receiver, or external-control surface. Suite-wide rule lives in `~/Bios/docs/ECOSYSTEM_BOUNDARIES.md`.
-- [`~/Bios/docs/DESIGN_SYSTEM.md`](../Bios/docs/DESIGN_SYSTEM.md) — ecosystem visual & design system. Identity palette = Broadcast gold `#D4AF37` on black, dark mode. Map the canonical 14-role token set in `res/values/colors.xml`; don't invent new roles or component anatomy outside the spec.
+- [docs/ECOSYSTEM.md](docs/ECOSYSTEM.md) — what SoulRadio accepts from sibling apps (Bios, W2F, Virgil) and what it refuses. Read before adding any intent filter, broadcast receiver, or external-control surface. Suite-wide rule lives in [Bios/docs/ECOSYSTEM_BOUNDARIES.md](https://github.com/thdelmas/Bios/blob/main/docs/ECOSYSTEM_BOUNDARIES.md).
+- [Bios/docs/DESIGN_SYSTEM.md](https://github.com/thdelmas/Bios/blob/main/docs/DESIGN_SYSTEM.md) — ecosystem visual & design system. Identity palette = Broadcast gold `#D4AF37` on black, dark mode. Map the canonical 14-role token set in `res/values/colors.xml`; don't invent new roles or component anatomy outside the spec.
 - [ORIGINS.md](ORIGINS.md) — long-form rationale and history.
 - [CREDITS.md](CREDITS.md) — audio attributions; update when adding new recordings.
 

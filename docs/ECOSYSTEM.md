@@ -7,9 +7,9 @@ in the home: the wallpaper. Always there, never demanding, sometimes
 reached for.
 
 For the suite-wide rule, see Bios's
-[`docs/ECOSYSTEM_BOUNDARIES.md`](../../Bios/docs/ECOSYSTEM_BOUNDARIES.md).
-For the **visual map** of all data flows across the six apps, see
-[miam-knowledge-base/docs/ecosystem-map.md](https://github.com/mi4m/miam-knowledge-base/blob/main/docs/ecosystem-map.md).
+[`docs/ECOSYSTEM_BOUNDARIES.md`](https://github.com/thdelmas/Bios/blob/main/docs/ECOSYSTEM_BOUNDARIES.md).
+The visual map of all data flows across the six apps is kept outside this
+repository.
 
 ## The wallpaper rule applies to integrations too
 
@@ -149,4 +149,4 @@ Before wiring any sibling-driven feature, answer all five:
 - [MANIFESTO.md](../MANIFESTO.md) — what SoulRadio is for
 - [ORIGINS.md](../ORIGINS.md) — why the bands, why the auto-loop
 - [FREQUENCIES.md](../FREQUENCIES.md) — the canonical 11-band catalogue
-- [Bios/docs/ECOSYSTEM_BOUNDARIES.md](../../Bios/docs/ECOSYSTEM_BOUNDARIES.md) — the suite-wide rule
+- [Bios/docs/ECOSYSTEM_BOUNDARIES.md](https://github.com/thdelmas/Bios/blob/main/docs/ECOSYSTEM_BOUNDARIES.md) — the suite-wide rule
